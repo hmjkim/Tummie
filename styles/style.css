@@ -1,1 +1,14 @@
+.navbar-brand,
+.nav-link {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #84a98c;
+}
 
+.nav-link:hover {
+    color: #52796f;
+}
+
+.navbar-nav .active {
+    color: #52796f !important;
+}
