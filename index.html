@@ -1,82 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>My BCIT Project</title>
 
-<head>
-  <title>My BCIT Project</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN  go here -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Bootstrap Library CSS CDN go here -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <!-- Boostrap Library JS CDN  go here -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
+    <!-- Other libraries go here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Link to styles of your own -->
 
-  <!-- Other libraries go here -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
-  <!-- Link to styles of your own -->
+    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
 
-  <!-- <link rel="stylesheet" href="./styles/style.css"> -->
-  <link rel="stylesheet" href="./styles/style.css">
-</head>
-
-<body>
-  <!------------------------------>
-  <!-- Your HTML Layout go here -->
-  <nav class="navbar navbar-expand-lg bg-transparent">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="" alt="logo placeholder" height="36">
-        App name
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link px-3 active" aria-current="page" href="mykitchen.html">My Kitchen</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3" href="recipes.html">Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3" href="share.html">Share</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3" href="setting.html">Setting</a>
-          </li>
-        </ul>
+  <body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <header>
+      <nav class="navbar navbar-expand-lg bg-transparent">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="" alt="logo placeholder" height="36" />
+            App name
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link px-3 active"
+                  aria-current="page"
+                  href="mykitchen.html"
+                  >My Kitchen</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link px-3" href="recipes.html">Recipes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link px-3" href="share.html">Share</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link px-3" href="setting.html">Setting</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="jumbotron container mx-auto p-2">
+        <h1 class="welcome-intro display-4 p-4">
+          Did you just throw out expired food AGAIN?
+        </h1>
+        <p class="lead px-4">Don't worry! We are here to help you!</p>
+        <p class="px-4">
+          Our app will keep you updated on what food in your kitchen is expiring
+          and suggest recipes using those ingredients. You can also give away
+          those food or get some food as well.
+        </p>
+        <p class="lead px-4">
+          <a class="btn btn-primary btn-lg" href="#" role="button"
+            >Learn more</a
+          >
+        </p>
       </div>
-    </div>
-  </nav>
+    </main>
+    <footer>
+      <div class="sticky-bar fixed-bottom">
+        <div class="container py-3">
+          <nav>
+            <ul
+              class="menu-list m-0 p-0 d-flex justify-content-evenly align-items-center"
+            >
+              <li>
+                <a
+                  class="d-flex justify-content-center align-items-center flex-column"
+                  href="index.html"
+                  title="Visit Home"
+                >
+                  <img class="nav-icon" src="./images/icons/home.svg" alt="" />
+                  <p class="m-0 label">Home</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="d-flex justify-content-center align-items-center flex-column"
+                  href="mykitchen.html"
+                  title="Visit My Kitchen"
+                >
+                  <img
+                    class="nav-icon"
+                    src="./images/icons/fridge.svg"
+                    alt=""
+                  />
+                  <p class="m-0 label">My Kitchen</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="d-flex justify-content-center align-items-center flex-column"
+                  href="recipes.html"
+                  title="Visit Recipes"
+                >
+                  <img
+                    class="nav-icon"
+                    src="./images/icons/recipes.svg"
+                    alt=""
+                  />
+                  <p class="m-0 label">Recipes</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="d-flex justify-content-center align-items-center flex-column"
+                  href="share.html"
+                  title="Visit Share Hub"
+                >
+                  <img
+                    class="nav-icon"
+                    src="./images/icons/community.svg"
+                    alt=""
+                  />
+                  <p class="m-0 label">Share Hub</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="d-flex justify-content-center align-items-center flex-column"
+                  href="setting.html"
+                  title="Visit Profile"
+                >
+                  <img
+                    class="nav-icon"
+                    src="./images/icons/profile.svg"
+                    alt=""
+                  />
+                  <p class="m-0 label">Profile</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+    <!------------------------------>
+    <!-- Stuff for body goes here -->
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
 
-  <div class="jumbotron container mx-auto p-2">
-    <h1 class="welcome-intro display-4 p-4">Did you just throw out expired food AGAIN?</h1>
-    <p class="lead px-4">Don't worry! We are here to help you!</p>
-    <p class="px-4">Our app will keep you updated on what food in your kitchen is expiring and suggest recipes using
-      those ingredients. You can also give away those food or get some food as well.</p>
-    <p class="lead px-4">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
-  </div>
-  <!------------------------------>
-  <!-- Stuff for body goes here -->
-  <!---------------------------------------------->
-  <!-- Your own JavaScript functions go here    -->
-  <!---------------------------------------------->
-
-  <!-- Link to scripts of your own -->
-  <!-- <script src="./scripts/script.js"></script> -->
-
-</body>
-
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+  </body>
 </html>

@@ -1,24 +1,62 @@
+/* Navbar */
 .navbar-brand,
 .nav-link {
-    font-family: "Montserrat", sans-serif;
-    font-weight: bold;
-    color: #84a98c;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  color: #84a98c;
 }
 
 .nav-link:hover {
-    color: #52796f;
+  color: #52796f;
 }
 
 .navbar-nav .active {
-    color: #52796f !important;
+  color: #52796f !important;
 }
 
+/* Welcome Banner */
 .jumbotron {
-    background-color: #e9fded;
-    font-family: "Montserrat", sans-serif;
+  background-color: #e9fded;
+  font-family: "Montserrat", sans-serif;
 }
 
 .welcome-intro {
-    font-weight: bold;
-    color: #84a98c;
+  font-weight: bold;
+  color: #84a98c;
+}
+
+/* Sticky Footer/ Navbar */
+footer .sticky-bar {
+  background-color: #84a98c;
+}
+
+.sticky-bar .menu-list {
+  list-style: none;
+  text-align: center;
+  /* grid-template-columns: repeat(5, minmax(0, 1fr)); */
+}
+
+.sticky-bar .menu-list a {
+  text-decoration: none;
+  color: #fff;
+  width: 55px;
+}
+
+.sticky-bar .menu-list .label {
+  font-size: 10px;
+}
+
+.sticky-bar .nav-icon {
+  width: 40px;
+}
+
+@media (min-width: 768px) {
+  .sticky-bar .menu-list a {
+    width: 150px;
+    padding: 5px 20px;
+  }
+
+  .sticky-bar .menu-list .label {
+    font-size: 16px;
+  }
 }
