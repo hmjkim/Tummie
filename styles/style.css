@@ -58,7 +58,19 @@
   width: 100%;
 }
 
+.navbar-toggler {
+  display: none;
+}
+
+.footer .nav {
+  display: none;
+}
+
 @media (min-width: 768px) {
+  .navbar-toggler {
+    display: block;
+  }
+
   .sticky-bar {
     display: none;
   }
@@ -74,5 +86,9 @@
 
   .footer {
     bottom: 0;
+  }
+
+  .footer .nav {
+    display: block;
   }
 }
