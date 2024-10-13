@@ -26,14 +26,14 @@
 }
 
 /* Sticky Footer/ Navbar */
-footer .sticky-bar {
+.sticky-bar {
   background-color: #84a98c;
+  display: block;
 }
 
 .sticky-bar .menu-list {
   list-style: none;
   text-align: center;
-  /* grid-template-columns: repeat(5, minmax(0, 1fr)); */
 }
 
 .sticky-bar .menu-list a {
@@ -50,7 +50,19 @@ footer .sticky-bar {
   width: 40px;
 }
 
+.footer {
+  position: absolute;
+  bottom: 87px;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
 @media (min-width: 768px) {
+  .sticky-bar {
+    display: none;
+  }
+
   .sticky-bar .menu-list a {
     width: 150px;
     padding: 5px 20px;
@@ -58,5 +70,9 @@ footer .sticky-bar {
 
   .sticky-bar .menu-list .label {
     font-size: 16px;
+  }
+
+  .footer {
+    bottom: 0;
   }
 }
