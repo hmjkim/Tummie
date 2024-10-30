@@ -13,7 +13,7 @@ main {
 /* Navbar */
 .navbar-brand,
 .nav-link {
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
   font-weight: bold;
   color: #84a98c;
 }
@@ -29,7 +29,7 @@ main {
 /* Welcome Banner */
 .jumbotron {
   background-color: #e9fded;
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
 }
 
 .welcome-intro {
@@ -101,6 +101,6 @@ main {
   }
 
   body {
-    margin-bottom: 0;
+    padding-bottom: 0;
   }
 }
