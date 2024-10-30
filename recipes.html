@@ -1,63 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Tummie - Food Expiration Tracking App</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Tummie - Food Expiration Tracking App</title>
 
-    <!-- Bootstrap Library CSS CDN go here -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <!-- Boostrap Library JS CDN  go here -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Other libraries go here -->
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Bootstrap Library CSS CDN go here -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <!-- Boostrap Library JS CDN  go here -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        prefix: "tw-",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#1D6961",
-              secondary: "#EC651B",
-              neutral: {
-                light: "#EEEEEE",
-                DEFAULT: "#7C7C7C",
-                dark: "#2A2A2A",
-              },
-            },
-            fontFamily: {
-              sans: ["Inter", "sans-serif"],
-              sansHeading: ["Poppins", "sans-serif"],
+  <!-- Other libraries go here -->
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      prefix: "tw-",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1D6961",
+            secondary: "#EC651B",
+            neutral: {
+              light: "#EEEEEE",
+              DEFAULT: "#7C7C7C",
+              dark: "#2A2A2A",
             },
           },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            sansHeading: ["Poppins", "sans-serif"],
+          },
         },
-      };
-    </script>
-    <style type="text/tailwindcss">
-      @layer base {
+      },
+    };
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
         body {
           @apply tw-font-sans;
         }
@@ -71,108 +65,82 @@
       }
     </style>
 
-    <!-- Link to styles of your own -->
-    <link rel="stylesheet" href="./styles/style.css" />
-  </head>
+  <!-- Link to styles of your own -->
+  <link rel="stylesheet" href="./styles/style.css" />
+</head>
 
-  <body>
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
-    <header id="headerContent"></header>
-    <main>
-      <div>
-        <div class="card w-75 mx-auto my-2">
-          <img
-            src="https://picsum.photos/id/292/150/50"
-            class="card-img-top"
-            alt="..."
-          />
+<body>
+  <!------------------------------>
+  <!-- Your HTML Layout go here -->
+  <header id="headerContent"></header>
+  <main>
+    <div class="row row-cols-1 row-cols-md-3 g-4 tw-px-4 sm:tw-px-20">
+      <div class="col">
+        <div class="card tw-flex-col tw-rounded-3xl tw-pt-2 tw-items-center">
+          <img src="https://picsum.photos/id/292/150/50" class="card-img-top tw-px-2 tw-rounded-t-3xl" alt="..." />
           <div class="position-absolute top-0 end-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              fill="white"
-              class="bi bi-star mt-3 me-3"
-              viewBox="0 0 16 16"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-star mt-3 me-3"
+              viewBox="0 0 16 16">
               <path
-                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"
-              />
+                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z" />
             </svg>
           </div>
-          <div class="card-body">
+          <div class="card-body w-100">
             <h5 class="card-title">Recipe #1</h5>
             <p class="card-text">A short description of the recipe.</p>
-            <a href="#" class="btn btn-primary">Learn more</a>
-          </div>
-        </div>
-        <div class="card w-75 mx-auto my-2">
-          <img
-            src="https://picsum.photos/id/292/150/50"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="position-absolute top-0 end-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              fill="white"
-              class="bi bi-star mt-3 me-3"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"
-              />
-            </svg>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Recipe #2</h5>
-            <p class="card-text">A short description of the recipe.</p>
-            <a href="#" class="btn btn-primary">Learn more</a>
-          </div>
-        </div>
-        <div class="card w-75 mx-auto my-2">
-          <img
-            src="https://picsum.photos/id/292/150/50"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="position-absolute top-0 end-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              fill="white"
-              class="bi bi-star mt-3 me-3"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"
-              />
-            </svg>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Recipe #3</h5>
-            <p class="card-text">A short description of the recipe.</p>
-            <a href="#" class="btn btn-primary">Learn more</a>
+            <a href="#" class="btn btn-primary mt-2">Learn more</a>
           </div>
         </div>
       </div>
-      <div id="stickyMobileNav"></div>
-    </main>
-    <footer id="footerContent"></footer>
+      <div class="col">
+        <div class="card tw-flex-col tw-rounded-3xl tw-pt-2 tw-items-center">
+          <img src="https://picsum.photos/id/292/150/50" class="card-img-top tw-px-2 tw-rounded-t-3xl" alt="..." />
+          <div class="position-absolute top-0 end-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-star mt-3 me-3"
+              viewBox="0 0 16 16">
+              <path
+                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z" />
+            </svg>
+          </div>
+          <div class="card-body w-100">
+            <h5 class="card-title">Recipe #2</h5>
+            <p class="card-text">A short description of the recipe.</p>
+            <a href="#" class="btn btn-primary mt-2">Learn more</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card tw-flex-col tw-rounded-3xl tw-pt-2 tw-items-center">
+          <img src="https://picsum.photos/id/292/150/50" class="card-img-top tw-px-2 tw-rounded-t-3xl" alt="..." />
+          <div class="position-absolute top-0 end-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-star mt-3 me-3"
+              viewBox="0 0 16 16">
+              <path
+                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z" />
+            </svg>
+          </div>
+          <div class="card-body w-100">
+            <h5 class="card-title">Recipe #3</h5>
+            <p class="card-text">A short description of the recipe.</p>
+            <a href="#" class="btn btn-primary mt-2">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="stickyMobileNav"></div>
+  </main>
+  <footer id="footerContent"></footer>
 
-    <!------------------------------>
-    <!-- Stuff for body goes here -->
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
+  <!------------------------------>
+  <!-- Stuff for body goes here -->
+  <!---------------------------------------------->
+  <!-- Your own JavaScript functions go here    -->
+  <!---------------------------------------------->
 
-    <!-- Link to scripts of your own -->
-    <!-- <script src="./scripts/script.js"></script> -->
-    <script src="./scripts/skeleton.js"></script>
-    <script src="./scripts/firebaseAPI_DTC02.js"></script>
-  </body>
+  <!-- Link to scripts of your own -->
+  <!-- <script src="./scripts/script.js"></script> -->
+  <script src="./scripts/skeleton.js"></script>
+  <script src="./scripts/firebaseAPI_DTC02.js"></script>
+</body>
+
 </html>
