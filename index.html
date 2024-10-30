@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>My BCIT Project</title>
+    <title>Tummie - Food Expiration Tracking App</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -22,6 +22,8 @@
     ></script>
 
     <!-- Other libraries go here -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,56 +31,13 @@
       rel="stylesheet"
     />
     <!-- Link to styles of your own -->
-
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
 
   <body>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
-    <header>
-      <nav class="navbar navbar-expand-lg bg-transparent">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="" alt="logo placeholder" height="36" />
-            App name
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a
-                  class="nav-link px-3 active"
-                  aria-current="page"
-                  href="mykitchen.html"
-                  >My Kitchen</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link px-3" href="recipes.html">Recipes</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link px-3" href="share.html">Share Hub</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link px-3" href="setting.html">Profile</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <header id="headerContent"></header>
     <main>
       <div class="jumbotron container mx-auto p-2">
         <h1 class="welcome-intro display-4 p-4">
@@ -179,28 +138,8 @@
         </div>
       </div>
     </main>
-    <footer
-      class="footer container d-flex flex-wrap justify-content-between align-items-center py-3 border-top"
-    >
-      <p class="col-md-4 mb-0 text-body-secondary">
-        &copy;2024 BCIT COMP 1800 project. All rights reserved.
-      </p>
-      <ul class="nav d-flex col-md-4 justify-content-end">
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">My Kitchen</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">Recipes</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">Share Hub</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">Profile</a>
-        </li>
-      </ul>
-    </footer>
-
+    <footer id="footerContent"></footer>
+    
     <!------------------------------>
     <!-- Stuff for body goes here -->
     <!---------------------------------------------->
@@ -209,5 +148,6 @@
 
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
+    <script src="./scripts/skeleton.js"></script>
   </body>
 </html>
