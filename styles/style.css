@@ -1,6 +1,13 @@
 /* Layout */
 body {
-  margin-bottom: 87px
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 87px;
+}
+
+main {
+  flex-grow: 1;
 }
 
 /* Navbar */
@@ -91,5 +98,9 @@ body {
 
   .footer .nav {
     display: block;
+  }
+
+  body {
+    margin-bottom: 0;
   }
 }
