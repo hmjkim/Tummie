@@ -40,6 +40,15 @@
         prefix: "tw-",
         theme: {
           extend: {
+            colors: {
+              primary: "#1D6961",
+              secondary: "#EC651B",
+              neutral: {
+                light: "#EEEEEE",
+                DEFAULT: "#7C7C7C",
+                dark: "#2A2A2A",
+              },
+            },
             fontFamily: {
               sans: ["Inter", "sans-serif"],
               sansHeading: ["Poppins", "sans-serif"],
@@ -58,10 +67,11 @@
         h2,
         h3,
         h4 {
-          @apply tw-font-sansHeading;
+          @apply tw-font-sansHeading tw-font-bold;
         }
       }
     </style>
+
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
@@ -69,9 +79,16 @@
   <body>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
-    <header id="headerContent"></header>
+    <!-- <header id="headerContent"></header> -->
+    <header>
+      <img src="#" alt="Fridge icon">
+      <h1>My Fridge</h1>
+    </header>
     <main>
-      my kitchen
+      <div class="container">
+        <p class="tw-text-neutral">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
+        <button class="btn-primary">Add Item</button>
+      </div>
       <div id="stickyMobileNav"></div>
     </main>
     <footer id="footerContent"></footer>

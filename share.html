@@ -39,6 +39,15 @@
         prefix: "tw-",
         theme: {
           extend: {
+            colors: {
+              primary: "#1D6961",
+              secondary: "#EC651B",
+              neutral: {
+                light: "#EEEEEE",
+                DEFAULT: "#7C7C7C",
+                dark: "#2A2A2A",
+              },
+            },
             fontFamily: {
               sans: ["Inter", "sans-serif"],
               sansHeading: ["Poppins", "sans-serif"],
@@ -57,7 +66,7 @@
         h2,
         h3,
         h4 {
-          @apply tw-font-sansHeading;
+          @apply tw-font-sansHeading tw-font-bold;
         }
       }
     </style>
