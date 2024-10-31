@@ -76,19 +76,31 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
 
-  <body>
+  <body class="">
     <!------------------------------>
     <!-- Your HTML Layout go here -->
-    <!-- <header id="headerContent"></header> -->
-    <header>
-      <img src="#" alt="Fridge icon">
-      <h1>My Fridge</h1>
-    </header>
-    <main>
-      <div class="container">
-        <p class="tw-text-neutral">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
-        <button class="btn-primary">Add Item</button>
+    <header id="headerContent"></header>
+    <main class="container py-3 tw-relative">
+      <!-- mobile header -->
+      <div class="tw-flex tw-items-center tw-space-x-4">
+        <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.25 26.25V27.5H8.75V26.25C8.08696 26.25 7.45107 25.9866 6.98223 25.5178C6.51339 25.0489 6.25 24.413 6.25 23.75V5C6.25 4.33696 6.51339 3.70107 6.98223 3.23223C7.45107 2.76339 8.08696 2.5 8.75 2.5H21.25C21.913 2.5 22.5489 2.76339 23.0178 3.23223C23.4866 3.70107 23.75 4.33696 23.75 5V23.75C23.75 24.413 23.4866 25.0489 23.0178 25.5178C22.5489 25.9866 21.913 26.25 21.25 26.25V27.5H18.75V26.25H11.25ZM8.75 5V11.25H21.25V5H8.75ZM8.75 23.75H21.25V13.75H8.75V23.75ZM10 15H12.5V18.75H10V15ZM10 7.5H12.5V10H10V7.5Z" fill="currentColor"/>
+          </svg>          
+        </div>
+        <h1 class="tw-text-2xl">My Fridge</h1>
+      </div> 
+      <!-- Content - message when empty -->
+      <div class="tw-pt-10 tw-text-center">
+        <p class="tw-text-neutral tw-max-w-[90%] tw-mx-auto tw-text-center tw-mb-4">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
+        <button class="btn-primary md:tw-w-fit">Add Item</button>
       </div>
+      <!-- Add button (plus icon) -->
+        <button class="tw-text-white tw-bg-primary tw-p-3 tw-rounded-lg tw-absolute -tw-bottom-[5%] md:tw-bottom-[2%] tw-right-0 tw-mr-4">
+          <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.5 3.65384V22.5M22.5 22.5V41.3461M22.5 22.5H41.3461M22.5 22.5L3.65381 22.5" stroke="currentColor" stroke-width="6.28205" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>          
+        </button>
       <div id="stickyMobileNav"></div>
     </main>
     <footer id="footerContent"></footer>
