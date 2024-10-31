@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tummie - Food Expiration Tracking App</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN  go here -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Other libraries go here -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        prefix: "tw-",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1D6961",
+              secondary: "#EC651B",
+              neutral: {
+                light: "#EEEEEE",
+                DEFAULT: "#7C7C7C",
+                dark: "#2A2A2A",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              sansHeading: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply tw-font-sans;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+          @apply tw-font-sansHeading tw-font-bold;
+        }
+      }
+    </style>
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+
+  <body class="">
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <header id="headerContent"></header>
+    <main class="container py-3 tw-relative">
+      <!-- mobile header -->
+      <div class="tw-flex tw-justify-between">
+        <div class="tw-flex tw-items-center tw-space-x-4">
+          <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.25 26.25V27.5H8.75V26.25C8.08696 26.25 7.45107 25.9866 6.98223 25.5178C6.51339 25.0489 6.25 24.413 6.25 23.75V5C6.25 4.33696 6.51339 3.70107 6.98223 3.23223C7.45107 2.76339 8.08696 2.5 8.75 2.5H21.25C21.913 2.5 22.5489 2.76339 23.0178 3.23223C23.4866 3.70107 23.75 4.33696 23.75 5V23.75C23.75 24.413 23.4866 25.0489 23.0178 25.5178C22.5489 25.9866 21.913 26.25 21.25 26.25V27.5H18.75V26.25H11.25ZM8.75 5V11.25H21.25V5H8.75ZM8.75 23.75H21.25V13.75H8.75V23.75ZM10 15H12.5V18.75H10V15ZM10 7.5H12.5V10H10V7.5Z" fill="currentColor"/>
+            </svg>          
+          </div>
+          <h1 class="tw-text-2xl">My Fridge</h1>
+          <!-- Down arrow -->
+          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+            <svg class="tw-text-neutral-dark" xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9" fill="none">
+              <path d="M15 1L8 8L1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div> 
+        <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3">
+          <!-- Search button -->
+          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+            <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21.4433 22.1226L14.7452 15.4245M16.9779 9.84276C16.9779 14.1586 13.4793 17.6572 9.16346 17.6572C4.84765 17.6572 1.349 14.1586 1.349 9.84276C1.349 5.52695 4.84765 2.02829 9.16346 2.02829C13.4793 2.02829 16.9779 5.52695 16.9779 9.84276Z" stroke="currentColor" stroke-width="2.67925" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+            <svg width="25" height="6" viewBox="0 0 25 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.54714 3.07546H3.56054M12.9245 3.07546H12.9379M22.3019 3.07546H22.3153M4.88676 3.07546C4.88676 3.81532 4.287 4.41509 3.54714 4.41509C2.80729 4.41509 2.20752 3.81532 2.20752 3.07546C2.20752 2.33561 2.80729 1.73584 3.54714 1.73584C4.287 1.73584 4.88676 2.33561 4.88676 3.07546ZM14.2641 3.07546C14.2641 3.81532 13.6644 4.41509 12.9245 4.41509C12.1846 4.41509 11.5849 3.81532 11.5849 3.07546C11.5849 2.33561 12.1846 1.73584 12.9245 1.73584C13.6644 1.73584 14.2641 2.33561 14.2641 3.07546ZM23.6415 3.07546C23.6415 3.81532 23.0417 4.41509 22.3019 4.41509C21.562 4.41509 20.9622 3.81532 20.9622 3.07546C20.9622 2.33561 21.562 1.73584 22.3019 1.73584C23.0417 1.73584 23.6415 2.33561 23.6415 3.07546Z" stroke="currentColor" stroke-width="2.67925" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Content - message when empty -->
+      <section class="tw-pt-10 tw-text-center">
+        <p class="tw-text-neutral tw-max-w-[90%] tw-mx-auto tw-text-center tw-mb-4">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
+        <button class="btn-primary md:tw-w-fit">Add Item</button>
+      </section>
+      <!-- Add button (plus icon) -->
+        <button class="tw-text-white tw-bg-primary tw-p-3 tw-rounded-lg tw-absolute -tw-bottom-[5%] md:tw-bottom-[2%] tw-right-0 tw-mr-4">
+          <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.5 3.65384V22.5M22.5 22.5V41.3461M22.5 22.5H41.3461M22.5 22.5L3.65381 22.5" stroke="currentColor" stroke-width="6.28205" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>          
+        </button>
+      <div id="stickyMobileNav"></div>
+    </main>
+    <footer id="footerContent"></footer>
+
+    <!------------------------------>
+    <!-- Stuff for body goes here -->
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="./scripts/skeleton.js"></script>
+    <script src="./scripts/firebaseAPI_DTC02.js"></script>
+  </body>
+</html>
