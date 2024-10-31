@@ -11,8 +11,8 @@ main {
 }
 
 /* Navbar */
-/* .navbar-brand,
-.nav-link {
+/* .navbar-brand, */
+/* .nav-link {
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   color: #84a98c;
@@ -23,7 +23,7 @@ main {
 }
 
 .navbar-nav .active {
-  color: #52796f !important;
+  color: #1D6961 !important;
 }
 
 /* Welcome Banner */
