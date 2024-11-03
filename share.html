@@ -17,8 +17,15 @@
     crossorigin="anonymous"></script>
 
   <!-- Other libraries go here -->
-  <!-- jQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Firebase 8 CDNs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,7 +81,40 @@
   <!-- Your HTML Layout go here -->
   <header id="headerContent"></header>
   <main>
-    Share Hub
+    <div class="container justify-content-between align-items-center py-3">
+      <div class="d-flex row justify-content-between tw-px-4 md:tw-px-0 tw-my-5 sm:tw-mb-5">
+        <div class="d-flex col gap-3 align-items-center">
+          <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
+            <img class="nav-icon" src="./images/icons/community-active.svg" alt="" />
+          </div>
+          <h1 class="tw-text-2xl">Share Hub</h1>
+        </div>
+        <div class="d-flex col gap-3 align-items-center justify-content-end">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sliders"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
+          </svg>
+        </div>
+      </div>
+      <div class="tw-px-4 md:tw-px-0 tw-my-5 sm:tw-mb-5">
+        <div class="input-group flex-nowrap">
+          <span class="input-group-text" id="addon-wrapping">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+              viewBox="0 0 16 16">
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+          </span>
+          <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+            aria-describedby="addon-wrapping">
+        </div>
+      </div>
+      <br>
+      <h1 class="text-center">Share Hub is currently under construction.</h1>
+      <br>
+      <h1 class="text-center">Come back to check this out later!</h1>
+    </div>
     <div id="stickyMobileNav"></div>
   </main>
   <footer id="footerContent"></footer>
