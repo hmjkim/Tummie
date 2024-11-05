@@ -101,13 +101,55 @@ main {
 
 
 /* Buttons */
-.btn-primary {
-  background-color: #1D6961;
-  color: #fff;
+.btn {
   padding: 10px 30px;
   border-radius: 10px;
   display: inline-block;
-  width: 100%;
-  border-color: #1D6961;
   font-weight: 600;
+  white-space: nowrap;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #1D6961;
+  color: #fff;
+  border-color: #1D6961;
+}
+
+.btn-primary:hover {
+  background-color: #1d6961b8;
+  color: #fff;
+  border-color: #1D6961;
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #575757;
+  border-color: #1D6961;
+}
+
+.btn-white:hover {
+  background-color: rgb(255 255 255 / 23%);
+  color: #fff;
+  border-color: #fff;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.btn-outline:hover {
+  background-color: rgb(255 255 255 / 23%);
+  color: #fff;
+  border-color: #fff;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .navbar {
+    padding: 0;
+  }
 }
