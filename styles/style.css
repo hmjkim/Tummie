@@ -154,3 +154,26 @@ main {
     padding: 0;
   }
 }
+
+/* Firebase Login Form */
+.firebase-login-form .firebaseui-container {
+  border-radius: 10px;
+}
+
+.firebase-login-form .mdl-button--colored{
+  border-radius: 10px;
+  background-color: #1D6961;
+}
+
+.firebase-login-form .firebaseui-link, 
+.firebase-login-form .firebaseui-id-secondary-link {
+  color: #1D6961;
+}
+
+.firebase-login-form form {
+  padding: 20px;
+}
+
+.firebase-login-form .firebaseui-textfield.mdl-textfield .firebaseui-label::after {
+  background-color: #1D6961;
+}
