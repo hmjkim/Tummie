@@ -83,7 +83,7 @@ function saveUserInfo() {
 }
 
 function editAccount() {
-    formContent = `<div class="tw-shadow-md tw-p-8 tw-space-y-8 tw-m-4 md:tw-m-12">
+    formContent = `<div class="tw-shadow-lg tw-p-8 tw-space-y-8 tw-bg-white tw-w-[90%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
             <h1 class="tw-text-xl tw-text-primary">Account</h1>
             <form>
                 <fieldset class="tw-space-y-4 tw-font-[Poppins]" id="personalInfoFields" disabled>
@@ -112,8 +112,10 @@ function editAccount() {
             </form>
         </div>`
     $("#profileFloatingWindow").append(formContent)
+    populateUserInfo();
 }
 
+// populateUserInfo() can be deleted because it is placed inside editAccount() function. It only populates when user click Account button on profile.html
 populateUserInfo(); //run the function for profile-account
 
 getNameFromAuth(); //run the function
