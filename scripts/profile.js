@@ -83,9 +83,8 @@ function saveUserInfo() {
 }
 
 function editAccount() {
-    formContent = ""
-    formContent += `<div class="tw-shadow-md tw-p-8 tw-space-y-8 tw-w-4/5">
-            <h1>Account</h1>
+    formContent = `<div class="tw-shadow-md tw-p-8 tw-space-y-8 tw-m-4 md:tw-m-12">
+            <h1 class="tw-text-xl tw-text-primary">Account</h1>
             <form>
                 <fieldset class="tw-space-y-4 tw-font-[Poppins]" id="personalInfoFields" disabled>
                     <div class="form-group">
