@@ -17,15 +17,15 @@
     crossorigin="anonymous"></script>
 
   <!-- Other libraries go here -->
-    <!-- Firebase 8 CDNs -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-    
+  <!-- Firebase 8 CDNs -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -120,7 +120,31 @@
             aria-describedby="addon-wrapping">
         </div>
       </div>
-      <div class="row row-cols-1 row-cols-md-3 g-4 tw-mt-5">
+
+      <!-- Templates for general use, not displayed -->
+      <template id="recipeCardTemplate">
+        <div class="row row-cols-1 row-cols-md-3 g-4 tw-mt-5">
+          <div class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
+            <div class="card tw-flex-col tw-rounded-lg tw-border-neutral-light tw-pt-2 tw-px-2 tw-items-center">
+              <img src="..." class="card-image card-img-top tw-rounded-t-lg" alt="Recipe Image" />
+              <div class="card-body w-100">
+                <div class="col d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="card-title card-title mb-0">Recipe Name</h5>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7C7C7C"
+                    class="card-save bi bi-star inline-block" viewBox="0 0 16 16">
+                    <path
+                      d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                  </svg>
+                </div>
+                <p class="card-text">A short description of the recipe.</p>
+                <a href="#" class="btn btn-primary mt-2">Learn more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- <div class="row row-cols-1 row-cols-md-3 g-4 tw-mt-5">
         <div class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
           <div class="card tw-flex-col tw-rounded-lg tw-border-neutral-light tw-pt-2 tw-px-2 tw-items-center">
             <img src="https://picsum.photos/id/292/150/50" class="card-img-top tw-rounded-t-lg" alt="..." />
@@ -172,7 +196,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div id="stickyMobileNav"></div>
   </main>
@@ -188,6 +212,7 @@
   <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/skeleton.js"></script>
   <script src="./scripts/firebaseAPI_DTC02.js"></script>
+  <script src="./scripts/recipes.js"></script>
 </body>
 
 </html>
