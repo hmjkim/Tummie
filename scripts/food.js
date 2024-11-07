@@ -157,3 +157,25 @@ function calculateTimeLeft(date) {
     return timeDifferenceDays
 
 }
+
+
+function determineRemainingDaysMessage(daysLeft) {
+    // determine remaining days message
+    let message;
+    switch (true) {
+        case (daysLeft === 0):
+            message = "Today";
+            break;
+        case (daysLeft === 1):
+            message = "Tomorrow";
+            break;
+        case (daysLeft < 0):
+            message = `${Math.abs(daysLeft)} days past`;
+            break;
+        default:
+            message = `${daysLeft} days left`;
+            break;
+    }
+
+    return message
+}
