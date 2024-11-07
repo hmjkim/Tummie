@@ -12,11 +12,19 @@ function displayRecipeInfo() {
             recipeName = doc.data().strMeal;
             recipeInstructions = doc.data().strInstructions
 
-            // only populate title, and image
             document.getElementById("recipeName").innerHTML = recipeName;
             let imgEvent = document.querySelector(".recipe-img");
             imgEvent.src = recipeImage;
             document.getElementById("details-go-here").innerHTML = recipeInstructions;
+
+            for (i = 1; i <= 20; i++) {
+                if (doc.data()[`strMeasure${i}`] != "") {
+                    ingredientName = doc.data()[`strIngredient${i}`]
+                    ingredientMeasure = doc.data()[`strMeasure${i}`]
+                    document.getElementById("ingredients").innerHTML += ingredientName + "<br/>"
+                    document.getElementById("measurements").innerHTML += ingredientMeasure + "<br/>"
+                }
+            }
         });
 }
 displayRecipeInfo();
