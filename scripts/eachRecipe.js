@@ -10,11 +10,13 @@ function displayRecipeInfo() {
             thisRecipe = doc.data();
             recipeImage = thisRecipe.strMealThumb;
             recipeName = doc.data().strMeal;
+            recipeInstructions = doc.data().strInstructions
 
             // only populate title, and image
             document.getElementById("recipeName").innerHTML = recipeName;
             let imgEvent = document.querySelector(".recipe-img");
             imgEvent.src = recipeImage;
+            document.getElementById("details-go-here").innerHTML = recipeInstructions;
         });
 }
 displayRecipeInfo();
