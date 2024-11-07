@@ -89,7 +89,9 @@ function saveAccountInfo() {
             console.log("Document successfully updated!");
         })
     //c) disable edit 
-    document.getElementById('profileAccount').classList.add("tw-hidden")
+    document.getElementById('profileAccount').classList.add("tw-hidden");
+    // call getName function again to change the name on profile.html
+    getNameFromAuth()
 }
 
 function editSupportRequest() {
