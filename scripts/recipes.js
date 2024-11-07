@@ -152,3 +152,28 @@ function writeRecipes() {
         last_updated: firebase.firestore.FieldValue.serverTimestamp()
     })
 }
+
+//------------------------------------------------------------------------------
+// Input parameter is a string representing the collection we are reading from
+//------------------------------------------------------------------------------
+function displayCardsDynamically(collection) {
+    let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable. 
+
+    db.collection(collection).get()   //the collection called "recipes"
+        .then(allRecipes => {
+            allRecipes.forEach(doc => { //iterate thru each doc
+                var title = doc.data().strMeal;       // get value of the "strMeal" key
+                var link = doc.data().strMealThumb
+                let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+
+                //update title and text and image
+                newcard.querySelector('.card-title').innerHTML = title;
+                newcard.querySelector('.card-image').src = link;
+
+                //attach to gallery, Example: "recipes-go-here"
+                document.getElementById(collection + "-go-here").appendChild(newcard);
+            })
+        })
+}
+
+displayCardsDynamically("recipes");  //input param is the name of the collection
