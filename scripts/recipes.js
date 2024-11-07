@@ -156,10 +156,10 @@ function writeRecipes() {
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
-function displayCardsDynamically(collection) {
+function displayCardsDynamically(recipes) {
     let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable. 
 
-    db.collection(collection).get()   //the collection called "recipes"
+    db.collection(recipes).get()   //the collection called "recipes"
         .then(allRecipes => {
             allRecipes.forEach(doc => { //iterate thru each doc
                 var title = doc.data().strMeal;       // get value of the "strMeal" key
@@ -173,7 +173,7 @@ function displayCardsDynamically(collection) {
                 newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
 
                 //attach to gallery, Example: "recipes-go-here"
-                document.getElementById(collection + "-go-here").appendChild(newcard);
+                document.getElementById(recipes + "-go-here").appendChild(newcard);
             })
         })
 }
