@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tummie - Food Expiration Tracking App</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN  go here -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Other libraries go here -->
+    <!-- Firebase 8 CDNs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        prefix: "tw-",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1D6961",
+              secondary: "#EC651B",
+              neutral: {
+                light: "#EEEEEE",
+                DEFAULT: "#7C7C7C",
+                dark: "#2A2A2A",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              sansHeading: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply tw-font-sans;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+          @apply tw-font-sansHeading tw-font-bold;
+        }
+      }
+    </style>
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <header id="headerContent"></header>
+    <main class="container py-3 tw-relative">
+      <!-- Content -->
+       <section>
+        <h1 class="tw-text-2xl tw-mb-6">Add New Item</h1>
+        <form>
+          <fieldset class="tw-space-y-4" id="personalInfoFields">
+            <button class="tw-relative tw-block tw-mx-auto">
+              <!-- Placeholder icon -->
+              <span class="tw-border tw-border-solid tw-border-[#929aa1] tw-p-2 tw-block tw-rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="tw-w-[43px]" viewBox="0 0 43 42" fill="none">
+                  <path d="M5.375 25.0835V8.9585H37.625V34.0418H5.375V25.0835Z" stroke="#BBBBBB" stroke-width="3.58333" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M5.375 28.6665L12.5417 23.2915L17.9167 26.8748L28.6667 17.9165L37.625 25.0832" stroke="#BBBBBB" stroke-width="1.79167" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M13.4375 19.7085C14.9218 19.7085 16.125 18.5053 16.125 17.021C16.125 15.5367 14.9218 14.3335 13.4375 14.3335C11.9532 14.3335 10.75 15.5367 10.75 17.021C10.75 18.5053 11.9532 19.7085 13.4375 19.7085Z" fill="#BBBBBB"></path>
+                  <path d="M5.375 28.6665L12.5417 23.2915L17.9167 26.8748L28.6667 17.9165L37.625 25.0832V34.0415H5.375V28.6665Z" fill="#BBBBBB" fill-opacity="0.3"></path>
+                </svg>
+              </span>
+              <!-- Edit Icon -->
+              <span class="tw-absolute tw-top-[78%] tw-left-[84%]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M7.96654 2.85536H3.4911C2.50242 2.85536 1.70093 3.65685 1.70093 4.64554V14.4915C1.70093 15.4802 2.50242 16.2817 3.4911 16.2817H13.3371C14.3258 16.2817 15.1272 15.4802 15.1272 14.4915V10.0161M13.8614 1.58952C14.5605 0.890409 15.694 0.890409 16.3931 1.58952C17.0922 2.28862 17.0922 3.4221 16.3931 4.12121L8.70806 11.8062H6.17637L6.17637 9.27455L13.8614 1.58952Z" stroke="#A4A4A4" stroke-width="1.79018" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </button>
+            <div class="form-group">
+                <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Name</label>
+                <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Expiry Date</label>
+                <input type="text" id="emailInput" class="form-control" placeholder="Enter date">
+            </div>
+            <div class="form-group">
+              <label for="storageSpaceInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Storage Space</label>
+              <select class="form-control" id="storageSpaceInput">
+                <option>Fridge</option>
+                <option>Freezer</option>
+                <option>Pantry</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="categoryInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Category</label>
+              <select class="form-control" id="categoryInput">
+                <option>Fruits</option>
+                <option>Vegetables</option>
+                <option>Dairy</option>
+                <option>Meat</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantityInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Quantity</label>
+              <input type="text" id="quantityInput" class="form-control" placeholder="Enter the amount">
+            </div>
+            <div class="form-group">
+              <label for="notesInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Notes</label>
+              <textarea class="form-control" id="notesInput" rows="4"></textarea>
+            </div>
+        </fieldset>
+        <div class="tw-mt-10">
+          <button type="submit" class="btn btn-primary save-btn md:tw-w-fit">Save</button>
+        </div>
+      </form>
+        
+       </section>
+      <div id="stickyMobileNav"></div>
+    </main>
+    <footer id="footerContent"></footer>
+
+    <!------------------------------>
+    <!-- Stuff for body goes here -->
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="./scripts/skeleton.js"></script>
+    <script src="./scripts/firebaseAPI_DTC02.js"></script>
+  </body>
+</html>
