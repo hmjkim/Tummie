@@ -17,6 +17,14 @@ function getNameFromAuth() {
     });
 }
 
+function openContentBox(contentbox) {
+    contentbox.classList.remove("tw-hidden")
+}
+
+function closeContentBox(contentbox) {
+    contentbox.classList.add("tw-hidden")
+}
+
 function populateUserInfo() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
@@ -36,8 +44,14 @@ function populateUserInfo() {
                     if (userName != null) {
                         document.getElementById("nameInput").value = userName;
                     }
+                    if (userName != null) {
+                        document.getElementById("requesterNameInput").value = userName;
+                    }
                     if (userEmail != null) {
                         document.getElementById("emailInput").value = userEmail;
+                    }
+                    if (userEmail != null) {
+                        document.getElementById("requesterEmailInput").value = userEmail;
                     }
                     if (userCountry != null) {
                         document.getElementById("countryInput").value = userCountry;
@@ -53,12 +67,11 @@ function populateUserInfo() {
     });
 }
 
-//Enable the form fields for profile-account
-function editUserInfo() {
-    document.getElementById('personalInfoFields').disabled = false;
+function editAccountInfo() {
+    document.getElementById('accountInfoFields').disabled = false;
 }
 
-function saveUserInfo() {
+function saveAccountInfo() {
     //enter code here
     //a) get user entered values
     userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
@@ -76,17 +89,34 @@ function saveUserInfo() {
             console.log("Document successfully updated!");
         })
     //c) disable edit 
-    document.getElementById('personalInfoFields').disabled = true;
+    document.getElementById('profileAccount').classList.add("tw-hidden")
 }
 
-function openContentBox(contentbox) {
-   contentbox.classList.remove("tw-hidden")
+function editSupportRequest() {
+    document.getElementById('supportRequestFields').disabled = false;
 }
 
-function closeContentBox(contentbox) {
-    contentbox.classList.add("tw-hidden")
+function submitSupportRequest() {
+    //enter code here
+    //a) get user entered values
+    userName = document.getElementById('requesterNameInput').value;       //get the value of the field with id="nameInput"
+    userEmail = document.getElementById('requesterEmailInput').value;       //get the value of the field with id="nameInput"
+    requestDescription = document.getElementById('requestDescriptionInput').value;     //get the value of the field with id="countryInput"
+    //b) update user's document in Firestore
+    db.collection("support").doc().set({
+        name: userName,
+        email: userEmail,
+        description: requestDescription
+    })
+        .then(() => {
+            console.log("Service request successfully submitted!");
+            document.getElementById('profileSupport').classList.add("tw-hidden");
+            document.getElementById('requestDescriptionInput').value = "";
+        })
 }
 
-populateUserInfo(); //run the function for profile-account
+populateUserInfo();
+getNameFromAuth();
 
-getNameFromAuth(); //run the function
+// need to add a function to populate user info for support content box
+// need to add a function to wrtie support request to database
