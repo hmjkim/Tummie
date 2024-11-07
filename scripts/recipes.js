@@ -164,11 +164,13 @@ function displayCardsDynamically(collection) {
             allRecipes.forEach(doc => { //iterate thru each doc
                 var title = doc.data().strMeal;       // get value of the "strMeal" key
                 var link = doc.data().strMealThumb
+                var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
                 //update title and text and image
                 newcard.querySelector('.card-title').innerHTML = title;
                 newcard.querySelector('.card-image').src = link;
+                newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
 
                 //attach to gallery, Example: "recipes-go-here"
                 document.getElementById(collection + "-go-here").appendChild(newcard);
