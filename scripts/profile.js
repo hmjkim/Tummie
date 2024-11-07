@@ -88,9 +88,9 @@ function saveAccountInfo() {
         .then(() => {
             console.log("Document successfully updated!");
         })
-    //c) disable edit 
+    //c) functions after saving
+    document.getElementById('accountInfoFields').disabled = true;
     document.getElementById('profileAccount').classList.add("tw-hidden");
-    // call getName function again to change the name on profile.html
     getNameFromAuth()
 }
 
