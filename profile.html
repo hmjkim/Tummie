@@ -85,16 +85,19 @@
       <div class="d-flex col gap-3 align-items-center">
         <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
           <svg width="30" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6.43706 22.2547C8.9766 20.8192 11.9105 20 15.0358 20C18.161 20 21.0949 20.8192 23.6345 22.2547M18.7858 12.5C18.7858 14.5711 17.1068 16.25 15.0358 16.25C12.9647 16.25 11.2858 14.5711 11.2858 12.5C11.2858 10.4289 12.9647 8.74999 15.0358 8.74999C17.1068 8.74999 18.7858 10.4289 18.7858 12.5ZM26.2858 15C26.2858 21.2132 21.249 26.25 15.0358 26.25C8.82256 26.25 3.78577 21.2132 3.78577 15C3.78577 8.78679 8.82256 3.74999 15.0358 3.74999C21.249 3.74999 26.2858 8.78679 26.2858 15Z" stroke="#1D6961" stroke-width="2.30769" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <path
+              d="M6.43706 22.2547C8.9766 20.8192 11.9105 20 15.0358 20C18.161 20 21.0949 20.8192 23.6345 22.2547M18.7858 12.5C18.7858 14.5711 17.1068 16.25 15.0358 16.25C12.9647 16.25 11.2858 14.5711 11.2858 12.5C11.2858 10.4289 12.9647 8.74999 15.0358 8.74999C17.1068 8.74999 18.7858 10.4289 18.7858 12.5ZM26.2858 15C26.2858 21.2132 21.249 26.25 15.0358 26.25C8.82256 26.25 3.78577 21.2132 3.78577 15C3.78577 8.78679 8.82256 3.74999 15.0358 3.74999C21.249 3.74999 26.2858 8.78679 26.2858 15Z"
+              stroke="#1D6961" stroke-width="2.30769" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </div>
         <h1 class="tw-text-2xl">Welcome! <span id="displayname" class="tw-text-[#1D6961] tw-uppercase"></span></h1>
       </div>
     </div>
-    
+
     <div class="container justify-content-between align-items-center tw-pt-10 tw-px-0">
       <div class="row row-cols-1 row-cols-md-3 g-4">
-        <button id="btnAccount" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6" onclick="editAccount()">
+        <button id="btnAccount" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6"
+          onclick="openContentBox(profileAccount)">
           <div class="card tw-flex-row sm:tw-flex-col tw-rounded-lg tw-border-neutral-light tw-py-4 tw-items-center">
             <img src="images/icons/account.svg"
               class="card-img-top tw-size-8 sm:tw-size-28 tw-w-1/3 sm:tw-w-[100%] sm:tw-py-6" alt="...">
@@ -104,7 +107,8 @@
             </div>
           </div>
         </button>
-        <button id="btnSetting" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
+        <button id="btnSetting" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6"
+          onclick="openContentBox(profileSetting)">
           <div class="card tw-flex-row sm:tw-flex-col tw-rounded-lg tw-border-neutral-light tw-py-4 tw-items-center">
             <img src="images/icons/setting.svg"
               class="card-img-top tw-size-8 sm:tw-size-28 tw-w-1/3 sm:tw-w-[100%] sm:tw-py-6" alt="...">
@@ -114,7 +118,8 @@
             </div>
           </div>
         </button>
-        <button id="btnUserGuide" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
+        <button id="btnUserGuide" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6"
+          onclick="openContentBox(profileUserGuide)">
           <div class="card tw-flex-row sm:tw-flex-col tw-rounded-lg tw-border-neutral-light tw-py-4 tw-items-center">
             <img src="images/icons/userguide.svg"
               class="card-img-top tw-size-8 sm:tw-size-28 tw-w-1/3 sm:tw-w-[100%] sm:tw-py-6" alt="...">
@@ -124,7 +129,8 @@
             </div>
           </div>
         </button>
-        <button id="btnAboutUs" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
+        <button id="btnAboutUs" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6"
+          onclick="openContentBox(profileAboutUs)">
           <div class="card tw-flex-row sm:tw-flex-col tw-rounded-lg tw-border-neutral-light tw-py-4 tw-items-center">
             <img src="images/icons/about.svg"
               class="card-img-top tw-size-8 sm:tw-size-28 tw-w-1/3 sm:tw-w-[100%] sm:tw-py-6" alt="...">
@@ -134,7 +140,8 @@
             </div>
           </div>
         </button>
-        <button id="btnSupport" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
+        <button id="btnSupport" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6"
+          onclick="openContentBox(profileSupport)">
           <div class="card tw-flex-row sm:tw-flex-col tw-rounded-lg tw-border-neutral-light tw-py-4 tw-items-center">
             <img src="images/icons/support.svg"
               class="card-img-top tw-size-8 sm:tw-size-28 tw-w-1/3 sm:tw-w-[100%] sm:tw-py-6" alt="...">
@@ -157,7 +164,181 @@
         </button>
       </div>
     </div>
-    <div id="profileFloatingWindow"></div>
+    <!-- <div id="profileFloatingWindow"></div> -->
+    <!-- Account Content Box -->
+    <div id="profileAccount" class="tw-hidden">
+      <div
+        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+        <div class="tw-flex tw-justify-between tw-items-center">
+          <h1 class="tw-text-xl tw-text-primary">Account</h1>
+          <button onclick="closeContentBox(profileAccount)">
+            <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+              viewBox="0 0 512.021 512.021" style="enable-background:new 0 0 512.021 512.021;" xml:space="preserve"
+              width="512" height="512">
+              <g>
+                <path
+                  d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z"
+                  fill="#7C7C7C" />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <form>
+          <fieldset class="tw-space-y-4 tw-font-[Poppins]" id="personalInfoFields" disabled>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="nameInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="text" id="emailInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" id="countryInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="Enter your country of residence">
+            </div>
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" id="cityInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="Enter your city of residence">
+            </div>
+          </fieldset>
+          <div class="d-flex justify-content-end tw-mt-10">
+            <button type="button" class="btn btn-secondary tw-font-[Poppins]" onclick="editUserInfo()">Edit</button>
+            <span style="width: 10px"></span>
+            <button type="button" class="btn btn-info btn-primary tw-font-[Poppins]"
+              onclick="saveUserInfo()">Save</button>
+            <span style="width: 10px"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Setting Content Box -->
+    <div id="profileSetting" class="tw-hidden">
+      <div
+        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+        <div class="tw-flex tw-justify-between tw-items-center">
+          <h1 class="tw-text-xl tw-text-primary">User Guide</h1>
+          <button onclick="closeContentBox(profileSetting)">
+            <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+              viewBox="0 0 512.021 512.021" style="enable-background:new 0 0 512.021 512.021;" xml:space="preserve"
+              width="512" height="512">
+              <g>
+                <path
+                  d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z"
+                  fill="#7C7C7C" />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div class="tw-space-y-4">
+          <p>This is a placeholder for profile setting. Form to be added later.</p>
+        </div>
+      </div>
+    </div>
+    <!-- User Guide Content Box -->
+    <div id="profileUserGuide" class="tw-hidden">
+      <div
+        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+        <div class="tw-flex tw-justify-between tw-items-center">
+          <h1 class="tw-text-xl tw-text-primary">User Guide</h1>
+          <button onclick="closeContentBox(profileUserGuide)">
+            <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+              viewBox="0 0 512.021 512.021" style="enable-background:new 0 0 512.021 512.021;" xml:space="preserve"
+              width="512" height="512">
+              <g>
+                <path
+                  d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z"
+                  fill="#7C7C7C" />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div class="tw-space-y-4">
+          <p>This is a placeholder for user guide.</p>
+          <p>This is a placeholder for user guide.</p>
+        </div>
+      </div>
+    </div>
+    <!-- About Us Content Box -->
+    <div id="profileAboutUs" class="tw-hidden">
+      <div
+        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+        <div class="tw-flex tw-justify-between tw-items-center">
+          <h1 class="tw-text-xl tw-text-primary">About Us</h1>
+          <button onclick="closeContentBox(profileAboutUs)">
+            <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+              viewBox="0 0 512.021 512.021" style="enable-background:new 0 0 512.021 512.021;" xml:space="preserve"
+              width="512" height="512">
+              <g>
+                <path
+                  d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z"
+                  fill="#7C7C7C" />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div class="tw-space-y-4">
+          <p>Placeholder: Tummie is an application .........</p>
+          <p>Our development team consists of three students at British Columbia Institute of Technology (BCIT), located
+            at British Columbia, Canada. </p>
+        </div>
+      </div>
+    </div>
+    <!-- Support Content Box -->
+    <div id="profileSupport" class="tw-hidden">
+      <div
+        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+        <div class="tw-flex tw-justify-between tw-items-center">
+          <h1 class="tw-text-xl tw-text-primary">Support</h1>
+          <button onclick="closeContentBox(profileSupport)">
+            <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+              viewBox="0 0 512.021 512.021" style="enable-background:new 0 0 512.021 512.021;" xml:space="preserve"
+              width="512" height="512">
+              <g>
+                <path
+                  d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z"
+                  fill="#7C7C7C" />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <form>
+          <fieldset class="tw-space-y-4 tw-font-[Poppins]" id="personalInfoFields" disabled>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="nameInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="text" id="emailInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+              <label>Tell us how we can help you.</label>
+              <input type="text" id="supportInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1"
+                placeholder="">
+            </div>
+          </fieldset>
+          <div class="d-flex justify-content-end tw-mt-10">
+            <button type="button" class="btn btn-secondary tw-font-[Poppins]" onclick="editUserInfo()">Edit</button>
+            <span style="width: 10px"></span>
+            <button type="button" class="btn btn-info btn-primary tw-font-[Poppins]"
+              onclick="saveUserInfo()">Save</button>
+            <span style="width: 10px"></span>
+          </div>
+        </form>
+      </div>
+    </div>
     <div id="stickyMobileNav"></div>
   </main>
   <footer id="footerContent"></footer>

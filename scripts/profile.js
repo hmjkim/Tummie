@@ -17,13 +17,10 @@ function getNameFromAuth() {
     });
 }
 
-
-// funtion for profile-account
 function populateUserInfo() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
-
             //go to the correct user document by referencing to the user uid
             currentUser = db.collection("users").doc(user.uid)
             //get the document for current user.
@@ -82,40 +79,14 @@ function saveUserInfo() {
     document.getElementById('personalInfoFields').disabled = true;
 }
 
-function editAccount() {
-    formContent = `<div class="tw-shadow-lg tw-p-8 tw-space-y-8 tw-bg-white tw-w-[90%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
-            <h1 class="tw-text-xl tw-text-primary">Account</h1>
-            <form>
-                <fieldset class="tw-space-y-4 tw-font-[Poppins]" id="personalInfoFields" disabled>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" id="nameInput" class="form-control tw-text-neutral tw-font-[Poppins]" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="text" id="emailInput" class="form-control tw-text-neutral tw-font-[Poppins]" placeholder="Enter your email address">
-                    </div>
-                    <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" id="countryInput" class="form-control tw-text-neutral tw-font-[Poppins]" placeholder="Enter your country of residence">
-                    </div>
-                    <div class="form-group">
-                        <label>City</label>
-                        <input type="text" id="cityInput" class="form-control tw-text-neutral tw-font-[Poppins]" placeholder="Enter your city of residence">
-                    </div>
-                </fieldset>
-                <div class="d-flex justify-content-end tw-mt-10">
-                    <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-                    <span style="width: 10px"></span>
-                    <button type="button" class="btn btn-info btn-primary" onclick="saveUserInfo()">Save</button>
-                </div>
-            </form>
-        </div>`
-    $("#profileFloatingWindow").append(formContent)
-    populateUserInfo();
+function openContentBox(contentbox) {
+   contentbox.classList.remove("tw-hidden")
 }
 
-// populateUserInfo() can be deleted because it is placed inside editAccount() function. It only populates when user click Account button on profile.html
+function closeContentBox(contentbox) {
+    contentbox.classList.add("tw-hidden")
+}
+
 populateUserInfo(); //run the function for profile-account
 
 getNameFromAuth(); //run the function
