@@ -120,7 +120,12 @@ main {
 .btn-primary:hover {
   background-color: #1d6961b8;
   color: #fff;
-  border-color: #1D6961;
+  border-color: #1d6961b8;
+}
+
+.btn-primary:active {
+  border-color: #1D6961 !important;
+  background-color: #1D6961 !important;
 }
 
 .btn-white {
@@ -175,4 +180,8 @@ main {
 
 .firebase-login-form .firebaseui-textfield.mdl-textfield .firebaseui-label::after {
   background-color: #1D6961;
+}
+
+.firebase-login-form .mdl-button--raised.mdl-button--colored:hover {
+  background-color: #1d6961d9;
 }
