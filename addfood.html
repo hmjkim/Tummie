@@ -89,10 +89,10 @@
        <section>
         <h1 class="tw-text-2xl tw-mb-6">Add New Item</h1>
         <form>
-          <fieldset class="tw-space-y-4" id="personalInfoFields">
+          <fieldset class="tw-grid tw-gap-5 md:tw-gap-8" id="personalInfoFields">
             <button class="tw-relative tw-block tw-mx-auto">
               <!-- Placeholder icon -->
-              <span class="tw-border tw-border-solid tw-border-[#929aa1] tw-p-2 tw-block tw-rounded-lg">
+              <span class="tw-border tw-border-solid tw-border-[#dee2e6] tw-p-2 tw-block tw-rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="tw-w-[43px]" viewBox="0 0 43 42" fill="none">
                   <path d="M5.375 25.0835V8.9585H37.625V34.0418H5.375V25.0835Z" stroke="#BBBBBB" stroke-width="3.58333" stroke-linecap="round" stroke-linejoin="round"></path>
                   <path d="M5.375 28.6665L12.5417 23.2915L17.9167 26.8748L28.6667 17.9165L37.625 25.0832" stroke="#BBBBBB" stroke-width="1.79167" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -107,39 +107,46 @@
                 </svg>
               </span>
             </button>
+            <!-- Name -->
             <div class="form-group">
-                <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Name</label>
+                <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Name</label>
                 <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
             </div>
-            <div class="form-group">
-                <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Expiry Date</label>
-                <input type="text" id="emailInput" class="form-control" placeholder="Enter date">
+            <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-5 md:tw-gap-8">
+              <!-- Expiry Date -->
+              <div class="form-group">
+                  <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Expiry Date</label>
+                  <input type="text" id="emailInput" class="form-control" placeholder="Enter date">
+              </div>
+              <!-- Storage Space -->
+              <div class="form-group">
+                <label for="storageSpaceInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Storage Space</label>
+                <select class="form-control" id="storageSpaceInput">
+                  <option>Fridge</option>
+                  <option>Freezer</option>
+                  <option>Pantry</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <!-- Category -->
+              <div class="form-group">
+                <label for="categoryInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Category</label>
+                <select class="form-control" id="categoryInput">
+                  <option>Fruits</option>
+                  <option>Vegetables</option>
+                  <option>Dairy</option>
+                  <option>Meat</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <!-- Quantity -->
+              <div class="form-group">
+                <label for="quantityInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Quantity</label>
+                <input type="text" id="quantityInput" class="form-control" placeholder="Enter the amount">
+              </div>
             </div>
             <div class="form-group">
-              <label for="storageSpaceInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Storage Space</label>
-              <select class="form-control" id="storageSpaceInput">
-                <option>Fridge</option>
-                <option>Freezer</option>
-                <option>Pantry</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="categoryInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Category</label>
-              <select class="form-control" id="categoryInput">
-                <option>Fruits</option>
-                <option>Vegetables</option>
-                <option>Dairy</option>
-                <option>Meat</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="quantityInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Quantity</label>
-              <input type="text" id="quantityInput" class="form-control" placeholder="Enter the amount">
-            </div>
-            <div class="form-group">
-              <label for="notesInput" class="tw-font-sansHeading tw-font-bold tw-mb-1">Notes</label>
+              <label for="notesInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Notes</label>
               <textarea class="form-control" id="notesInput" rows="4"></textarea>
             </div>
         </fieldset>

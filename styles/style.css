@@ -185,3 +185,13 @@ main {
 .firebase-login-form .mdl-button--raised.mdl-button--colored:hover {
   background-color: #1d6961d9;
 }
+
+/* Form */
+form fieldset .form-group input::placeholder {
+  color: #CBCBCB;
+}
+
+.form-control {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
