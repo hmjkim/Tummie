@@ -184,11 +184,25 @@ function determineRemainingDaysMessage(daysLeft) {
 document.addEventListener("DOMContentLoaded", () => {
     const btnAddItem = document.querySelector('.btn-add-item');
     const addOverlay = document.querySelector('.add-overlay');
-    if (!btnAddItem) {
-        return
+    if (!btnAddItem || !addOverlay) {
+        return;
     }
 
-    btnAddItem.addEventListener("click", () => {
-        addOverlay.classList.toggle('tw-hidden')
-    })
-})
+    // Show/Hide Add overlay when clicking on the plus icon
+    btnAddItem.addEventListener("click", (event) => {
+        if (addOverlay.classList.contains('is-active')) {
+            addOverlay.classList.remove('is-active');
+        } else {
+            addOverlay.classList.add('is-active');
+        }
+    });
+
+    // Close overlay when clicking outside of it
+    document.addEventListener("click", (event) => {
+        // overlay open, not clicking inside of overlay or add button
+        if (addOverlay.classList.contains('is-active') && !addOverlay.contains(event.target) && !btnAddItem.contains(event.target)) {
+            // Close overlay
+            addOverlay.classList.remove('is-active');
+        }
+    });
+});
