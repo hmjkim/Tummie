@@ -195,3 +195,14 @@ form fieldset .form-group input::placeholder {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+select {
+  appearance: none;
+  background-image: url('../images/icons/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+}
+
+.is-active {
+  display: block !important;
+}

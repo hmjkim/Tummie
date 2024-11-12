@@ -87,7 +87,12 @@
     <main class="container py-3 tw-relative">
       <!-- Content -->
        <section>
-        <h1 class="tw-text-2xl tw-mb-6">Add New Item</h1>
+        <div class="tw-flex md:tw-block tw-items-center tw-mb-6">
+          <button id="go-back" class="tw-basis-[5%] md:tw-hidden">
+            <img class="" src="./images/icons/arrow-left.svg" alt="Left arrow">
+          </button>
+          <h1 class="tw-text-2xl tw-basis-[95%] tw-text-center md:tw-text-left">Add New Item</h1>
+        </div>
         <form>
           <fieldset class="tw-grid tw-gap-5 md:tw-gap-8" id="personalInfoFields">
             <button class="tw-relative tw-block tw-mx-auto">
@@ -167,7 +172,7 @@
     <!---------------------------------------------->
 
     <!-- Link to scripts of your own -->
-    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="./scripts/script.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/firebaseAPI_DTC02.js"></script>
   </body>
