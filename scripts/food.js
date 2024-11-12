@@ -14,7 +14,8 @@ firebase.auth().onAuthStateChanged((user) => {
         window.location.href = 'login.html';
     }
 });
-  
+
+// Add food items
 function writeFood(userID) {
     // Add a new document inside users > food (sub collection)
     var foodRef = db.collection("users").doc(userID).collection("food");
@@ -179,3 +180,15 @@ function determineRemainingDaysMessage(daysLeft) {
 
     return message
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAddItem = document.querySelector('.btn-add-item');
+    const addOverlay = document.querySelector('.add-overlay');
+    if (!btnAddItem) {
+        return
+    }
+
+    btnAddItem.addEventListener("click", () => {
+        addOverlay.classList.toggle('tw-hidden')
+    })
+})
