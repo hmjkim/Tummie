@@ -1,14 +1,12 @@
 function displayRecipeInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
-    console.log(ID);
 
     db.collection("recipes")
         .doc(ID)
         .get()
         .then(doc => {
-            thisRecipe = doc.data();
-            recipeImage = thisRecipe.strMealThumb;
+            recipeImage = doc.data().strMealThumb;
             recipeName = doc.data().strMeal;
             recipeInstructions = doc.data().strInstructions
 
@@ -27,4 +25,5 @@ function displayRecipeInfo() {
             }
         });
 }
+
 displayRecipeInfo();
