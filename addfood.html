@@ -100,7 +100,7 @@
         <form>
           <fieldset class="tw-grid tw-gap-5 md:tw-gap-8" id="personalInfoFields">
             <div class="form-group tw-relative tw-block tw-mx-auto">
-              <label for="imageUpload" class="tw-inline-block">
+              <label for="imageUpload" class="tw-inline-block tw-cursor-pointer">
                 <!-- Placeholder icon -->
                 <span class="tw-border tw-border-solid tw-border-[#dee2e6] tw-p-2 tw-block tw-rounded-lg">
                   <img id="previewImg" src="./images/icons/placeholder.svg" alt="Placeholder image" style="width: 55px; height: 55px; object-fit: cover;">
@@ -159,7 +159,7 @@
             </div>
         </fieldset>
         <div class="tw-mt-10">
-          <button type="button" class="btn btn-primary save-btn md:tw-w-fit" onclick="writeFood()">Save</button>
+          <button type="button" class="btn btn-primary save-btn md:tw-w-fit">Save</button>
         </div>
         </form>
         
@@ -180,9 +180,9 @@
       });
     </script>
     <!-- Link to scripts of your own -->
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/food.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/firebaseAPI_DTC02.js"></script>
+    <script src="./scripts/script.js"></script>
+    <script src="./scripts/food.js"></script>
   </body>
 </html>

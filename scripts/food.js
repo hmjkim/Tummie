@@ -5,8 +5,12 @@ firebase.auth().onAuthStateChanged((user) => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/v8/firebase.User
         var userID = user.uid;
-        // writeFood(userID)
+        
         displayFoodItemsDynamically(userID);
+
+        document.querySelector('.save-btn').addEventListener('click', () => {
+            writeFood(userID);
+        });
 
       // ...
     } else {
@@ -17,98 +21,38 @@ firebase.auth().onAuthStateChanged((user) => {
 
 // Add food items
 function writeFood(userID) {
-    console.log("writefood");
 
-    let foodImage = document.getElementById("imageUpload").value;
+    // split path by \ and get the last one
+    let foodImage = document.getElementById("imageUpload").value.split('\\').pop();
     let foodName = document.getElementById("nameInput").value;
+    let foodSlug = slugify(foodName);
     let foodExpiryDate = document.getElementById("datepickerInput").value;
     let foodStorage = document.getElementById("storageSpaceInput").value;
     let foodCategory = document.getElementById("categoryInput").value;
     let foodQuantity = document.getElementById("quantityInput").value;
     let foodNotes = document.getElementById("notesInput").value;
 
-    console.log(foodImage, foodName, foodExpiryDate, foodCategory, foodNotes, foodQuantity, foodStorage)
-    // // Add a new document inside users > food (sub collection)
-    // var foodRef = db.collection("users").doc(userID).collection("food");
-    // // Apple
-    // foodRef.add({
-    //     userID: userID,
-    //     title: "Apple",
-    //     expiry_date: "2024-12-05",
-    //     category: "Fruits",
-    //     storage_space: "Fridge",
-    //     quantity: 2,
-    //     image: "apple.svg",
-    //     notes: "Organic, bought from the farmer's market",
-    //     date_created: firebase.firestore.FieldValue.serverTimestamp()
-    // }).then((foodRef) => {
-    //     console.log("Document written with ID:", foodRef)
-    // }).catch((error) => {
-    //     console.error("Error adding document: ", error);
-    // })
-    // // Carrot
-    // foodRef.add({
-    //     userID: userID,
-    //     title: "Carrot",
-    //     expiry_date: "2024-11-20",
-    //     category: "Vegetables",
-    //     storage_space: "Fridge",
-    //     quantity: 5,
-    //     image: "carrot.svg",
-    //     notes: "Baby carrots, washed and peeled",
-    //     date_created: firebase.firestore.FieldValue.serverTimestamp()
-    // }).then((foodRef) => {
-    //     console.log("Document written with ID:", foodRef.id);
-    // }).catch((error) => {
-    //     console.error("Error adding document: ", error);
-    // });
-    // // Potato
-    // foodRef.add({
-    //     userID: userID,
-    //     title: "Potato",
-    //     expiry_date: "2025-01-15",
-    //     category: "Vegetables",
-    //     storage_space: "Pantry",
-    //     quantity: 10,
-    //     image: "potato.svg",
-    //     notes: "Russet potatoes, for mashing",
-    //     date_created: firebase.firestore.FieldValue.serverTimestamp()
-    // }).then((foodRef) => {
-    //     console.log("Document written with ID:", foodRef.id);
-    // }).catch((error) => {
-    //     console.error("Error adding document: ", error);
-    // });
-    // foodRef.add({
-    //     userID: userID,
-    //     title: "Tomato",
-    //     expiry_date: "2024-11-14",
-    //     category: "Vegetables",
-    //     storage_space: "Counter",
-    //     quantity: 3,
-    //     image: "tomato.svg",
-    //     notes: "Plum tomato, best for salads",
-    //     date_created: firebase.firestore.FieldValue.serverTimestamp()
-    // }).then((foodRef) => {
-    //     console.log("Document written with ID:", foodRef.id);
-    // }).catch((error) => {
-    //     console.error("Error adding document: ", error);
-    // });
-    // // Cheese
-    // foodRef.add({
-    //     userID: userID,
-    //     title: "Cheese",
-    //     expiry_date: "2025-02-03",
-    //     category: "Dairy",
-    //     storage_space: "Fridge",
-    //     quantity: 1,
-    //     image: "cheese.svg",
-    //     notes: "Cheddar block, aged 6 months",
-    //     date_created: firebase.firestore.FieldValue.serverTimestamp()
-    // }).then((foodRef) => {
-    //     console.log("Document written with ID:", foodRef.id);
-    // }).catch((error) => {
-    //     console.error("Error adding document: ", error);
-    // });
+    console.log(foodImage, foodSlug, foodName, foodExpiryDate, foodCategory, foodNotes, foodQuantity, foodStorage)
+    
+    // Add a new document inside users > food (sub collection)
+    var foodRef = db.collection("users").doc(userID).collection("food");
+
+    foodRef.add({
+        userID: userID,
+        title: foodName,
+        slug: foodSlug,
+        expiry_date: foodExpiryDate,
+        category: foodCategory,
+        storage_space: foodStorage,
+        quantity: foodQuantity,
+        image: foodImage,
+        notes: foodNotes,
+        date_created: firebase.firestore.FieldValue.serverTimestamp()
+    }).then((foodRef) => {
+        console.log("Document written with ID:", foodRef)
+    }).catch((error) => {
+        console.error("Error adding document: ", error);
+    });
 }
 
 function displayFoodItemsDynamically(userID) {
@@ -232,3 +176,12 @@ function previewFile(input){
         reader.readAsDataURL(file);
     }
 }
+
+function slugify(str) {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim leading/trailing white space
+    str = str.toLowerCase(); // convert string to lowercase
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove any non-alphanumeric characters
+             .replace(/\s+/g, '-') // replace spaces with hyphens
+             .replace(/-+/g, '-'); // remove consecutive hyphens
+    return str;
+  }
