@@ -1,3 +1,14 @@
+var currentUser;
+// split path by \ and get the last one
+const editForm = document.querySelector('.js-edit-form');
+var foodImage = document.getElementById("imageUpload");
+var foodName = document.getElementById("nameInput");
+var foodExpiryDate = document.getElementById("datepickerInput");
+var foodStorage = document.getElementById("storageSpaceInput");
+var foodCategory = document.getElementById("categoryInput");
+var foodQuantity = document.getElementById("quantityInput");
+var foodNotes = document.getElementById("notesInput");
+
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -7,10 +18,19 @@ firebase.auth().onAuthStateChanged((user) => {
         var userID = user.uid;
         
         displayFoodItemsDynamically(userID);
+        populateFoodInfo();
 
-        document.querySelector('.save-btn').addEventListener('click', () => {
-            writeFood(userID);
-        });
+        const saveBtn = document.querySelector('.save-btn');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                if (editForm) {
+                    updateFoodItem(userID);
+                } else {
+                    writeFood(userID);
+                }
+                window.location.href = 'mykitchen.html';
+            });
+        }
 
       // ...
     } else {
@@ -22,31 +42,23 @@ firebase.auth().onAuthStateChanged((user) => {
 // Add food items
 function writeFood(userID) {
 
-    // split path by \ and get the last one
-    let foodImage = document.getElementById("imageUpload").value.split('\\').pop();
-    let foodName = document.getElementById("nameInput").value;
-    let foodSlug = slugify(foodName);
-    let foodExpiryDate = document.getElementById("datepickerInput").value;
-    let foodStorage = document.getElementById("storageSpaceInput").value;
-    let foodCategory = document.getElementById("categoryInput").value;
-    let foodQuantity = document.getElementById("quantityInput").value;
-    let foodNotes = document.getElementById("notesInput").value;
 
     console.log(foodImage, foodSlug, foodName, foodExpiryDate, foodCategory, foodNotes, foodQuantity, foodStorage)
     
     // Add a new document inside users > food (sub collection)
     var foodRef = db.collection("users").doc(userID).collection("food");
+    let foodSlug = slugify(foodName.value);
 
     foodRef.add({
         userID: userID,
-        title: foodName,
+        title: foodName.value,
         slug: foodSlug,
-        expiry_date: foodExpiryDate,
-        category: foodCategory,
-        storage_space: foodStorage,
-        quantity: foodQuantity,
-        image: foodImage,
-        notes: foodNotes,
+        expiry_date: foodExpiryDate.value,
+        category: foodCategory.value,
+        storage_space: foodStorage.value,
+        quantity: foodQuantity.value,
+        image: foodImage.value.split('\\').pop(),
+        notes: foodNotes.value,
         date_created: firebase.firestore.FieldValue.serverTimestamp()
     }).then((foodRef) => {
         console.log("Document written with ID:", foodRef)
@@ -55,6 +67,7 @@ function writeFood(userID) {
     });
 }
 
+// Display Food items on My Kitchen page
 function displayFoodItemsDynamically(userID) {
     let foodItemTemplate = document.querySelector("#foodItemTemplate");
     let foodItemList = document.querySelector("#foodItemList");
@@ -113,7 +126,6 @@ function calculateTimeLeft(date) {
     return timeDifferenceDays
 
 }
-
 
 function determineRemainingDaysMessage(daysLeft) {
     // determine remaining days message
@@ -184,4 +196,83 @@ function slugify(str) {
              .replace(/\s+/g, '-') // replace spaces with hyphens
              .replace(/-+/g, '-'); // remove consecutive hyphens
     return str;
-  }
+}
+
+function populateFoodInfo() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            var foodItemRef = db.collection("users").doc(user.uid).collection("food").doc('0MoIAflx89sSehWbZGAA');
+            foodItemRef.get().then((doc) => {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                    //get the data fields of the food item
+                    let title = doc.data().title;
+                    let expiry_date = doc.data().expiry_date;
+                    let category = doc.data().category;
+                    let storage_space = doc.data().storage_space;
+                    let quantity = doc.data().quantity;
+                    let image = doc.data().image;
+                    let notes = doc.data().notes;
+                    let dateCreated = doc.data().date_created;
+                    let daysLeft = calculateTimeLeft(expiry_date);
+                    console.log(image)
+
+                    //if the data fields are not empty, then write them in to the form.
+                    if (title != null) {
+                        document.querySelector(".js-edit-form #nameInput").value = title;
+                    }
+                    if (expiry_date != null) {
+                        document.querySelector(".js-edit-form #datepickerInput").value = expiry_date;
+                    }
+                    if (category != null) {
+                        document.querySelector(".js-edit-form #categoryInput").value = category;
+                    }
+                    if (storage_space != null) {
+                        document.querySelector(".js-edit-form #storageSpaceInput").value = storage_space;
+                    }
+                    if (quantity != null) {
+                        document.querySelector(".js-edit-form #quantityInput").value = quantity;
+                    }
+                    if (image != null) {
+                        document.querySelector(".js-edit-form #previewImg").src = `../images/icons/food/${image}`;;
+                    }
+                    if (notes != null) {
+                        document.querySelector(".js-edit-form #notesInput").value = notes;
+                    }
+                    if (daysLeft != null) {
+                        document.querySelector(".js-edit-form .js-days-remaining").innerHTML = determineRemainingDaysMessage(daysLeft);
+                    }
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }
+    });
+}
+
+function updateFoodItem(userID) {
+    
+    // Update doc with new data input inside users > food (sub collection)
+    var foodRef = db.collection("users").doc(userID).collection("food");
+    let foodSlug = slugify(foodName.value);
+
+    foodRef.update({
+        userID: userID,
+        title: foodName.value,
+        slug: foodSlug,
+        expiry_date: foodExpiryDate.value,
+        category: foodCategory.value,
+        storage_space: foodStorage.value,
+        quantity: foodQuantity.value,
+        image: foodImage.value.split('\\').pop(),
+        notes: foodNotes.value,
+        date_updated: firebase.firestore.FieldValue.serverTimestamp()
+    }).then((foodRef) => {
+        console.log("Document written with ID:", foodRef)
+    }).catch((error) => {
+        console.error("Error adding document: ", error);
+    });
+}
