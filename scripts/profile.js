@@ -1,30 +1,38 @@
-var currentUser;               //points to the document of the user who is logged in
+var currentUser;               //global variable which points to the document of the user who is logged in
 
-function getNameFromAuth() {
+//Function that calls everything needed for the main page  
+function pageSetup() {
     firebase.auth().onAuthStateChanged(user => {
-        // Check if a user is signed in:
         if (user) {
-            currentUser = db.collection("users").doc(user.uid)
-            currentUser.get()
-                .then(userDoc => {
-                    let userName = userDoc.data().name;
-                    $("#displayname").text(userName);
-                })
+            currentUser = db.collection("users").doc(user.uid); //global
+            console.log(currentUser);
+
+            // the following functions are always called when someone is logged in
+            populateUserInfo();
+
         } else {
             // No user is signed in.
-            console.log("No user is logged in");
+            console.log("No user is signed in");
+            window.location.href = "login.html";
         }
     });
 }
+pageSetup();
 
+
+// function to open a content box for each button on profile.html
 function openContentBox(contentbox) {
     contentbox.classList.remove("tw-hidden")
 }
 
+
+// function to collapse a content box; attached to X button on content box
 function closeContentBox(contentbox) {
     contentbox.classList.add("tw-hidden")
 }
 
+
+// function to auto-populate info read from database
 function populateUserInfo() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
@@ -42,21 +50,18 @@ function populateUserInfo() {
 
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
+                        document.getElementById("displayName").append(userName);        // Automatically display username on welcome message
                         document.getElementById("nameInput").value = userName;
-                    }
-                    if (userName != null) {
                         document.getElementById("requesterNameInput").value = userName;
                     }
                     if (userEmail != null) {
                         document.getElementById("emailInput").value = userEmail;
-                    }
-                    if (userEmail != null) {
                         document.getElementById("requesterEmailInput").value = userEmail;
                     }
-                    if (userCountry != null) {
+                    if (countryInput != null) {
                         document.getElementById("countryInput").value = userCountry;
                     }
-                    if (userCity != null) {
+                    if (cityInput != null) {
                         document.getElementById("cityInput").value = userCity;
                     }
                 })
@@ -67,9 +72,11 @@ function populateUserInfo() {
     });
 }
 
+
 function editAccountInfo() {
     document.getElementById('accountInfoFields').disabled = false;
 }
+
 
 function saveAccountInfo() {
     //enter code here
@@ -86,7 +93,7 @@ function saveAccountInfo() {
         city: userCity
     })
         .then(() => {
-            console.log("Document successfully updated!");
+            console.log("Your personal information has been successfully updated!");
         })
     //c) functions after saving
     document.getElementById('accountInfoFields').disabled = true;
@@ -111,14 +118,11 @@ function submitSupportRequest() {
         description: requestDescription
     })
         .then(() => {
-            console.log("Service request successfully submitted!");
+            console.log("Your service request has been successfully submitted!");
             document.getElementById('profileSupport').classList.add("tw-hidden");
             document.getElementById('requestDescriptionInput').value = "";
         })
 }
 
-populateUserInfo();
-getNameFromAuth();
 
 // need to add a function to populate user info for support content box
-// need to add a function to wrtie support request to database
