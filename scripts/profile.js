@@ -93,7 +93,7 @@ function saveAccountInfo() {
         city: userCity
     })
         .then(() => {
-            console.log("Document successfully updated!");
+            console.log("Your personal information has been successfully updated!");
         })
     //c) functions after saving
     document.getElementById('accountInfoFields').disabled = true;
@@ -118,7 +118,7 @@ function submitSupportRequest() {
         description: requestDescription
     })
         .then(() => {
-            console.log("Service request successfully submitted!");
+            console.log("Your service request has been successfully submitted!");
             document.getElementById('profileSupport').classList.add("tw-hidden");
             document.getElementById('requestDescriptionInput').value = "";
         })
