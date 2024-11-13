@@ -17,8 +17,12 @@ firebase.auth().onAuthStateChanged((user) => {
         // https://firebase.google.com/docs/reference/js/v8/firebase.User
         var userID = user.uid;
         
-        displayFoodItemsDynamically(userID);
-        populateFoodInfo();
+        if (editForm) {
+            populateFoodInfo();
+        } else {
+            displayFoodItemsDynamically(userID);
+        }
+
 
         const saveBtn = document.querySelector('.save-btn');
         if (saveBtn) {
@@ -78,7 +82,9 @@ function displayFoodItemsDynamically(userID) {
         .then((allItems) => {
             allItems.forEach((doc) => {
                 // console.log(doc.id, " => ", doc.data());
+                let docID = doc.id;
                 let title = doc.data().title;
+                let slug = doc.data().slug;
                 let expiry_date = doc.data().expiry_date;
                 let category = doc.data().category;
                 let storage_space = doc.data().storage_space;
@@ -96,6 +102,7 @@ function displayFoodItemsDynamically(userID) {
 
                 // Populate card content
                 foodItemCard.querySelector(".food-title").innerHTML = title;
+                foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
 
                 foodItemCard.querySelector(".food-days-left").innerHTML =  determineRemainingDaysMessage(daysLeft)
                 foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
@@ -198,10 +205,18 @@ function slugify(str) {
     return str;
 }
 
+function getDocID() {
+    const params = new URL(window.location.href).searchParams; // get the url from the search bar and its search parameters
+    const docID = params.get('docID');
+
+    return docID
+}
+
 function populateFoodInfo() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            var foodItemRef = db.collection("users").doc(user.uid).collection("food").doc('0MoIAflx89sSehWbZGAA');
+            console.log('populateFoodInfo');
+            var foodItemRef = db.collection("users").doc(user.uid).collection("food").doc(getDocID());
             foodItemRef.get().then((doc) => {
                 if (doc.exists) {
                     console.log("Document data:", doc.data());
@@ -215,7 +230,6 @@ function populateFoodInfo() {
                     let notes = doc.data().notes;
                     let dateCreated = doc.data().date_created;
                     let daysLeft = calculateTimeLeft(expiry_date);
-                    console.log(image)
 
                     //if the data fields are not empty, then write them in to the form.
                     if (title != null) {
