@@ -1,5 +1,27 @@
-var currentUser;               //points to the document of the user who is logged in
+var currentUser;               //global variable which points to the document of the user who is logged in
 
+//Function that calls everything needed for the main page  
+function pageSetup() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            currentUser = db.collection("users").doc(user.uid); //global
+            console.log(currentUser);
+
+            // the following functions are always called when someone is logged in
+            populateUserInfo();
+            getNameFromAuth();
+
+        } else {
+            // No user is signed in.
+            console.log("No user is signed in");
+            window.location.href = "login.html";
+        }
+    });
+}
+pageSetup();
+
+
+// function to display
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:
@@ -17,14 +39,20 @@ function getNameFromAuth() {
     });
 }
 
+
+// function to open a content box for each button on profile.html
 function openContentBox(contentbox) {
     contentbox.classList.remove("tw-hidden")
 }
 
+
+// function to collapse a content box; attached to X button on content box
 function closeContentBox(contentbox) {
     contentbox.classList.add("tw-hidden")
 }
 
+
+// function to auto-populate info read from database
 function populateUserInfo() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
@@ -43,20 +71,16 @@ function populateUserInfo() {
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
                         document.getElementById("nameInput").value = userName;
-                    }
-                    if (userName != null) {
                         document.getElementById("requesterNameInput").value = userName;
                     }
                     if (userEmail != null) {
                         document.getElementById("emailInput").value = userEmail;
-                    }
-                    if (userEmail != null) {
                         document.getElementById("requesterEmailInput").value = userEmail;
                     }
-                    if (userCountry != null) {
+                    if (countryInput != null) {
                         document.getElementById("countryInput").value = userCountry;
                     }
-                    if (userCity != null) {
+                    if (cityInput != null) {
                         document.getElementById("cityInput").value = userCity;
                     }
                 })
@@ -67,9 +91,11 @@ function populateUserInfo() {
     });
 }
 
+
 function editAccountInfo() {
     document.getElementById('accountInfoFields').disabled = false;
 }
+
 
 function saveAccountInfo() {
     //enter code here
@@ -117,8 +143,5 @@ function submitSupportRequest() {
         })
 }
 
-populateUserInfo();
-getNameFromAuth();
 
 // need to add a function to populate user info for support content box
-// need to add a function to wrtie support request to database
