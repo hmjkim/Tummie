@@ -1,3 +1,25 @@
+var currentUser;               //global variable which points to the document of the user who is logged in
+
+//Function that calls everything needed for the main page  
+function pageSetup() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            currentUser = db.collection("users").doc(user.uid); //global
+            console.log(currentUser);
+
+            // the following functions are always called when someone is logged in
+            displayCardsDynamically("recipes");  //input param is the name of the collection
+
+        } else {
+            // No user is signed in.
+            console.log("No user is signed in");
+            window.location.href = "login.html";
+        }
+    });
+}
+pageSetup();
+
+
 async function readJSONrecipes() {
     const response = await fetch('../AllRecipes.json') // source: https://www.themealdb.com/api.php
     const data = await response.text(); //get text file, string
@@ -79,6 +101,15 @@ function displayCardsDynamically(recipes) {
                 newcard.querySelector('.card-title').innerHTML = title;
                 newcard.querySelector('.card-image').src = link;
                 newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+                newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
+                newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
+
+                currentUser.get().then(userDoc => {
+                    var favorites = userDoc.data().favorites;
+                    if (favorites.includes(docID)) {
+                        document.getElementById('save-' + docID).innerText = 'favorite';
+                    }
+                })
 
                 //attach to gallery, Example: "recipes-go-here"
                 document.getElementById(recipes + "-go-here").appendChild(newcard);
@@ -86,4 +117,30 @@ function displayCardsDynamically(recipes) {
         })
 }
 
-displayCardsDynamically("recipes");  //input param is the name of the collection
+
+// Function that write saved recipes to database when user hit save button
+function savetoFavorite(recipesDocID) {
+    currentUser.get().then((userDoc) => {
+        const favorites = userDoc.data().favorites;
+        if (favorites.includes(recipesDocID)) {
+            currentUser.update({
+                favorites: firebase.firestore.FieldValue.arrayRemove(recipesDocID)
+            })
+                .then(function () {
+                    console.log(recipesDocID + "has been removed from your Favorite Recipes.");
+                    let iconID = 'save-' + recipesDocID;
+                    document.getElementById(iconID).innerText = 'favorite_border';
+                });
+        }
+        else {
+            currentUser.update({
+                favorites: firebase.firestore.FieldValue.arrayUnion(recipesDocID)
+            })
+                .then(function () {
+                    console.log(recipesDocID + "has been added to your Favorite Recipes.");
+                    let iconID = 'save-' + recipesDocID;
+                    document.getElementById(iconID).innerText = 'favorite';
+                });
+        }
+    });
+}
