@@ -9,7 +9,6 @@ function pageSetup() {
 
             // the following functions are always called when someone is logged in
             populateUserInfo();
-            getNameFromAuth();
 
         } else {
             // No user is signed in.
@@ -19,25 +18,6 @@ function pageSetup() {
     });
 }
 pageSetup();
-
-
-// function to display
-function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-        // Check if a user is signed in:
-        if (user) {
-            currentUser = db.collection("users").doc(user.uid)
-            currentUser.get()
-                .then(userDoc => {
-                    let userName = userDoc.data().name;
-                    $("#displayname").text(userName);
-                })
-        } else {
-            // No user is signed in.
-            console.log("No user is logged in");
-        }
-    });
-}
 
 
 // function to open a content box for each button on profile.html
@@ -70,6 +50,7 @@ function populateUserInfo() {
 
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
+                        document.getElementById("displayName").append(userName);        // Automatically display username on welcome message
                         document.getElementById("nameInput").value = userName;
                         document.getElementById("requesterNameInput").value = userName;
                     }
