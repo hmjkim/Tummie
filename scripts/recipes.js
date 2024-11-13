@@ -106,8 +106,10 @@ function displayCardsDynamically(recipes) {
 
                 currentUser.get().then(userDoc => {
                     var favorites = userDoc.data().favorites;
-                    if (favorites.includes(docID)) {
-                        document.getElementById('save-' + docID).innerText = 'favorite';
+                    if (favorites) {
+                        if (favorites.includes(docID)) {
+                            document.getElementById('save-' + docID).innerText = 'favorite';
+                        }
                     }
                 })
 
@@ -122,7 +124,7 @@ function displayCardsDynamically(recipes) {
 function savetoFavorite(recipesDocID) {
     currentUser.get().then((userDoc) => {
         const favorites = userDoc.data().favorites;
-        if (favorites.includes(recipesDocID)) {
+        if (favorites && favorites.includes(recipesDocID)) {
             currentUser.update({
                 favorites: firebase.firestore.FieldValue.arrayRemove(recipesDocID)
             })
