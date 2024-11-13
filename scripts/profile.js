@@ -9,6 +9,7 @@ function pageSetup() {
 
             // the following functions are always called when someone is logged in
             populateUserInfo();
+            getNameFromAuth();
 
         } else {
             // No user is signed in.
@@ -19,6 +20,24 @@ function pageSetup() {
 }
 pageSetup();
 
+
+// function to auto-populate user name on welcome message
+function getNameFromAuth() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Check if a user is signed in:
+        if (user) {
+            currentUser = db.collection("users").doc(user.uid)
+            currentUser.get()
+                .then(userDoc => {
+                    let userName = userDoc.data().name;
+                    $("#displayName").text(userName);
+                })
+        } else {
+            // No user is signed in.
+            console.log("No user is logged in");
+        }
+    });
+}
 
 // function to open a content box for each button on profile.html
 function openContentBox(contentbox) {
@@ -50,7 +69,6 @@ function populateUserInfo() {
 
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
-                        document.getElementById("displayName").append(userName);        // Automatically display username on welcome message
                         document.getElementById("nameInput").value = userName;
                         document.getElementById("requesterNameInput").value = userName;
                     }
@@ -58,10 +76,10 @@ function populateUserInfo() {
                         document.getElementById("emailInput").value = userEmail;
                         document.getElementById("requesterEmailInput").value = userEmail;
                     }
-                    if (countryInput != null) {
+                    if (userCountry != null) {
                         document.getElementById("countryInput").value = userCountry;
                     }
-                    if (cityInput != null) {
+                    if (userCity != null) {
                         document.getElementById("cityInput").value = userCity;
                     }
                 })
@@ -99,6 +117,7 @@ function saveAccountInfo() {
     document.getElementById('accountInfoFields').disabled = true;
     document.getElementById('profileAccount').classList.add("tw-hidden");
     getNameFromAuth()
+    populateUserInfo()
 }
 
 function editSupportRequest() {

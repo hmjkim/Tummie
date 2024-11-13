@@ -151,7 +151,7 @@
             </div>
           </div>
         </button>
-        <a href="/index.html" id="btnSignOut" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
+        <button id="btnSignOut" class="col tw-m-0 tw-gap-3 md:tw-gap-6 tw-mb-3 md:tw-mb-6">
           <div
             class="card tw-flex-row sm:tw-flex-col tw-rounded-lg tw-border-neutral-light tw-py-4 tw-items-center tw-bg-[#1D6961]">
             <img src="images/icons/logout.svg"
@@ -161,7 +161,7 @@
                 Sign Out</h5>
             </div>
           </div>
-        </a>
+        </button>
       </div>
     </div>
     <!-- Account Content Box -->
@@ -260,15 +260,19 @@
           </button>
         </div>
         <div class="tw-space-y-4">
-          <p>This is a placeholder for user guide.</p>
-          <p>This is a placeholder for user guide.</p>
+          <p>Tummie consists of four pages: My Kitchen, Recipes, Share Hub and Profile. Please read below for the user
+            guide for each function.</p>
+          <p>This is a placeholder for My Kichen.</p>
+          <p>This is a placeholder for Recipes.</p>
+          <p>This is a placeholder for Share Hub.</p>
+          <p>This is a placeholder for Profile.</p>
         </div>
       </div>
     </div>
     <!-- About Us Content Box -->
     <div id="profileAboutUs" class="tw-hidden">
       <div
-        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+        class="tw-border tw-border-neutral-light tw-border-solid tw-shadow-2xl tw-p-8 md:tw-p-12 tw-space-y-8 tw-bg-white tw-w-[90%] md:tw-w-[80%] tw-absolute tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2 tw-max-h-[80%] tw-overflow-auto">
         <div class="tw-flex tw-justify-between tw-items-center">
           <h1 class="tw-text-xl tw-text-primary">About Us</h1>
           <button onclick="closeContentBox(profileAboutUs)">
@@ -285,9 +289,22 @@
           </button>
         </div>
         <div class="tw-space-y-4">
-          <p>Placeholder: Tummie is an application .........</p>
-          <p>Our development team consists of three students at British Columbia Institute of Technology (BCIT), located
-            at British Columbia, Canada. </p>
+          <p>This application, Tummie, is a food expiration tracker built on the web with an aim to tackle the growing
+            food waste concern.
+            The app allows users to monitor the grocery items in their homes and recommends personalized recipe
+            based on the almost-expired items, so as to encourage timely consumption of food.
+            Additionally, users can share surplus food in their neighborhood for free. Through the development of this
+            app, we aim to reduce food waste at the household level while promoting resource redistribution within
+            local
+            communities.
+          </p>
+          <p>Tummie is developed by three students at British Columbia Institute of Technology (BCIT) for
+            studying purpose. Our development team consists of:</p>
+          <ul style="list-style-type:square">
+            <li>Hazel Jeong</li>
+            <li>Heather Kim</li>
+            <li>Hei Yeung Sze</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -324,7 +341,8 @@
             </div>
             <div class="form-group">
               <label>Request Description</label>
-              <textarea id="requestDescriptionInput" class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1 tw-h-32"
+              <textarea id="requestDescriptionInput"
+                class="form-control tw-text-neutral tw-font-[Poppins] tw-mt-1 tw-h-32"
                 placeholder="Tell us how we can help you"></textarea>
             </div>
           </fieldset>
