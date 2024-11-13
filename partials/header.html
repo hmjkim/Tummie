@@ -26,7 +26,8 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <!-- Tablet Dropdown -->
+    <div class="collapse navbar-collapse tw-hidden md:tw-block lg:tw-flex lg:tw-justify-between" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="tw-font-medium tw-font-sansHeading nav-link px-3 active" aria-current="page"
@@ -42,10 +43,9 @@
           <a class="tw-font-medium tw-font-sansHeading nav-link px-3" href="profile.html">Profile</a>
         </li>
       </ul>
-    </div>
-    <div>
-      <button id="btnSignOut"
-        class="tw-py-1 tw-px-4 tw-rounded-3xl tw-border-2 tw-border-[#1D6961] tw-text-[#1D6961] tw-font-medium tw-font-sansHeading collapse navbar-collapse">Logout</button>
+      <div class="tw-py-4">
+        <a id="btnSignOut" class="tw-py-1 tw-px-4 tw-rounded-3xl tw-border-2 tw-border-[#1D6961] tw-text-[#1D6961] tw-font-medium tw-font-sansHeading" href="../index.html">Sign Out</a>
+      </div>
     </div>
   </div>
 </nav>
