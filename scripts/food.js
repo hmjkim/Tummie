@@ -32,7 +32,6 @@ firebase.auth().onAuthStateChanged((user) => {
                 } else {
                     writeFood(userID);
                 }
-                window.location.href = 'mykitchen.html';
             });
         }
 
@@ -46,8 +45,6 @@ firebase.auth().onAuthStateChanged((user) => {
 // Add food items
 function writeFood(userID) {
 
-
-    console.log(foodImage, foodSlug, foodName, foodExpiryDate, foodCategory, foodNotes, foodQuantity, foodStorage)
     
     // Add a new document inside users > food (sub collection)
     var foodRef = db.collection("users").doc(userID).collection("food");
@@ -66,6 +63,7 @@ function writeFood(userID) {
         date_created: firebase.firestore.FieldValue.serverTimestamp()
     }).then((foodRef) => {
         console.log("Document written with ID:", foodRef)
+        window.location.href = 'mykitchen.html';
     }).catch((error) => {
         console.error("Error adding document: ", error);
     });
@@ -270,7 +268,7 @@ function populateFoodInfo() {
 function updateFoodItem(userID) {
     
     // Update doc with new data input inside users > food (sub collection)
-    var foodRef = db.collection("users").doc(userID).collection("food");
+    var foodRef = db.collection("users").doc(userID).collection("food").doc(getDocID());
     let foodSlug = slugify(foodName.value);
 
     foodRef.update({
@@ -285,7 +283,8 @@ function updateFoodItem(userID) {
         notes: foodNotes.value,
         date_updated: firebase.firestore.FieldValue.serverTimestamp()
     }).then((foodRef) => {
-        console.log("Document written with ID:", foodRef)
+        console.log("Document updated with ID:", foodRef)
+        window.location.href = 'mykitchen.html';
     }).catch((error) => {
         console.error("Error adding document: ", error);
     });
