@@ -86,7 +86,7 @@ async function readJSONrecipes() {
 //------------------------------------------------------------------------------
 // Set initial page number for pagination
 //------------------------------------------------------------------------------
-var page_number = 2
+var page_number = 1
 
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
@@ -128,8 +128,7 @@ function displayCardsDynamically(recipes) {
                             document.getElementById(recipes + "-go-here").appendChild(newcard);
                         })
                     })
-            }
-            else {
+            } else {
                 LastVisible = pagination.docs[(CARDS_PER_PAGE * (page_number - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
 
                 db.collection(recipes).startAfter(LastVisible).limit(CARDS_PER_PAGE).get() // display the next batch using the cursor
@@ -161,6 +160,121 @@ function displayCardsDynamically(recipes) {
                         })
                     })
             }
+
+            // Pagination
+            // Previous page
+            if (page_number >= 2) {
+                prev_button_html = ``
+                prev_button_html += `<li>
+                <a class="page-link rounded tw-border-none" href="#" aria-label="Previous">
+                  <i class="material-icons tw-text-neutral">chevron_left</i>
+                </a>
+                </li>`
+
+                prev_button = document.createElement(`div`)
+                prev_button.innerHTML = prev_button_html
+
+                prev_btn.appendChild(prev_button)
+            }
+
+            // First page
+            first_button_html = ``
+            first_button_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">1</a></li>`
+
+            first_button = document.createElement(`div`)
+            first_button.innerHTML = first_button_html
+
+            page_btns.appendChild(first_button)
+
+            // placeholder ... button
+            if (page_number >= 3) {
+                placeholder_button_html = ``
+                placeholder_button_html += `<li class="page-btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
+
+                placeholder_button = document.createElement(`div`)
+                placeholder_button.innerHTML = placeholder_button_html
+
+                page_btns.appendChild(placeholder_button)
+            }
+
+            // Middle pages
+            if (page_number <= 2) {
+                for (i = 2; i <= 3; i++) {
+                    page_btn_html = ``
+                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+
+                    page_btn = document.createElement(`div`)
+                    page_btn.innerHTML = page_btn_html
+
+                    page_btns.appendChild(page_btn)
+                }
+            } else if (page_number == 3) {
+                for (i = page_number; i <= page_number + 2; i++) {
+                    page_btn_html = ``
+                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+
+                    page_btn = document.createElement(`div`)
+                    page_btn.innerHTML = page_btn_html
+
+                    page_btns.appendChild(page_btn)
+                }
+            } else if (page_number > 3 && page_number < TOTAL_NUMBER_OF_PAGES - 2) {
+                for (i = page_number - 1; i <= page_number + 1; i++) {
+                    page_btn_html = ``
+                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+
+                    page_btn = document.createElement(`div`)
+                    page_btn.innerHTML = page_btn_html
+
+                    page_btns.appendChild(page_btn)
+                }
+            } else if (page_number >= TOTAL_NUMBER_OF_PAGES - 2) {
+                for (i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
+                    page_btn_html = ``
+                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+
+                    page_btn = document.createElement(`div`)
+                    page_btn.innerHTML = page_btn_html
+
+                    page_btns.appendChild(page_btn)
+                }
+            }
+
+            // placeholder ... button
+            if (page_number <= TOTAL_NUMBER_OF_PAGES - 3) {
+                placeholder_button_html = ``
+                placeholder_button_html += `<li class="page-btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
+
+                placeholder_button = document.createElement(`div`)
+                placeholder_button.innerHTML = placeholder_button_html
+
+                page_btns.appendChild(placeholder_button)
+            }
+
+            // Last page
+            last_button_html = ``
+            last_button_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+
+            last_button = document.createElement(`div`)
+            last_button.innerHTML = last_button_html
+
+            page_btns.appendChild(last_button)
+
+            // Next page
+            if (page_number <= TOTAL_NUMBER_OF_PAGES - 1) {
+                next_button_html = ``
+                next_button_html += `<li>
+                    <a class="page-link rounded tw-border-none" href="#" aria-label="Next">
+                    <i class="material-icons tw-text-neutral">chevron_right</i>
+                    </a>
+                    </li>`
+
+                next_button = document.createElement(`div`)
+                next_button.innerHTML = next_button_html
+
+                next_btn.appendChild(next_button)
+            }
+
         })
 }
 
