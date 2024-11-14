@@ -130,7 +130,7 @@
       <!-- Link to saved recipes -->
       <a href="favourite.html">
         <div class="tw-my-5 d-flex col justify-content-end gap-2">
-          <h1 class="tw-text-lg">My Favourite Recipes</h1>
+          <h1 class="tw-text-lg">Go to My Favourite Recipes</h1>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1D6961"
             class="bi bi-arrow-right-circle-fill inline-block align-self-center" viewBox="0 0 16 16">
             <path
@@ -163,7 +163,16 @@
           </div>
         </div>
       </template>
-      
+
+      <!-- Here is the buttons for pagination  -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <div id="prev_btn"></div>
+          <div id="page_btns" class="d-flex"></div>
+          <div id="next_btn"></div>
+        </ul>
+      </nav>
+
     </div>
     <div id="stickyMobileNav"></div>
   </main>
