@@ -86,7 +86,7 @@ async function readJSONrecipes() {
 //------------------------------------------------------------------------------
 // Set initial page number for pagination
 //------------------------------------------------------------------------------
-var page_number = 2
+var page_number = 1
 
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
@@ -94,10 +94,17 @@ var page_number = 2
 function displayCardsDynamically(recipes) {
     let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
 
+    document.getElementById("recipes-go-here").innerHTML = ``
+    document.getElementById("prev_btn").innerHTML = ``
+    document.getElementById("page_btns").innerHTML = ``
+    document.getElementById("next_btn").innerHTML = ``
+
     db.collection(recipes).get() // the collection called "recipes"
         .then(pagination => {
             const CARDS_PER_PAGE = 3;
             const TOTAL_NUMBER_OF_PAGES = Math.ceil(pagination.docs.length / CARDS_PER_PAGE);
+
+            document.getElementById("page_info").innerHTML = `Page ${page_number} out of ${TOTAL_NUMBER_OF_PAGES}`
 
             if (page_number == 1) {
                 db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
@@ -253,7 +260,7 @@ function displayCardsDynamically(recipes) {
 
             // Last page
             last_button_html = ``
-            last_button_html += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="page_btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+            last_button_html += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="page_btn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
 
             last_button = document.createElement(`div`)
             last_button.innerHTML = last_button_html
@@ -273,6 +280,16 @@ function displayCardsDynamically(recipes) {
                 next_button.innerHTML = next_button_html
 
                 next_btn.appendChild(next_button)
+            }
+
+            // On Click event listener for each button
+            for (i = 1; i <= TOTAL_NUMBER_OF_PAGES; i++) {
+                document.querySelector(`#pageBtnLink${i}`).onclick = (event) => {
+                    clickedElementId = event.target.id;
+                    page_number = clickedElementId.replace("pageBtnLink", "")
+                    console.log(page_number)
+                    displayCardsDynamically("recipes")
+                }
             }
         })
 }
