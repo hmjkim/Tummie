@@ -95,9 +95,9 @@
           <button id="go-back" class="tw-basis-[5%] md:tw-hidden">
             <img class="" src="./images/icons/arrow-left.svg" alt="Left arrow">
           </button>
-          <h1 class="tw-text-2xl tw-basis-[95%] tw-text-center md:tw-text-left">Add New Item</h1>
+          <h1 class="tw-text-2xl tw-basis-[95%] tw-text-center md:tw-text-left">Edit Item</h1>
         </div>
-        <form>
+        <form class="js-edit-form">
           <fieldset class="tw-grid tw-gap-5 md:tw-gap-8" id="personalInfoFields">
             <div class="form-group tw-relative tw-block tw-mx-auto">
               <label for="imageUpload" class="tw-inline-block tw-cursor-pointer">
@@ -122,7 +122,10 @@
             <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-5 md:tw-gap-8">
               <!-- Expiry Date -->
               <div class="form-group">
-                  <label for="datepickerInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Expiry Date</label>
+                  <div class="tw-flex tw-justify-between">
+                    <label for="datepickerInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Expiry Date</label>
+                    <span class="js-days-remaining"># of days remaining</span>
+                  </div>
                   <input id="datepickerInput" type="text" class="form-control" placeholder="Select date">
               </div>
               <!-- Storage Space -->

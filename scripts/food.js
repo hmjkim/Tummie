@@ -1,3 +1,14 @@
+var currentUser;
+// split path by \ and get the last one
+const editForm = document.querySelector('.js-edit-form');
+var foodImage = document.getElementById("imageUpload");
+var foodName = document.getElementById("nameInput");
+var foodExpiryDate = document.getElementById("datepickerInput");
+var foodStorage = document.getElementById("storageSpaceInput");
+var foodCategory = document.getElementById("categoryInput");
+var foodQuantity = document.getElementById("quantityInput");
+var foodNotes = document.getElementById("notesInput");
+
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -5,8 +16,24 @@ firebase.auth().onAuthStateChanged((user) => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/v8/firebase.User
         var userID = user.uid;
-        // writeFood(userID)
-        displayFoodItemsDynamically(userID);
+        
+        if (editForm) {
+            populateFoodInfo();
+        } else {
+            displayFoodItemsDynamically(userID);
+        }
+
+
+        const saveBtn = document.querySelector('.save-btn');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                if (editForm) {
+                    updateFoodItem(userID);
+                } else {
+                    writeFood(userID);
+                }
+            });
+        }
 
       // ...
     } else {
@@ -14,91 +41,35 @@ firebase.auth().onAuthStateChanged((user) => {
         window.location.href = 'login.html';
     }
 });
-  
+
+// Add food items
 function writeFood(userID) {
+
+    
     // Add a new document inside users > food (sub collection)
     var foodRef = db.collection("users").doc(userID).collection("food");
-    // Apple
+    let foodSlug = slugify(foodName.value);
+
     foodRef.add({
         userID: userID,
-        title: "Apple",
-        expiry_date: "2024-12-05",
-        category: "Fruits",
-        storage_space: "Fridge",
-        quantity: 2,
-        image: "apple.svg",
-        notes: "Organic, bought from the farmer's market",
+        title: foodName.value,
+        slug: foodSlug,
+        expiry_date: foodExpiryDate.value,
+        category: foodCategory.value,
+        storage_space: foodStorage.value,
+        quantity: foodQuantity.value,
+        image: foodImage.value.split('\\').pop(),
+        notes: foodNotes.value,
         date_created: firebase.firestore.FieldValue.serverTimestamp()
     }).then((foodRef) => {
         console.log("Document written with ID:", foodRef)
-    }).catch((error) => {
-        console.error("Error adding document: ", error);
-    })
-    // Carrot
-    foodRef.add({
-        userID: userID,
-        title: "Carrot",
-        expiry_date: "2024-11-20",
-        category: "Vegetables",
-        storage_space: "Fridge",
-        quantity: 5,
-        image: "carrot.svg",
-        notes: "Baby carrots, washed and peeled",
-        date_created: firebase.firestore.FieldValue.serverTimestamp()
-    }).then((foodRef) => {
-        console.log("Document written with ID:", foodRef.id);
-    }).catch((error) => {
-        console.error("Error adding document: ", error);
-    });
-    // Potato
-    foodRef.add({
-        userID: userID,
-        title: "Potato",
-        expiry_date: "2025-01-15",
-        category: "Vegetables",
-        storage_space: "Pantry",
-        quantity: 10,
-        image: "potato.svg",
-        notes: "Russet potatoes, for mashing",
-        date_created: firebase.firestore.FieldValue.serverTimestamp()
-    }).then((foodRef) => {
-        console.log("Document written with ID:", foodRef.id);
-    }).catch((error) => {
-        console.error("Error adding document: ", error);
-    });
-    foodRef.add({
-        userID: userID,
-        title: "Tomato",
-        expiry_date: "2024-11-14",
-        category: "Vegetables",
-        storage_space: "Counter",
-        quantity: 3,
-        image: "tomato.svg",
-        notes: "Plum tomato, best for salads",
-        date_created: firebase.firestore.FieldValue.serverTimestamp()
-    }).then((foodRef) => {
-        console.log("Document written with ID:", foodRef.id);
-    }).catch((error) => {
-        console.error("Error adding document: ", error);
-    });
-    // Cheese
-    foodRef.add({
-        userID: userID,
-        title: "Cheese",
-        expiry_date: "2025-02-03",
-        category: "Dairy",
-        storage_space: "Fridge",
-        quantity: 1,
-        image: "cheese.svg",
-        notes: "Cheddar block, aged 6 months",
-        date_created: firebase.firestore.FieldValue.serverTimestamp()
-    }).then((foodRef) => {
-        console.log("Document written with ID:", foodRef.id);
+        window.location.href = 'mykitchen.html';
     }).catch((error) => {
         console.error("Error adding document: ", error);
     });
 }
 
+// Display Food items on My Kitchen page
 function displayFoodItemsDynamically(userID) {
     let foodItemTemplate = document.querySelector("#foodItemTemplate");
     let foodItemList = document.querySelector("#foodItemList");
@@ -109,7 +80,9 @@ function displayFoodItemsDynamically(userID) {
         .then((allItems) => {
             allItems.forEach((doc) => {
                 // console.log(doc.id, " => ", doc.data());
+                let docID = doc.id;
                 let title = doc.data().title;
+                let slug = doc.data().slug;
                 let expiry_date = doc.data().expiry_date;
                 let category = doc.data().category;
                 let storage_space = doc.data().storage_space;
@@ -127,6 +100,7 @@ function displayFoodItemsDynamically(userID) {
 
                 // Populate card content
                 foodItemCard.querySelector(".food-title").innerHTML = title;
+                foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
 
                 foodItemCard.querySelector(".food-days-left").innerHTML =  determineRemainingDaysMessage(daysLeft)
                 foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
@@ -158,7 +132,6 @@ function calculateTimeLeft(date) {
 
 }
 
-
 function determineRemainingDaysMessage(daysLeft) {
     // determine remaining days message
     let message;
@@ -178,4 +151,141 @@ function determineRemainingDaysMessage(daysLeft) {
     }
 
     return message
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAddItem = document.querySelector('.btn-add-item');
+    const addOverlay = document.querySelector('.add-overlay');
+    if (!btnAddItem || !addOverlay) {
+        return;
+    }
+
+    // Show/Hide Add overlay when clicking on the plus icon
+    btnAddItem.addEventListener("click", (event) => {
+        if (addOverlay.classList.contains('is-active')) {
+            addOverlay.classList.remove('is-active');
+        } else {
+            addOverlay.classList.add('is-active');
+        }
+    });
+
+    // Close overlay when clicking outside of it
+    document.addEventListener("click", (event) => {
+        // overlay open, not clicking inside of overlay or add button
+        if (addOverlay.classList.contains('is-active') && !addOverlay.contains(event.target) && !btnAddItem.contains(event.target)) {
+            // Close overlay
+            addOverlay.classList.remove('is-active');
+        }
+    });
+});
+
+// Preview Uploaded Image File before server submission
+function previewFile(input){
+    var file = $("input[type=file]").get(0).files[0];
+
+    if(file){
+        var reader = new FileReader();
+
+        reader.onload = function(){
+            $("#previewImg").attr("src", reader.result);
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+
+function slugify(str) {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim leading/trailing white space
+    str = str.toLowerCase(); // convert string to lowercase
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove any non-alphanumeric characters
+             .replace(/\s+/g, '-') // replace spaces with hyphens
+             .replace(/-+/g, '-'); // remove consecutive hyphens
+    return str;
+}
+
+function getDocID() {
+    const params = new URL(window.location.href).searchParams; // get the url from the search bar and its search parameters
+    const docID = params.get('docID');
+
+    return docID
+}
+
+function populateFoodInfo() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            console.log('populateFoodInfo');
+            var foodItemRef = db.collection("users").doc(user.uid).collection("food").doc(getDocID());
+            foodItemRef.get().then((doc) => {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                    //get the data fields of the food item
+                    let title = doc.data().title;
+                    let expiry_date = doc.data().expiry_date;
+                    let category = doc.data().category;
+                    let storage_space = doc.data().storage_space;
+                    let quantity = doc.data().quantity;
+                    let image = doc.data().image;
+                    let notes = doc.data().notes;
+                    let dateCreated = doc.data().date_created;
+                    let daysLeft = calculateTimeLeft(expiry_date);
+
+                    //if the data fields are not empty, then write them in to the form.
+                    if (title != null) {
+                        document.querySelector(".js-edit-form #nameInput").value = title;
+                    }
+                    if (expiry_date != null) {
+                        document.querySelector(".js-edit-form #datepickerInput").value = expiry_date;
+                    }
+                    if (category != null) {
+                        document.querySelector(".js-edit-form #categoryInput").value = category;
+                    }
+                    if (storage_space != null) {
+                        document.querySelector(".js-edit-form #storageSpaceInput").value = storage_space;
+                    }
+                    if (quantity != null) {
+                        document.querySelector(".js-edit-form #quantityInput").value = quantity;
+                    }
+                    if (image != null) {
+                        document.querySelector(".js-edit-form #previewImg").src = `../images/icons/food/${image}`;;
+                    }
+                    if (notes != null) {
+                        document.querySelector(".js-edit-form #notesInput").value = notes;
+                    }
+                    if (daysLeft != null) {
+                        document.querySelector(".js-edit-form .js-days-remaining").innerHTML = determineRemainingDaysMessage(daysLeft);
+                    }
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }
+    });
+}
+
+function updateFoodItem(userID) {
+    
+    // Update doc with new data input inside users > food (sub collection)
+    var foodRef = db.collection("users").doc(userID).collection("food").doc(getDocID());
+    let foodSlug = slugify(foodName.value);
+
+    foodRef.update({
+        userID: userID,
+        title: foodName.value,
+        slug: foodSlug,
+        expiry_date: foodExpiryDate.value,
+        category: foodCategory.value,
+        storage_space: foodStorage.value,
+        quantity: foodQuantity.value,
+        image: foodImage.value.split('\\').pop(),
+        notes: foodNotes.value,
+        date_updated: firebase.firestore.FieldValue.serverTimestamp()
+    }).then((foodRef) => {
+        console.log("Document updated with ID:", foodRef)
+        window.location.href = 'mykitchen.html';
+    }).catch((error) => {
+        console.error("Error adding document: ", error);
+    });
 }

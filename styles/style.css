@@ -195,3 +195,43 @@ form fieldset .form-group input::placeholder {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+select {
+  appearance: none;
+  background-image: url('../images/icons/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+}
+
+.is-active {
+  display: block !important;
+}
+
+.form-control:focus {
+  border-color: #609690;
+  box-shadow: 0 0 0 .1rem #016a5e21;
+}
+
+.gj-datepicker .btn {
+  padding: 0;
+  border-color: #dee2e6;
+}
+
+.gj-datepicker .btn:hover {
+  background: #1D6961;
+}
+
+.gj-datepicker.gj-datepicker-bootstrap button[role=right-icon] {
+  width: 3.2rem; 
+}
+
+.gj-datepicker.gj-datepicker-bootstrap button[role=right-icon] .gj-icon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.material-icons{
+  cursor: pointer;
+  color: #1D6961;
+}
