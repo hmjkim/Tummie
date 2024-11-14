@@ -86,7 +86,7 @@ async function readJSONrecipes() {
 //------------------------------------------------------------------------------
 // Set initial page number for pagination
 //------------------------------------------------------------------------------
-var page_number = 1
+var page_number = 2
 
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
@@ -179,7 +179,7 @@ function displayCardsDynamically(recipes) {
 
             // First page
             first_button_html = ``
-            first_button_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">1</a></li>`
+            first_button_html += `<li id="pageBtn1" class="page_btn"><a id="pageBtnLink1" class="page-link tw-text-neutral rounded tw-border-none" href="#">1</a></li>`
 
             first_button = document.createElement(`div`)
             first_button.innerHTML = first_button_html
@@ -189,7 +189,7 @@ function displayCardsDynamically(recipes) {
             // placeholder ... button
             if (page_number >= 3) {
                 placeholder_button_html = ``
-                placeholder_button_html += `<li class="page-btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
+                placeholder_button_html += `<li class="page_btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
 
                 placeholder_button = document.createElement(`div`)
                 placeholder_button.innerHTML = placeholder_button_html
@@ -201,7 +201,7 @@ function displayCardsDynamically(recipes) {
             if (page_number <= 2) {
                 for (i = 2; i <= 3; i++) {
                     page_btn_html = ``
-                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
                     page_btn = document.createElement(`div`)
                     page_btn.innerHTML = page_btn_html
@@ -211,7 +211,7 @@ function displayCardsDynamically(recipes) {
             } else if (page_number == 3) {
                 for (i = page_number; i <= page_number + 2; i++) {
                     page_btn_html = ``
-                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
                     page_btn = document.createElement(`div`)
                     page_btn.innerHTML = page_btn_html
@@ -221,7 +221,7 @@ function displayCardsDynamically(recipes) {
             } else if (page_number > 3 && page_number < TOTAL_NUMBER_OF_PAGES - 2) {
                 for (i = page_number - 1; i <= page_number + 1; i++) {
                     page_btn_html = ``
-                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
                     page_btn = document.createElement(`div`)
                     page_btn.innerHTML = page_btn_html
@@ -231,7 +231,7 @@ function displayCardsDynamically(recipes) {
             } else if (page_number >= TOTAL_NUMBER_OF_PAGES - 2) {
                 for (i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
                     page_btn_html = ``
-                    page_btn_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
                     page_btn = document.createElement(`div`)
                     page_btn.innerHTML = page_btn_html
@@ -243,7 +243,7 @@ function displayCardsDynamically(recipes) {
             // placeholder ... button
             if (page_number <= TOTAL_NUMBER_OF_PAGES - 3) {
                 placeholder_button_html = ``
-                placeholder_button_html += `<li class="page-btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
+                placeholder_button_html += `<li class="page_btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
 
                 placeholder_button = document.createElement(`div`)
                 placeholder_button.innerHTML = placeholder_button_html
@@ -253,7 +253,7 @@ function displayCardsDynamically(recipes) {
 
             // Last page
             last_button_html = ``
-            last_button_html += `<li class="page-btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+            last_button_html += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="page_btn"><a class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
 
             last_button = document.createElement(`div`)
             last_button.innerHTML = last_button_html
@@ -274,7 +274,6 @@ function displayCardsDynamically(recipes) {
 
                 next_btn.appendChild(next_button)
             }
-
         })
 }
 
