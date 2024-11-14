@@ -62,28 +62,62 @@ async function readJSONrecipes() {
 }
 
 //------------------------------------------------------------------------------
+// Set initial page number for pagination
+//------------------------------------------------------------------------------
+var page_number = 2
+
+//------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
 function displayCardsDynamically(recipes) {
-    let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable. 
+    let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
 
-    db.collection(recipes).get()   //the collection called "recipes"
-        .then(allRecipes => {
-            allRecipes.forEach(doc => { //iterate thru each doc
-                var title = doc.data().strMeal;       // get value of the "strMeal" key
-                var link = doc.data().strMealThumb
-                var docID = doc.id;
-                let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+    db.collection(recipes).get() // the collection called "recipes"
+        .then(pagination => {
+            const CARDS_PER_PAGE = 3;
+            const TOTAL_NUMBER_OF_PAGES = Math.ceil(pagination.docs.length / CARDS_PER_PAGE);
 
-                //update title and text and image
-                newcard.querySelector('.card-title').innerHTML = title;
-                newcard.querySelector('.card-image').src = link;
-                newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+            if (page_number == 1) {
+                db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
+                    .then(allRecipes => {
+                        allRecipes.forEach(doc => { //iterate thru each doc
+                            var title = doc.data().strMeal;       // get value of the "strMeal" key
+                            var link = doc.data().strMealThumb;
+                            var docID = doc.id;
+                            let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
-                //attach to gallery, Example: "recipes-go-here"
-                document.getElementById(recipes + "-go-here").appendChild(newcard);
-            })
+                            //update title and text and image
+                            newcard.querySelector('.card-title').innerHTML = title;
+                            newcard.querySelector('.card-image').src = link;
+                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+
+                            //attach to gallery, Example: "recipes-go-here"
+                            document.getElementById(recipes + "-go-here").appendChild(newcard);
+                        })
+                    })
+            }
+            else {
+                LastVisible = pagination.docs[(CARDS_PER_PAGE * (page_number - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
+
+                db.collection(recipes).startAfter(LastVisible).limit(CARDS_PER_PAGE).get() // display the next batch using the cursor
+                    .then(allRecipes => {
+                        allRecipes.forEach(doc => { //iterate thru each doc
+                            var title = doc.data().strMeal;       // get value of the "strMeal" key
+                            var link = doc.data().strMealThumb;
+                            var docID = doc.id;
+                            let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+
+                            //update title and text and image
+                            newcard.querySelector('.card-title').innerHTML = title;
+                            newcard.querySelector('.card-image').src = link;
+                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+
+                            //attach to gallery, Example: "recipes-go-here"
+                            document.getElementById(recipes + "-go-here").appendChild(newcard);
+                        })
+                    })
+            }
         })
 }
 
-displayCardsDynamically("recipes");  //input param is the name of the collection
+// displayCardsDynamically("recipes");  //input param is the name of the collection
