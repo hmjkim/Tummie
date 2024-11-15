@@ -224,3 +224,8 @@ select {
   cursor: pointer;
   color: #1D6961;
 }
+
+/* Pagination */
+.pagination .page-link:hover {
+  color: #1D6961;
+}

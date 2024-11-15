@@ -271,7 +271,7 @@ function displayCardsDynamically(recipes) {
             if (page_number <= TOTAL_NUMBER_OF_PAGES - 1) {
                 next_button_html = ``
                 next_button_html += `<li>
-                    <a class="page-link rounded tw-border-none" href="#" aria-label="Next">
+                    <a class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[33px] tw-h-[36px]" href="#" aria-label="Next">
                     <i class="material-icons tw-text-neutral">chevron_right</i>
                     </a>
                     </li>`
