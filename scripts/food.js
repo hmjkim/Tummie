@@ -8,7 +8,11 @@ var foodStorage = document.getElementById("storageSpaceInput");
 var foodCategory = document.getElementById("categoryInput");
 var foodQuantity = document.getElementById("quantityInput");
 var foodNotes = document.getElementById("notesInput");
+const emptyKitchenMessageTemplate = document.querySelector("#emptyKitchenMessageTemplate");
+const emptyKitchenMessage = document.querySelector("#emptyKitchenMessage");
+const searchBar = document.querySelector('.js-search-bar');
 
+// MAIN FUNCTION FOR MY KITCHEN PAGE
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -18,18 +22,39 @@ firebase.auth().onAuthStateChanged((user) => {
         var userID = user.uid;
         
         if (editForm) {
+            // Edit form page
             populateFoodInfo();
         } else {
-            displayFoodItemsDynamically(userID);
-        }
+            // My Kitchen page
 
+
+            db.collection("users").doc(userID).collection("food").get().then(subCollection => {
+
+                if (emptyKitchenMessage && searchBar) {
+                    // When food subcollection has more than one entry
+                    if (subCollection.docs.length > 0) {
+                        console.log('food collection exists');
+                        displayFoodItemsDynamically(userID);
+                    // When food subcollection has no documents
+                    } else {
+                        console.log('food collection does not exist');
+                        let node = emptyKitchenMessageTemplate.content.cloneNode(true);
+                        emptyKitchenMessage.appendChild(node);
+                        searchBar.style.display = "none";
+                    }
+                }
+            });
+            
+        }
 
         const saveBtn = document.querySelector('.save-btn');
         if (saveBtn) {
             saveBtn.addEventListener('click', () => {
                 if (editForm) {
+                    // Edit form page
                     updateFoodItem(userID);
                 } else {
+                    // Add form page
                     writeFood(userID);
                 }
             });
@@ -45,7 +70,6 @@ firebase.auth().onAuthStateChanged((user) => {
 // Add food items
 function writeFood(userID) {
 
-    
     // Add a new document inside users > food (sub collection)
     var foodRef = db.collection("users").doc(userID).collection("food");
     let foodSlug = slugify(foodName.value);
@@ -266,7 +290,7 @@ function populateFoodInfo() {
 }
 
 function updateFoodItem(userID) {
-    
+
     // Update doc with new data input inside users > food (sub collection)
     var foodRef = db.collection("users").doc(userID).collection("food").doc(getDocID());
     let foodSlug = slugify(foodName.value);
