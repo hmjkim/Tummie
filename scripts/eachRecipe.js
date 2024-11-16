@@ -16,7 +16,7 @@ function displayRecipeInfo() {
             document.getElementById("details-go-here").innerHTML = recipeInstructions;
 
             for (i = 1; i <= 20; i++) {
-                if (doc.data()[`strMeasure${i}`] != "") {
+                if (doc.data()[`strMeasure${i}`] != "" && doc.data()[`strMeasure${i}`] != " " && doc.data()[`strMeasure${i}`] != null) {
                     ingredientName = doc.data()[`strIngredient${i}`]
                     ingredientMeasure = doc.data()[`strMeasure${i}`]
                     document.getElementById("ingredients").innerHTML += ingredientName + "<br/>"
