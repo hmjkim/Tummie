@@ -223,6 +223,7 @@ select {
 .material-icons{
   cursor: pointer;
   color: #1D6961;
+  font-size: 36px;
 }
 
 /* Pagination */
