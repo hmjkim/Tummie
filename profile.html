@@ -236,7 +236,33 @@
           </button>
         </div>
         <div class="tw-space-y-4">
-          <p>This is a placeholder for profile setting. Form to be added later.</p>
+          <form>
+            <fieldset class="tw-space-y-4 tw-font-[Poppins]" id="settingFields" disabled>
+              <!-- Notification on/off -->
+              <div class="form-group">
+                <label for="categoryInput">Notification</label>
+                <select class="form-control" id="notificationInput">
+                  <option value="notificationOn">On</option>
+                  <option value="notificationOff">Off</option>
+                </select>
+              </div>
+              <!-- Notification style/methods -->
+              <div class="form-group" id="notificationStyle">
+                <label>Notification Style</label><br>
+                <input type="checkbox" id="notifyInApp" value=true> In-app
+                <input type="checkbox" id="notifyByEmail" value=true> Email
+              </div>
+            </fieldset>
+            <!-- Edit and Save buttons -->
+            <div class="d-flex justify-content-end tw-mt-10">
+              <button type="button" class="btn btn-secondary tw-font-[Poppins]" onclick="editSetting()">Edit</button>
+              <span style="width: 10px"></span>
+              <button type="button" class="btn btn-info btn-primary tw-font-[Poppins]"
+                onclick="saveSetting()">Save</button>
+              <span style="width: 10px"></span>
+            </div>
+          </form>
+
         </div>
       </div>
     </div>
@@ -299,8 +325,9 @@
             communities.
           </p>
           <p>Tummie is developed by three students at British Columbia Institute of Technology (BCIT) for
-            studying purpose. Our development team consists of:</p>
-          <ul style="list-style-type:square">
+            studying purpose. Our development team consists of:
+          </p>
+          <ul style="list-style-type:square" class="tw-px-8">
             <li>Hazel Jeong</li>
             <li>Heather Kim</li>
             <li>Hei Yeung Sze</li>
