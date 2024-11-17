@@ -8,7 +8,7 @@ function pageSetup() {
             console.log(currentUser);
 
             // the following functions are always called when someone is logged in
-            // displayCardsDynamically("recipes", pageNumber);  //input param is the name of the collection
+            displayCardsDynamically("recipes", pageNumber);  //input param is the name of the collection
 
         } else {
             // No user is signed in.
@@ -190,10 +190,10 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber >= 2) {
         prevBtnHtml = ``
         prevBtnHtml += `<li>
-                <a class="page-link rounded tw-border-none" href="#" aria-label="Previous">
-                  <i class="material-icons tw-text-neutral">chevron_left</i>
-                </a>
-                </li>`
+                    <a id="prevBtnLink" class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[33px] tw-h-[36px]" href="#" aria-label="Previous">
+                    <i class="material-icons tw-text-neutral">chevron_left</i>
+                    </a>
+                    </li>`
 
         prevBtnDiv = document.createElement(`div`)
         prevBtnDiv.innerHTML = prevBtnHtml
@@ -288,7 +288,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber <= TOTAL_NUMBER_OF_PAGES - 1) {
         nextBtnHtml = ``
         nextBtnHtml += `<li>
-                    <a class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[33px] tw-h-[36px]" href="#" aria-label="Next">
+                    <a id="nextBtnLink" class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[33px] tw-h-[36px]" href="#" aria-label="Next">
                     <i class="material-icons tw-text-neutral">chevron_right</i>
                     </a>
                     </li>`
@@ -300,11 +300,29 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     }
 
     // On Click event listener for each button
+
+    // Prev button
+    if (pageNumber > 1) {
+        document.getElementById("prevBtnLink").addEventListener("click", () => {
+            pageNumber--
+            displayCardsDynamically("recipes", pageNumber)
+        })
+    }
+
+    // Page buttons
     btnsDisplayed = document.getElementsByClassName("pageBtnLink")
 
     for (let i = 0; i < btnsDisplayed.length; i++) {
         btnsDisplayed[i].addEventListener("click", () => {
-            pageNumber = btnsDisplayed[i].innerText
+            pageNumber = parseInt(btnsDisplayed[i].innerText)
+            displayCardsDynamically("recipes", pageNumber)
+        })
+    }
+
+    // Next button
+    if (pageNumber < TOTAL_NUMBER_OF_PAGES) {
+        document.getElementById("nextBtnLink").addEventListener("click", () => {
+            pageNumber++
             displayCardsDynamically("recipes", pageNumber)
         })
     }
