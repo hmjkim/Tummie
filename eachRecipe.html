@@ -101,19 +101,21 @@
         </div>
       </div>
 
-      <!-- Here is the container for card  -->
-      <div class="row row-cols-1 gap-4">
+      <div class="tw-flex tw-flex-col gap-4">
         <!-- <h1><span id="recipeName"> this recipe</span></h1> -->
-        <img class="recipe-img responsive" src="" />
-        <div>
-          <h2>Ingredients</h2>
-          <div class="row row-cols-2 g-4 justify-content-between tw-pt-2">
-            <div id="ingredients"></div>
-            <div id="measurements"></div>
+        <div class="tw-flex tw-flex-col md:tw-flex-row gap-4">
+          <img class="recipe-img responsive md:tw-w-1/2" src="" />
+          <div class="md:tw-w-1/2">
+            <h2>Ingredients</h2>
+            <div class="row row-cols-2 g-4 justify-content-between tw-pt-2">
+              <div id="ingredients"></div>
+              <div id="measurements"></div>
+            </div>
           </div>
         </div>
         <div id="details-go-here"></div>
       </div>
+    </div>
 
     </div>
     <div id="stickyMobileNav"></div>
