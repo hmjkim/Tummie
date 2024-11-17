@@ -82,27 +82,27 @@
   <header id="headerContent"></header>
   <main class="container">
     <div class="justify-content-between align-items-center py-3">
+      <div class="tw-flex tw-justify-between">
+        <div class="d-flex col gap-3 align-items-center">
+          <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
+            <img class="nav-icon" src="./images/icons/recipes-active.svg" alt="" />
+          </div>
+          <h1 class="tw-text-2xl">Recipes</h1>
+        </div>
+      </div>
       <a href="recipes.html">
-        <div class="tw-px-4 md:tw-px-0 tw-mb-5 sm:tw-mb-5 d-flex col justify-content-start gap-2">
+        <div class="tw-my-5 d-flex col justify-content-start gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1D6961"
             class="bi bi-arrow-right-circle-fill inline-block align-self-center" viewBox="0 0 16 16">
             <path
               d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
           </svg>
-          <h1 class="tw-text-lg">Back to Recipes</h1>
+          <h1 class="tw-text-lg">Back to All Recipes</h1>
         </div>
       </a>
-      <div class="d-flex row justify-content-between tw-my-5 sm:tw-mb-5">
-        <div class="d-flex col gap-3 align-items-center">
-          <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
-            <img class="nav-icon" src="./images/icons/recipes-active.svg" alt="" />
-          </div>
-          <h1 class="tw-text-2xl"><span id="recipeName">Recipes</span></h1>
-        </div>
-      </div>
 
       <div class="tw-flex tw-flex-col gap-4">
-        <!-- <h1><span id="recipeName"> this recipe</span></h1> -->
+        <h1><span id="recipeName" class="tw-text-2xl">Recipe Name</span></h1>
         <div class="tw-flex tw-flex-col md:tw-flex-row gap-4">
           <img class="recipe-img responsive md:tw-w-1/2" src="" />
           <div class="md:tw-w-1/2">
