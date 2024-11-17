@@ -40,7 +40,7 @@ function populateFavoriteRecipes(currentUser) {
                     //update title and text and image
                     newcard.querySelector('.card-title').innerHTML = title;
                     newcard.querySelector('.card-image').src = link;
-                    newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+                    newcard.querySelector('.card-button').href = "eachFavouriteRecipe.html?docID=" + docID;
 
                     newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                     newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
