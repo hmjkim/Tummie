@@ -8,7 +8,7 @@ function pageSetup() {
             console.log(currentUser);
 
             // the following functions are always called when someone is logged in
-            displayCardsDynamically("recipes");  //input param is the name of the collection
+            // displayCardsDynamically("recipes", pageNumber);  //input param is the name of the collection
 
         } else {
             // No user is signed in.
@@ -96,7 +96,7 @@ const CARDS_PER_PAGE = 3;
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
-function displayCardsDynamically(recipes) {
+function displayCardsDynamically(recipes, pageNumber) {
     let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
 
     // Clear existing recipe cards before loading new cards
@@ -179,7 +179,7 @@ function displayCardsDynamically(recipes) {
 
 
 function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
-    
+
     // Clear existing pagination buttons before loading new buttons
     document.getElementById("prevBtn").innerHTML = ``
     document.getElementById("pageBtns").innerHTML = ``
@@ -203,7 +203,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
 
     // First page
     firstBtnHtml = ``
-    firstBtnHtml += `<li id="pageBtn1" class="pageBtn"><a id="pageBtnLink1" class="page-link tw-text-neutral rounded tw-border-none" href="#">1</a></li>`
+    firstBtnHtml += `<li id="pageBtn1" class="pageBtn"><a id="pageBtnLink1" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none" href="#">1</a></li>`
 
     firstBtnDiv = document.createElement(`div`)
     firstBtnDiv.innerHTML = firstBtnHtml
@@ -223,9 +223,9 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
 
     // Middle pages
     if (pageNumber <= 2) {
-        for (i = 2; i <= 3; i++) {
+        for (let i = 2; i <= 3; i++) {
             pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
             pageBtnDiv = document.createElement(`div`)
             pageBtnDiv.innerHTML = pageBtnHtml
@@ -233,9 +233,9 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
             pageBtns.appendChild(pageBtnDiv)
         }
     } else if (pageNumber == 3) {
-        for (i = pageNumber; i <= pageNumber + 2; i++) {
+        for (let i = pageNumber; i <= pageNumber + 2; i++) {
             pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
             pageBtnDiv = document.createElement(`div`)
             pageBtnDiv.innerHTML = pageBtnHtml
@@ -243,9 +243,9 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
             pageBtns.appendChild(pageBtnDiv)
         }
     } else if (pageNumber > 3 && pageNumber < TOTAL_NUMBER_OF_PAGES - 2) {
-        for (i = pageNumber - 1; i <= pageNumber + 1; i++) {
+        for (let i = pageNumber - 1; i <= pageNumber + 1; i++) {
             pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
             pageBtnDiv = document.createElement(`div`)
             pageBtnDiv.innerHTML = pageBtnHtml
@@ -253,9 +253,9 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
             pageBtns.appendChild(pageBtnDiv)
         }
     } else if (pageNumber >= TOTAL_NUMBER_OF_PAGES - 2) {
-        for (i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
+        for (let i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
             pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
 
             pageBtnDiv = document.createElement(`div`)
             pageBtnDiv.innerHTML = pageBtnHtml
@@ -277,7 +277,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
 
     // Last page
     lastBtnHtml = ``
-    lastBtnHtml += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="pageBtn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+    lastBtnHtml += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="pageBtn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
 
     lastBtnDiv = document.createElement(`div`)
     lastBtnDiv.innerHTML = lastBtnHtml
@@ -300,13 +300,13 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     }
 
     // On Click event listener for each button
-    for (i = 1; i <= TOTAL_NUMBER_OF_PAGES; i++) {
-        document.querySelector(`#pageBtnLink${i}`).onclick = (event) => {
-            clickedElementId = event.target.id;
-            pageNumber = clickedElementId.replace("pageBtnLink", "")
-            console.log(pageNumber)
-            displayCardsDynamically("recipes")
-        }
+    btnsDisplayed = document.getElementsByClassName("pageBtnLink")
+
+    for (let i = 0; i < btnsDisplayed.length; i++) {
+        btnsDisplayed[i].addEventListener("click", () => {
+            pageNumber = btnsDisplayed[i].innerText
+            displayCardsDynamically("recipes", pageNumber)
+        })
     }
 }
 
