@@ -8,7 +8,7 @@ function pageSetup() {
             console.log(currentUser);
 
             // the following functions are always called when someone is logged in
-            // displayCardsDynamically("recipes");  //input param is the name of the collection
+            displayCardsDynamically("recipes");  //input param is the name of the collection
 
         } else {
             // No user is signed in.
@@ -94,6 +94,7 @@ var page_number = 1
 function displayCardsDynamically(recipes) {
     let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
 
+    // Clear existing recipe cards before loading new cards
     document.getElementById("recipes-go-here").innerHTML = ``
 
     db.collection(recipes).get() // the collection called "recipes"
@@ -106,19 +107,20 @@ function displayCardsDynamically(recipes) {
             if (page_number == 1) {
                 db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
                     .then(allRecipes => {
-                        allRecipes.forEach(doc => { //iterate thru each doc
+                        allRecipes.forEach(doc => { //iterate through each doc
                             var title = doc.data().strMeal;       // get value of the "strMeal" key
-                            var link = doc.data().strMealThumb;
-                            var docID = doc.id;
+                            var link = doc.data().strMealThumb;    // get link of the recipe image
+                            var docID = doc.id;   // get document ID
                             let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
-                            //update title and text and image
-                            newcard.querySelector('.card-title').innerHTML = title;
-                            newcard.querySelector('.card-image').src = link;
-                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+                            //update title, text, and image
+                            newcard.querySelector('.card-title').innerHTML = title;  // update title
+                            newcard.querySelector('.card-image').src = link; // update image
+                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID; // link the button with the document ID
                             newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                             newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
+                            // Check if the recipe is already saved or not
                             currentUser.get().then(userDoc => {
                                 var favorites = userDoc.data().favorites;
                                 if (favorites) {
@@ -139,17 +141,18 @@ function displayCardsDynamically(recipes) {
                     .then(allRecipes => {
                         allRecipes.forEach(doc => { //iterate thru each doc
                             var title = doc.data().strMeal;       // get value of the "strMeal" key
-                            var link = doc.data().strMealThumb;
-                            var docID = doc.id;
+                            var link = doc.data().strMealThumb;    // get link of the recipe image
+                            var docID = doc.id;   // get document ID
                             let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
                             //update title and text and image
-                            newcard.querySelector('.card-title').innerHTML = title;
-                            newcard.querySelector('.card-image').src = link;
-                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+                            newcard.querySelector('.card-title').innerHTML = title;  // update title
+                            newcard.querySelector('.card-image').src = link; // update image
+                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID; // link the button with the document ID
                             newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                             newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
+                            // Check if the recipe is already saved or not
                             currentUser.get().then(userDoc => {
                                 var favorites = userDoc.data().favorites;
                                 if (favorites) {
@@ -165,12 +168,15 @@ function displayCardsDynamically(recipes) {
                     })
             }
 
+            // Create pagination
             pagination(page_number, TOTAL_NUMBER_OF_PAGES)
         })
 }
 
 
 function pagination(page_number, TOTAL_NUMBER_OF_PAGES) {
+    
+    // Clear existing pagination buttons before loading new buttons
     document.getElementById("prev_btn").innerHTML = ``
     document.getElementById("page_btns").innerHTML = ``
     document.getElementById("next_btn").innerHTML = ``
