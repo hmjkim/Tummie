@@ -146,7 +146,7 @@ function editSetting() {
 function saveSetting() {
     //enter code here
     //a) get user entered values
-    if (document.getElementById('notificationInput') == "On") {
+    if (document.getElementById('notificationInput').value == "notificationOn") {
         userNotification = true
     } else {
         userNotification = false
