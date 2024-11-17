@@ -32,6 +32,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -102,7 +103,10 @@
       </a>
 
       <div class="tw-flex tw-flex-col gap-4">
-        <h1><span id="recipeName" class="tw-text-2xl">Recipe Name</span></h1>
+        <div class="col d-flex justify-content-between align-items-center">
+          <h1><span id="recipeName" class="tw-text-2xl">Recipe Name</span></h1>
+          <i class="material-icons">favorite_border</i>
+        </div>
         <div class="tw-flex tw-flex-col md:tw-flex-row gap-4">
           <img class="recipe-img responsive md:tw-w-1/2" src="" />
           <div class="md:tw-w-1/2">

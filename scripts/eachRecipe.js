@@ -1,6 +1,30 @@
+var currentUser;               //global variable which points to the document of the user who is logged in
+
+//Function that calls everything needed for the main page  
+function pageSetup() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            currentUser = db.collection("users").doc(user.uid); //global
+            console.log(currentUser);
+
+            // the following functions are always called when someone is logged in
+            displayRecipeInfo();
+
+        } else {
+            // No user is signed in.
+            console.log("No user is signed in");
+            window.location.href = "login.html";
+        }
+    });
+}
+pageSetup();
+
 function displayRecipeInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
+
+    document.querySelector('i').id = 'save-' + ID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
+    document.querySelector('i').onclick = () => savetoFavorite(ID); // add event listen to invoke function everytime when the favorite button is hit
 
     db.collection("recipes")
         .doc(ID)
@@ -23,7 +47,41 @@ function displayRecipeInfo() {
                     document.getElementById("measurements").innerHTML += ingredientMeasure + "<br/>"
                 }
             }
+
+            currentUser.get().then(userDoc => {
+                var favorites = userDoc.data().favorites;
+                if (favorites) {
+                    if (favorites.includes(ID)) {
+                        document.getElementById('save-' + ID).innerText = 'favorite';
+                    }
+                }
+            })
         });
 }
 
-displayRecipeInfo();
+// Function that write saved recipes to database when user hit save button
+function savetoFavorite(recipesDocID) {
+    currentUser.get().then((userDoc) => {
+        const favorites = userDoc.data().favorites;
+        if (favorites && favorites.includes(recipesDocID)) {
+            currentUser.update({
+                favorites: firebase.firestore.FieldValue.arrayRemove(recipesDocID)
+            })
+                .then(function () {
+                    console.log(recipesDocID + " has been removed from your Favorite Recipes.");
+                    let iconID = 'save-' + recipesDocID;
+                    document.getElementById(iconID).innerText = 'favorite_border';
+                });
+        }
+        else {
+            currentUser.update({
+                favorites: firebase.firestore.FieldValue.arrayUnion(recipesDocID)
+            })
+                .then(function () {
+                    console.log(recipesDocID + " has been added to your Favorite Recipes.");
+                    let iconID = 'save-' + recipesDocID;
+                    document.getElementById(iconID).innerText = 'favorite';
+                });
+        }
+    });
+}
