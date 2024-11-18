@@ -61,8 +61,6 @@ firebase.auth().onAuthStateChanged((user) => {
                 }
             });
         }
-
-        // ...
     } else {
         console.log("No user is signed in");
         window.location.href = 'login.html';
@@ -216,9 +214,10 @@ function displayFoodItemsByCategory(userID) {
                     foodItemCard.querySelector(".food-title").innerHTML = title;
                     foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
 
-                    foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft)
+                    foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft, expiry_date)
                     foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
                     foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
+                    foodItemCard.querySelector(".food-img").alt = `${title} icon`;
 
                     switch (true) {
                         case (category == "Fruits"):
@@ -423,7 +422,7 @@ function displayFoodItemsByName(userID) {
                     foodItemCard.querySelector(".food-title").innerHTML = title;
                     foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
 
-                    foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft)
+                    foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft, )
                     foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
                     foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
 
@@ -436,7 +435,7 @@ function displayFoodItemsByName(userID) {
 
 
 function calculateTimeLeft(date) {
-    // Define two Date objects representing the start and end datess
+    // Define two Date objects representing the start and end dates
     const currentDate = Date.now(); // Current date and time in milliseconds
     const expiryDate = new Date(date);
 
@@ -451,7 +450,7 @@ function calculateTimeLeft(date) {
 
 }
 
-function determineRemainingDaysMessage(daysLeft) {
+function determineRemainingDaysMessage(daysLeft, date) {
     // determine remaining days message
     let message;
     switch (true) {
@@ -463,6 +462,9 @@ function determineRemainingDaysMessage(daysLeft) {
             break;
         case (daysLeft < 0):
             message = `${Math.abs(daysLeft)} days past`;
+            break;
+        case (daysLeft > 5 && !editForm):
+            message = date;
             break;
         default:
             message = `${daysLeft} days left`;
@@ -571,7 +573,7 @@ function populateFoodInfo() {
                         document.querySelector(".js-edit-form #notesInput").value = notes;
                     }
                     if (daysLeft != null) {
-                        document.querySelector(".js-edit-form .js-days-remaining").innerHTML = determineRemainingDaysMessage(daysLeft);
+                        document.querySelector(".js-edit-form .js-days-remaining").innerHTML = determineRemainingDaysMessage(daysLeft, expiry_date);
                     }
                 } else {
                     // doc.data() will be undefined in this case
