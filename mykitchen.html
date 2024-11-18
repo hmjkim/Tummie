@@ -82,8 +82,8 @@
   <header id="headerContent"></header>
   <main class="container py-3 tw-relative">
     <section>
-      <!-- mobile header -->
-      <div class="tw-flex tw-justify-between">
+      <!-- Header -->
+      <div class="tw-flex tw-justify-between tw-relative">
         <div class="tw-flex tw-items-center tw-space-x-4">
           <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,6 +101,36 @@
                 stroke-linejoin="round"></path>
             </svg>
           </button>
+          <!-- Storage Spaces Dropdown -->
+          <div class="js-storage-dropdown tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[115%] tw-w-[240px] tw-z-[1] !tw-mx-0 tw-left-0 tw-w-full lg:tw-max-w-[520px]">
+            <ul>
+              <li>
+                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+                  <span class="tw-font-sansHeading tw-font-semibold">All Spaces</span>
+                  <span># items</span>
+                </button>
+                <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
+              </li>
+              <li>
+                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+                  <span class="tw-font-sansHeading tw-font-semibold">Fridge</span>
+                  <span># items</span>
+                </button>
+              </li>
+              <li>
+                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+                  <span class="tw-font-sansHeading tw-font-semibold">Freezer</span>
+                  <span># items</span>
+                </button>
+              </li>
+              <li>
+                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+                  <span class="tw-font-sansHeading tw-font-semibold">Pantry</span>
+                  <span># items</span>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
         <!-- (DESKTOP) - Utilities bar -->
         <ul class="tw-hidden tw-text-neutral-dark md:tw-flex tw-space-x-3 tw-items-center">
@@ -151,9 +181,9 @@
             </li> -->
         </ul>
         <!-- (MOBILE) - Search & Meatball icon container -->
-        <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3 md:tw-hidden">
+        <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3 md:tw-hidden tw-relative">
           <!-- Search button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center hover:tw-text-neutral tw-transition">
             <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M21.4433 22.1226L14.7452 15.4245M16.9779 9.84276C16.9779 14.1586 13.4793 17.6572 9.16346 17.6572C4.84765 17.6572 1.349 14.1586 1.349 9.84276C1.349 5.52695 4.84765 2.02829 9.16346 2.02829C13.4793 2.02829 16.9779 5.52695 16.9779 9.84276Z"
@@ -161,13 +191,41 @@
             </svg>
           </button>
           <!-- Meatball menu button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center hover:tw-text-neutral tw-transition">
             <svg width="25" height="6" viewBox="0 0 25 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M3.54714 3.07546H3.56054M12.9245 3.07546H12.9379M22.3019 3.07546H22.3153M4.88676 3.07546C4.88676 3.81532 4.287 4.41509 3.54714 4.41509C2.80729 4.41509 2.20752 3.81532 2.20752 3.07546C2.20752 2.33561 2.80729 1.73584 3.54714 1.73584C4.287 1.73584 4.88676 2.33561 4.88676 3.07546ZM14.2641 3.07546C14.2641 3.81532 13.6644 4.41509 12.9245 4.41509C12.1846 4.41509 11.5849 3.81532 11.5849 3.07546C11.5849 2.33561 12.1846 1.73584 12.9245 1.73584C13.6644 1.73584 14.2641 2.33561 14.2641 3.07546ZM23.6415 3.07546C23.6415 3.81532 23.0417 4.41509 22.3019 4.41509C21.562 4.41509 20.9622 3.81532 20.9622 3.07546C20.9622 2.33561 21.562 1.73584 22.3019 1.73584C23.0417 1.73584 23.6415 2.33561 23.6415 3.07546Z"
                 stroke="currentColor" stroke-width="2.67925" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
+          <!-- Meatball menu overlay -->
+          <div class="js-meatball-dropdown tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[120%] tw-right-0 tw-w-[240px] tw-z-[1] tw-mx-0">
+            <ul>
+              <li>
+                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-text-neutral">
+                  <span>Select Items</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+                    <path d="M16.7917 0.125H2.20833C1.6558 0.125 1.12589 0.344493 0.735194 0.735194C0.344493 1.12589 0.125 1.6558 0.125 2.20833V16.7917C0.125 17.3442 0.344493 17.8741 0.735194 18.2648C1.12589 18.6555 1.6558 18.875 2.20833 18.875H16.7917C17.3442 18.875 17.8741 18.6555 18.2648 18.2648C18.6555 17.8741 18.875 17.3442 18.875 16.7917V2.20833C18.875 1.6558 18.6555 1.12589 18.2648 0.735194C17.8741 0.344493 17.3442 0.125 16.7917 0.125ZM16.7917 2.20833V16.7917H2.20833V2.20833H16.7917ZM7.41667 14.7083L3.25 10.5417L4.71875 9.0625L7.41667 11.7604L14.2812 4.89583L15.75 6.375" fill="currentColor"></path>
+                  </svg>
+                </button>
+                <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
+              </li>
+              <li>
+                <!-- Sort button -->
+                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-transition hover:tw-text-neutral tw-items-center">
+                  <div class="tw-text-left">
+                    <p>Sort by</p>
+                    <p class="tw-text-sm tw-text-neutral">Category</p>
+                  </div>
+                  <svg class="tw-w-6" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11.2751 7.69162C11.6111 7.35573 12.0667 7.16704 12.5418 7.16704C13.0169 7.16704 13.4725 7.35573 13.8085 7.69162L20.9752 14.8583C21.3015 15.1962 21.4821 15.6488 21.478 16.1185C21.474 16.5883 21.2855 17.0377 20.9533 17.3699C20.6211 17.7021 20.1718 17.8905 19.702 17.8946C19.2322 17.8987 18.7797 17.7181 18.4417 17.3917L14.3335 13.2834V34.0417C14.3335 34.5168 14.1447 34.9726 13.8087 35.3086C13.4727 35.6446 13.017 35.8333 12.5418 35.8333C12.0666 35.8333 11.6109 35.6446 11.2749 35.3086C10.9389 34.9726 10.7501 34.5168 10.7501 34.0417V13.2834L6.64183 17.3917C6.30392 17.7181 5.85134 17.8987 5.38157 17.8946C4.9118 17.8905 4.46243 17.7021 4.13024 17.3699C3.79805 17.0377 3.60962 16.5883 3.60554 16.1185C3.60145 15.6488 3.78204 15.1962 4.10841 14.8583L11.2751 7.69162ZM28.6668 29.7166V8.95832C28.6668 8.48314 28.8556 8.02743 29.1916 7.69142C29.5276 7.35542 29.9833 7.16666 30.4585 7.16666C30.9336 7.16666 31.3894 7.35542 31.7254 7.69142C32.0614 8.02743 32.2501 8.48314 32.2501 8.95832V29.7166L36.3584 25.6083C36.6963 25.2819 37.1489 25.1013 37.6187 25.1054C38.0884 25.1095 38.5378 25.2979 38.87 25.6301C39.2022 25.9623 39.3906 26.4117 39.3947 26.8814C39.3988 27.3512 39.2182 27.8038 38.8918 28.1417L31.7252 35.3084C31.3892 35.6443 30.9335 35.8329 30.4585 35.8329C29.9834 35.8329 29.5277 35.6443 29.1917 35.3084L22.0251 28.1417C21.6987 27.8038 21.5181 27.3512 21.5222 26.8814C21.5263 26.4117 21.7147 25.9623 22.0469 25.6301C22.3791 25.2979 22.8285 25.1095 23.2982 25.1054C23.768 25.1013 24.2206 25.2819 24.5585 25.6083L28.6668 29.7166Z"
+                      fill="currentColor" />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <!-- Search bar -->
