@@ -5,13 +5,12 @@ function pageSetup() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             currentUser = db.collection("users").doc(user.uid); //global
-            console.log(currentUser);
 
             // the following functions are always called when someone is logged in
             displayCardsDynamically("recipes", pageNumber);  //input param is the name of the collection
 
         } else {
-            // No user is signed in.
+            // When no user is signed in, forcefully direct the user to login.html
             console.log("No user is signed in");
             window.location.href = "login.html";
         }
@@ -97,6 +96,12 @@ const CARDS_PER_PAGE = 3;
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
 function displayCardsDynamically(recipes, pageNumber) {
+    var params = new URL(window.location.href)
+    pageNumber = params.searchParams.get("page")
+    if (pageNumber == null) {
+        pageNumber = 1
+    }
+
     let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
 
     // Clear existing recipe cards before loading new cards
@@ -125,7 +130,7 @@ function displayCardsDynamically(recipes, pageNumber) {
                             //update title, text, and image
                             newcard.querySelector('.card-title').innerHTML = title;  // update title
                             newcard.querySelector('.card-image').src = link; // update image
-                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID; // link the button with the document ID
+                            newcard.querySelector('.card-button').href = `eachRecipe.html?page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
                             newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                             newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
@@ -157,7 +162,7 @@ function displayCardsDynamically(recipes, pageNumber) {
                             //update title and text and image
                             newcard.querySelector('.card-title').innerHTML = title;  // update title
                             newcard.querySelector('.card-image').src = link; // update image
-                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID; // link the button with the document ID
+                            newcard.querySelector('.card-button').href = `eachRecipe.html?page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
                             newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                             newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
@@ -303,6 +308,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber > 1) {
         document.getElementById("prevBtnLink").addEventListener("click", () => {
             pageNumber--
+            document.getElementById("prevBtnLink").href = `recipes.html?page=${pageNumber}`
             displayCardsDynamically("recipes", pageNumber)
         })
     }
@@ -311,6 +317,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     for (let i = 0; i < btnsDisplayed.length; i++) {
         btnsDisplayed[i].addEventListener("click", () => {
             pageNumber = parseInt(btnsDisplayed[i].innerText)
+            btnsDisplayed[i].href = `recipes.html?page=${pageNumber}`
             displayCardsDynamically("recipes", pageNumber)
         })
     }
@@ -319,6 +326,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber < TOTAL_NUMBER_OF_PAGES) {
         document.getElementById("nextBtnLink").addEventListener("click", () => {
             pageNumber++
+            document.getElementById("nextBtnLink").href = `recipes.html?page=${pageNumber}`
             displayCardsDynamically("recipes", pageNumber)
         })
     }

@@ -5,13 +5,12 @@ function pageSetup() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             currentUser = db.collection("users").doc(user.uid); //global
-            console.log(currentUser);
 
             // the following functions are always called when someone is logged in
             displayRecipeInfo();
 
         } else {
-            // No user is signed in.
+            // When no user is signed in, forcefully direct the user to login.html
             console.log("No user is signed in");
             window.location.href = "login.html";
         }
@@ -22,9 +21,13 @@ pageSetup();
 function displayRecipeInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
+    let pageNumber = params.searchParams.get("page") //get value for key "page"
 
     document.querySelector('i').id = 'save-' + ID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
     document.querySelector('i').onclick = () => savetoFavorite(ID); // add event listen to invoke function everytime when the favorite button is hit
+
+    // link 'Back to All Recipes' button to the page number the user was in
+    document.querySelector('a').href = `recipes.html?page=${pageNumber}`
 
     db.collection("recipes")
         .doc(ID)

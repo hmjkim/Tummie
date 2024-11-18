@@ -21,9 +21,13 @@ pageSetup();
 function displayRecipeInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
+    let pageNumber = params.searchParams.get("page") //get value for key "page"
 
     document.querySelector('i').id = 'save-' + ID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
     document.querySelector('i').onclick = () => savetoFavorite(ID); // add event listen to invoke function everytime when the favorite button is hit
+
+    // link 'Back to My Favourite' button to the page number the user was in
+    document.querySelector('a').href = `favourite.html?page=${pageNumber}`
 
     db.collection("recipes")
         .doc(ID)
