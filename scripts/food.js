@@ -35,8 +35,8 @@ firebase.auth().onAuthStateChanged((user) => {
                     if (subCollection.docs.length > 0) {
                         console.log('food collection exists');
                         
-                        displayFoodItemsByCategory(userID);
                         createSortByCategoryContainer(userID);
+                        displayFoodItemsByCategory(userID);
                     // When food subcollection has no documents
                     } else {
                         console.log('food collection does not exist');
