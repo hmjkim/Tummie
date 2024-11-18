@@ -35,7 +35,7 @@ function populateFavoriteRecipes(currentUser, pageNumber) {
         .then(userDoc => {
 
             // Get the Array of bookmarks
-            var favorites = userDoc.data().favorites;
+            var favorites = userDoc.data().favorites.reverse();
             // console.log(favorites);
 
             // Create an array containing recipes on the current page only
@@ -271,7 +271,7 @@ function savetoFavorite(recipesDocID) {
                 document.getElementById(iconID).innerText = 'favorite_border';
 
                 document.getElementById("recipes-go-here").innerText = ""; // clear all cards 
-                populateFavoriteRecipes(currentUser); // re-populate favorite recipes again
+                populateFavoriteRecipes(currentUser, pageNumber); // re-populate favorite recipes again
             });
     });
 }
