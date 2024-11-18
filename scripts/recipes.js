@@ -8,7 +8,7 @@ function pageSetup() {
             console.log(currentUser);
 
             // the following functions are always called when someone is logged in
-            displayCardsDynamically("recipes");  //input param is the name of the collection
+            displayCardsDynamically("recipes", pageNumber);  //input param is the name of the collection
 
         } else {
             // No user is signed in.
@@ -86,42 +86,45 @@ async function readJSONrecipes() {
 //------------------------------------------------------------------------------
 // Set initial page number for pagination
 //------------------------------------------------------------------------------
-var page_number = 1
+var pageNumber = 1
+
+//------------------------------------------------------------------------------
+// Set the number of recipes per page for pagination
+//------------------------------------------------------------------------------
+const CARDS_PER_PAGE = 3;
 
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
-function displayCardsDynamically(recipes) {
+function displayCardsDynamically(recipes, pageNumber) {
     let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
 
+    // Clear existing recipe cards before loading new cards
     document.getElementById("recipes-go-here").innerHTML = ``
-    document.getElementById("prev_btn").innerHTML = ``
-    document.getElementById("page_btns").innerHTML = ``
-    document.getElementById("next_btn").innerHTML = ``
 
     db.collection(recipes).get() // the collection called "recipes"
-        .then(pagination => {
-            const CARDS_PER_PAGE = 3;
-            const TOTAL_NUMBER_OF_PAGES = Math.ceil(pagination.docs.length / CARDS_PER_PAGE);
+        .then(allRecipes => {
+            const TOTAL_NUMBER_OF_PAGES = Math.ceil(allRecipes.docs.length / CARDS_PER_PAGE);
 
-            document.getElementById("page_info").innerHTML = `Page ${page_number} out of ${TOTAL_NUMBER_OF_PAGES}`
+            document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${allRecipes.docs.length} Recipes`
 
-            if (page_number == 1) {
+            if (pageNumber == 1) {
                 db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
                     .then(allRecipes => {
-                        allRecipes.forEach(doc => { //iterate thru each doc
+                        allRecipes.forEach(doc => { //iterate through each doc
                             var title = doc.data().strMeal;       // get value of the "strMeal" key
-                            var link = doc.data().strMealThumb;
-                            var docID = doc.id;
+                            var link = doc.data().strMealThumb;    // get link of the recipe image
+                            var docID = doc.id;   // get document ID
                             let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
-                            //update title and text and image
-                            newcard.querySelector('.card-title').innerHTML = title;
-                            newcard.querySelector('.card-image').src = link;
-                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+                            //update title, text, and image
+                            newcard.querySelector('.card-title').innerHTML = title;  // update title
+                            newcard.querySelector('.card-image').src = link; // update image
+                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID; // link the button with the document ID
                             newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                             newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
+                            // Check if the recipe is already saved or not
                             currentUser.get().then(userDoc => {
                                 var favorites = userDoc.data().favorites;
                                 if (favorites) {
@@ -136,23 +139,24 @@ function displayCardsDynamically(recipes) {
                         })
                     })
             } else {
-                LastVisible = pagination.docs[(CARDS_PER_PAGE * (page_number - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
+                LastVisible = allRecipes.docs[(CARDS_PER_PAGE * (pageNumber - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
 
                 db.collection(recipes).startAfter(LastVisible).limit(CARDS_PER_PAGE).get() // display the next batch using the cursor
                     .then(allRecipes => {
                         allRecipes.forEach(doc => { //iterate thru each doc
                             var title = doc.data().strMeal;       // get value of the "strMeal" key
-                            var link = doc.data().strMealThumb;
-                            var docID = doc.id;
+                            var link = doc.data().strMealThumb;    // get link of the recipe image
+                            var docID = doc.id;   // get document ID
                             let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
                             //update title and text and image
-                            newcard.querySelector('.card-title').innerHTML = title;
-                            newcard.querySelector('.card-image').src = link;
-                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID;
+                            newcard.querySelector('.card-title').innerHTML = title;  // update title
+                            newcard.querySelector('.card-image').src = link; // update image
+                            newcard.querySelector('.card-button').href = "eachRecipe.html?docID=" + docID; // link the button with the document ID
                             newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                             newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
+                            // Check if the recipe is already saved or not
                             currentUser.get().then(userDoc => {
                                 var favorites = userDoc.data().favorites;
                                 if (favorites) {
@@ -168,130 +172,167 @@ function displayCardsDynamically(recipes) {
                     })
             }
 
-            // Pagination
-            // Previous page
-            if (page_number >= 2) {
-                prev_button_html = ``
-                prev_button_html += `<li>
-                <a class="page-link rounded tw-border-none" href="#" aria-label="Previous">
-                  <i class="material-icons tw-text-neutral">chevron_left</i>
-                </a>
-                </li>`
+            // Create pagination
+            pagination(pageNumber, TOTAL_NUMBER_OF_PAGES)
+        })
+}
 
-                prev_button = document.createElement(`div`)
-                prev_button.innerHTML = prev_button_html
 
-                prev_btn.appendChild(prev_button)
-            }
+function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
 
-            // First page
-            first_button_html = ``
-            first_button_html += `<li id="pageBtn1" class="page_btn"><a id="pageBtnLink1" class="page-link tw-text-neutral rounded tw-border-none" href="#">1</a></li>`
+    // Clear existing pagination buttons before loading new buttons
+    document.getElementById("prevBtn").innerHTML = ``
+    document.getElementById("pageBtns").innerHTML = ``
+    document.getElementById("nextBtn").innerHTML = ``
 
-            first_button = document.createElement(`div`)
-            first_button.innerHTML = first_button_html
+    // Create pagination buttons
+    // Previous page
+    if (pageNumber >= 2) {
+        prevBtnHtml = ``
+        prevBtnHtml += `<li>
+                    <a id="prevBtnLink" class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#" aria-label="Previous">
+                    <i class="material-icons tw-text-neutral">chevron_left</i>
+                    </a>
+                    </li>`
 
-            page_btns.appendChild(first_button)
+        prevBtnDiv = document.createElement(`div`)
+        prevBtnDiv.innerHTML = prevBtnHtml
 
-            // placeholder ... button
-            if (page_number >= 3) {
-                placeholder_button_html = ``
-                placeholder_button_html += `<li class="page_btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
+        prevBtn.appendChild(prevBtnDiv)
+    }
 
-                placeholder_button = document.createElement(`div`)
-                placeholder_button.innerHTML = placeholder_button_html
+    // First page
+    firstBtnHtml = ``
+    firstBtnHtml += `<li id="pageBtn1" class="pageBtn"><a id="pageBtnLink1" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">1</a></li>`
 
-                page_btns.appendChild(placeholder_button)
-            }
+    firstBtnDiv = document.createElement(`div`)
+    firstBtnDiv.innerHTML = firstBtnHtml
 
-            // Middle pages
-            if (page_number <= 2) {
-                for (i = 2; i <= 3; i++) {
-                    page_btn_html = ``
-                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+    pageBtns.appendChild(firstBtnDiv)
 
-                    page_btn = document.createElement(`div`)
-                    page_btn.innerHTML = page_btn_html
+    // placeholder ... button
+    if (pageNumber >= 3) {
+        placeholderBtnHtml = ``
+        placeholderBtnHtml += `<li class="tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#" tabindex="-1">...</a></li>`
 
-                    page_btns.appendChild(page_btn)
-                }
-            } else if (page_number == 3) {
-                for (i = page_number; i <= page_number + 2; i++) {
-                    page_btn_html = ``
-                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+        placeholderBtnDiv = document.createElement(`div`)
+        placeholderBtnDiv.innerHTML = placeholderBtnHtml
 
-                    page_btn = document.createElement(`div`)
-                    page_btn.innerHTML = page_btn_html
+        pageBtns.appendChild(placeholderBtnDiv)
+    }
 
-                    page_btns.appendChild(page_btn)
-                }
-            } else if (page_number > 3 && page_number < TOTAL_NUMBER_OF_PAGES - 2) {
-                for (i = page_number - 1; i <= page_number + 1; i++) {
-                    page_btn_html = ``
-                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+    // Middle pages
+    if (pageNumber <= 2) {
+        for (let i = 2; i <= 3; i++) {
+            pageBtnHtml = ``
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
 
-                    page_btn = document.createElement(`div`)
-                    page_btn.innerHTML = page_btn_html
+            pageBtnDiv = document.createElement(`div`)
+            pageBtnDiv.innerHTML = pageBtnHtml
 
-                    page_btns.appendChild(page_btn)
-                }
-            } else if (page_number >= TOTAL_NUMBER_OF_PAGES - 2) {
-                for (i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
-                    page_btn_html = ``
-                    page_btn_html += `<li id="pageBtn${i}" class="page_btn"><a id="pageBtnLink${i}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${i}</a></li>`
+            pageBtns.appendChild(pageBtnDiv)
+        }
+    } else if (pageNumber == 3) {
+        for (let i = pageNumber; i <= pageNumber + 2; i++) {
+            pageBtnHtml = ``
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
 
-                    page_btn = document.createElement(`div`)
-                    page_btn.innerHTML = page_btn_html
+            pageBtnDiv = document.createElement(`div`)
+            pageBtnDiv.innerHTML = pageBtnHtml
 
-                    page_btns.appendChild(page_btn)
-                }
-            }
+            pageBtns.appendChild(pageBtnDiv)
+        }
+    } else if (pageNumber > 3 && pageNumber < TOTAL_NUMBER_OF_PAGES - 2) {
+        for (let i = pageNumber - 1; i <= pageNumber + 1; i++) {
+            pageBtnHtml = ``
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
 
-            // placeholder ... button
-            if (page_number <= TOTAL_NUMBER_OF_PAGES - 3) {
-                placeholder_button_html = ``
-                placeholder_button_html += `<li class="page_btn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none" href="#" tabindex="-1">...</a></li>`
+            pageBtnDiv = document.createElement(`div`)
+            pageBtnDiv.innerHTML = pageBtnHtml
 
-                placeholder_button = document.createElement(`div`)
-                placeholder_button.innerHTML = placeholder_button_html
+            pageBtns.appendChild(pageBtnDiv)
+        }
+    } else if (pageNumber >= TOTAL_NUMBER_OF_PAGES - 2) {
+        for (let i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
+            pageBtnHtml = ``
+            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
 
-                page_btns.appendChild(placeholder_button)
-            }
+            pageBtnDiv = document.createElement(`div`)
+            pageBtnDiv.innerHTML = pageBtnHtml
 
-            // Last page
-            last_button_html = ``
-            last_button_html += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="page_btn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link tw-text-neutral rounded tw-border-none" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+            pageBtns.appendChild(pageBtnDiv)
+        }
+    }
 
-            last_button = document.createElement(`div`)
-            last_button.innerHTML = last_button_html
+    // placeholder ... button
+    if (pageNumber <= TOTAL_NUMBER_OF_PAGES - 3) {
+        placeholderBtnHtml = ``
+        placeholderBtnHtml += `<li class="pageBtn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#" tabindex="-1">...</a></li>`
 
-            page_btns.appendChild(last_button)
+        placeholderBtnDiv = document.createElement(`div`)
+        placeholderBtnDiv.innerHTML = placeholderBtnHtml
 
-            // Next page
-            if (page_number <= TOTAL_NUMBER_OF_PAGES - 1) {
-                next_button_html = ``
-                next_button_html += `<li>
-                    <a class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[33px] tw-h-[36px]" href="#" aria-label="Next">
+        pageBtns.appendChild(placeholderBtnDiv)
+    }
+
+    // Last page
+    lastBtnHtml = ``
+    lastBtnHtml += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="pageBtn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+
+    lastBtnDiv = document.createElement(`div`)
+    lastBtnDiv.innerHTML = lastBtnHtml
+
+    pageBtns.appendChild(lastBtnDiv)
+
+    // Next page
+    if (pageNumber <= TOTAL_NUMBER_OF_PAGES - 1) {
+        nextBtnHtml = ``
+        nextBtnHtml += `<li>
+                    <a id="nextBtnLink" class="page-link rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#" aria-label="Next">
                     <i class="material-icons tw-text-neutral">chevron_right</i>
                     </a>
                     </li>`
 
-                next_button = document.createElement(`div`)
-                next_button.innerHTML = next_button_html
+        nextBtnDiv = document.createElement(`div`)
+        nextBtnDiv.innerHTML = nextBtnHtml
 
-                next_btn.appendChild(next_button)
-            }
+        nextBtn.appendChild(nextBtnDiv)
+    }
 
-            // On Click event listener for each button
-            for (i = 1; i <= TOTAL_NUMBER_OF_PAGES; i++) {
-                document.querySelector(`#pageBtnLink${i}`).onclick = (event) => {
-                    clickedElementId = event.target.id;
-                    page_number = clickedElementId.replace("pageBtnLink", "")
-                    console.log(page_number)
-                    displayCardsDynamically("recipes")
-                }
-            }
+    // Highlight current page
+    btnsDisplayed = document.getElementsByClassName("pageBtnLink")
+    for (let i = 0; i < btnsDisplayed.length; i++) {
+        if (btnsDisplayed[i].innerText == pageNumber) {
+            document.getElementById(`pageBtnLink${pageNumber}`).classList.remove("tw-text-neutral")
+            document.getElementById(`pageBtnLink${pageNumber}`).classList.add("tw-bg-primary", "tw-text-white")
+        }
+    }
+
+    // On Click event listener for each button
+
+    // Prev button
+    if (pageNumber > 1) {
+        document.getElementById("prevBtnLink").addEventListener("click", () => {
+            pageNumber--
+            displayCardsDynamically("recipes", pageNumber)
         })
+    }
+
+    // Page buttons
+    for (let i = 0; i < btnsDisplayed.length; i++) {
+        btnsDisplayed[i].addEventListener("click", () => {
+            pageNumber = parseInt(btnsDisplayed[i].innerText)
+            displayCardsDynamically("recipes", pageNumber)
+        })
+    }
+
+    // Next button
+    if (pageNumber < TOTAL_NUMBER_OF_PAGES) {
+        document.getElementById("nextBtnLink").addEventListener("click", () => {
+            pageNumber++
+            displayCardsDynamically("recipes", pageNumber)
+        })
+    }
 }
 
 
@@ -304,7 +345,7 @@ function savetoFavorite(recipesDocID) {
                 favorites: firebase.firestore.FieldValue.arrayRemove(recipesDocID)
             })
                 .then(function () {
-                    console.log(recipesDocID + "has been removed from your Favorite Recipes.");
+                    console.log(recipesDocID + " has been removed from your Favorite Recipes.");
                     let iconID = 'save-' + recipesDocID;
                     document.getElementById(iconID).innerText = 'favorite_border';
                 });
@@ -314,7 +355,7 @@ function savetoFavorite(recipesDocID) {
                 favorites: firebase.firestore.FieldValue.arrayUnion(recipesDocID)
             })
                 .then(function () {
-                    console.log(recipesDocID + "has been added to your Favorite Recipes.");
+                    console.log(recipesDocID + " has been added to your Favorite Recipes.");
                     let iconID = 'save-' + recipesDocID;
                     document.getElementById(iconID).innerText = 'favorite';
                 });

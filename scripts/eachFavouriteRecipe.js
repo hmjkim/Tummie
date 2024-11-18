@@ -5,13 +5,12 @@ function pageSetup() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             currentUser = db.collection("users").doc(user.uid); //global
-            console.log(currentUser);
 
             // the following functions are always called when someone is logged in
             displayRecipeInfo();
 
         } else {
-            // No user is signed in.
+            // When no user is signed in, forcefully direct the user to login.html
             console.log("No user is signed in");
             window.location.href = "login.html";
         }
