@@ -106,7 +106,12 @@ function displayCardsDynamically(recipes, pageNumber) {
         .then(allRecipes => {
             const TOTAL_NUMBER_OF_PAGES = Math.ceil(allRecipes.docs.length / CARDS_PER_PAGE);
 
-            document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${allRecipes.docs.length} Recipes`
+            // Display page info
+            if (pageNumber * CARDS_PER_PAGE > allRecipes.docs.length) {
+                document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${allRecipes.docs.length} of ${allRecipes.docs.length} Recipes`
+            } else {
+                document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${allRecipes.docs.length} Recipes`
+            }
 
             if (pageNumber == 1) {
                 db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
@@ -211,7 +216,7 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     pageBtns.appendChild(firstBtnDiv)
 
     // placeholder ... button
-    if (pageNumber >= 3) {
+    if (pageNumber >= 3 && TOTAL_NUMBER_OF_PAGES > 7) {
         placeholderBtnHtml = ``
         placeholderBtnHtml += `<li class="tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#" tabindex="-1">...</a></li>`
 
@@ -222,50 +227,32 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     }
 
     // Middle pages
-    if (pageNumber <= 2) {
-        for (let i = 2; i <= 3; i++) {
-            pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
-
-            pageBtnDiv = document.createElement(`div`)
-            pageBtnDiv.innerHTML = pageBtnHtml
-
-            pageBtns.appendChild(pageBtnDiv)
+    if (TOTAL_NUMBER_OF_PAGES > 7) {
+        if (pageNumber <= 2) {
+            for (let i = 2; i <= 3; i++) {
+                createPageBtn(i)
+            }
+        } else if (pageNumber == 3) {
+            for (let i = pageNumber; i <= pageNumber + 2; i++) {
+                createPageBtn(i)
+            }
+        } else if (pageNumber > 3 && pageNumber < TOTAL_NUMBER_OF_PAGES - 2) {
+            for (let i = pageNumber - 1; i <= pageNumber + 1; i++) {
+                createPageBtn(i)
+            }
+        } else if (pageNumber >= TOTAL_NUMBER_OF_PAGES - 2) {
+            for (let i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
+                createPageBtn(i)
+            }
         }
-    } else if (pageNumber == 3) {
-        for (let i = pageNumber; i <= pageNumber + 2; i++) {
-            pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
-
-            pageBtnDiv = document.createElement(`div`)
-            pageBtnDiv.innerHTML = pageBtnHtml
-
-            pageBtns.appendChild(pageBtnDiv)
-        }
-    } else if (pageNumber > 3 && pageNumber < TOTAL_NUMBER_OF_PAGES - 2) {
-        for (let i = pageNumber - 1; i <= pageNumber + 1; i++) {
-            pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
-
-            pageBtnDiv = document.createElement(`div`)
-            pageBtnDiv.innerHTML = pageBtnHtml
-
-            pageBtns.appendChild(pageBtnDiv)
-        }
-    } else if (pageNumber >= TOTAL_NUMBER_OF_PAGES - 2) {
-        for (let i = TOTAL_NUMBER_OF_PAGES - 2; i <= TOTAL_NUMBER_OF_PAGES - 1; i++) {
-            pageBtnHtml = ``
-            pageBtnHtml += `<li id="pageBtn${i}" class="pageBtn"><a id="pageBtnLink${i}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${i}</a></li>`
-
-            pageBtnDiv = document.createElement(`div`)
-            pageBtnDiv.innerHTML = pageBtnHtml
-
-            pageBtns.appendChild(pageBtnDiv)
+    } else {
+        for (let i = 2; i < TOTAL_NUMBER_OF_PAGES; i++) {
+            createPageBtn(i)
         }
     }
 
     // placeholder ... button
-    if (pageNumber <= TOTAL_NUMBER_OF_PAGES - 3) {
+    if (pageNumber <= TOTAL_NUMBER_OF_PAGES - 3 && TOTAL_NUMBER_OF_PAGES > 7) {
         placeholderBtnHtml = ``
         placeholderBtnHtml += `<li class="pageBtn tw-pointer-events-none"><a class="page-link tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#" tabindex="-1">...</a></li>`
 
@@ -276,13 +263,15 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     }
 
     // Last page
-    lastBtnHtml = ``
-    lastBtnHtml += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="pageBtn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
+    if (TOTAL_NUMBER_OF_PAGES > 1) {
+        lastBtnHtml = ``
+        lastBtnHtml += `<li id="pageBtn${TOTAL_NUMBER_OF_PAGES}" class="pageBtn"><a id="pageBtnLink${TOTAL_NUMBER_OF_PAGES}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${TOTAL_NUMBER_OF_PAGES}</a></li>`
 
-    lastBtnDiv = document.createElement(`div`)
-    lastBtnDiv.innerHTML = lastBtnHtml
+        lastBtnDiv = document.createElement(`div`)
+        lastBtnDiv.innerHTML = lastBtnHtml
 
-    pageBtns.appendChild(lastBtnDiv)
+        pageBtns.appendChild(lastBtnDiv)
+    }
 
     // Next page
     if (pageNumber <= TOTAL_NUMBER_OF_PAGES - 1) {
@@ -333,6 +322,17 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
             displayCardsDynamically("recipes", pageNumber)
         })
     }
+}
+
+
+function createPageBtn(index) {
+    pageBtnHtml = ``
+    pageBtnHtml += `<li id="pageBtn${index}" class="pageBtn"><a id="pageBtnLink${index}" class="page-link pageBtnLink tw-text-neutral rounded tw-border-none tw-flex tw-justify-center tw-items-center tw-w-[36px] tw-h-[36px]" href="#">${index}</a></li>`
+
+    pageBtnDiv = document.createElement(`div`)
+    pageBtnDiv.innerHTML = pageBtnHtml
+
+    pageBtns.appendChild(pageBtnDiv)
 }
 
 
