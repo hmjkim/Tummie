@@ -4,13 +4,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const goBackBtn = document.getElementById("go-back");
+    const cancelBtn = document.querySelector(".js-cancel-btn");
     if (!goBackBtn) {
         return;
     }
-    goBackBtn.addEventListener("click", () => {
+    [goBackBtn,cancelBtn].forEach((el) => {
+      el.addEventListener("click", () => {
         history.back();
-      });
-})
+      })
+    });
+});
 
 //------------------------------------------------
 // Call this function when the "logout" button is clicked
