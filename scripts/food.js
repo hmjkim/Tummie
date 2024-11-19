@@ -20,6 +20,7 @@ var foodNotes = document.getElementById("notesInput");
 const emptyKitchenMessageTemplate = document.querySelector(
   "#emptyKitchenMessageTemplate"
 );
+const currentSpace = document.querySelector('.js-current-space');
 const emptyKitchenMessage = document.querySelector("#emptyKitchenMessage");
 const searchBar = document.querySelector(".js-search-bar");
 
@@ -46,9 +47,17 @@ firebase.auth().onAuthStateChanged((user) => {
                     // When food subcollection has more than one entry
                     if (subCollection.docs.length > 0) {
                         console.log('food collection exists');
+                        const storageBtn = document.querySelector('.js-show-storage-list');
+                        const storageDropdownContainer = document.querySelector('.js-storage-dropdown');
+                        storageBtn.addEventListener('click', () => {
+                            storageDropdownContainer.classList.toggle('tw-hidden');
+                            storageBtn.classList.toggle('tw-rotate-180');
+                        });
+
                         
                         let spaceName = getURLParams('storage');
                         console.log(spaceName);
+
                         createStorageSpaceDropdown(userID);
                         displayFoodByStorageSpace(userID, spaceName);
                         // createSortByCategoryContainer(userID);
@@ -181,6 +190,11 @@ function createStorageSpaceDropdown(userID) {
                     spaceTitleElement.innerHTML = space;
                 }
 
+                // Update the title directly in the anchor tag
+                let spaceLinkElement = spaceBtn.querySelector("a");
+                if (spaceLinkElement) {
+                    spaceLinkElement.href = `mykitchen.html?storage=${slugify(space)}`;
+                }
                 // Append to the dropdown
                 storageSpaceDropdown.appendChild(spaceBtn);
             });
@@ -194,6 +208,11 @@ function displayFoodByStorageSpace(userID, storageSpace) {
 
     let foodItemTemplate = document.querySelector("#foodItemTemplate");
     let foodItemList = document.querySelector("#foodItemList");
+
+
+    // Update current space
+    var currentSpaceTitle = storageSpace == 'all_spaces' ? "All Spaces" : `My ${convertToTitleCase(storageSpace)}`;
+    currentSpace.innerHTML = currentSpaceTitle;
 
     if (foodItemList && foodItemTemplate) {
         let allFoodItems = db.collection("users").doc(userID).collection("food");

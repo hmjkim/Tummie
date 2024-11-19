@@ -92,9 +92,9 @@
                 fill="currentColor" />
             </svg>
           </div>
-          <h1 class="tw-text-2xl js-storage-space">My Fridge</h1>
+          <h1 class="tw-text-2xl js-current-space">My Fridge</h1>
           <!-- Down arrow -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+          <button class="js-show-storage-list tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
             <svg class="tw-text-neutral-dark" xmlns="http://www.w3.org/2000/svg" width="16" height="9"
               viewBox="0 0 16 9" fill="none">
               <path d="M15 1L8 8L1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -102,7 +102,7 @@
             </svg>
           </button>
           <!-- Storage Spaces Dropdown -->
-          <div class="tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[115%] tw-w-[240px] tw-z-[1] !tw-mx-0 tw-left-0 tw-w-full lg:tw-max-w-[520px]">
+          <div class="tw-py-1 tw-px-2 js-storage-dropdown tw-hidden tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[115%] tw-w-[240px] tw-z-[1] !tw-mx-0 tw-left-0 tw-w-full lg:tw-max-w-[520px]">
             <ul id="storageSpaceDropdown"></ul>
           </div>
         </div>
@@ -313,10 +313,10 @@
       </section>
     </template>
     <!-- Storage Space Change Dropdown -->
-    <template id="storageDropdownTemplate" >
+    <template id="storageDropdownTemplate">
       <li>
-        <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-          <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Individual</span>
+        <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-transition tw-rounded-lg hover:tw-bg-[#f9f9f9] tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+          <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Space Name</span>
           <span class="js-storage-space-num"># items</span>
         </a>
       </li>
