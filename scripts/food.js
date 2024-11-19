@@ -62,7 +62,7 @@ firebase.auth().onAuthStateChanged((user) => {
             // When food subcollection has more than one entry
             if (subCollection.docs.length > 0) {
               console.log("food collection exists");
-              document.querySelector('.js-sub-header').classList.remove('tw-hidden');
+            //   document.querySelector('.js-sub-header').classList.remove('tw-hidden');
 
               let spaceName = getURLParams("storage");
               console.log(spaceName);
@@ -169,7 +169,7 @@ function writeFood(userID) {
     })
     .then((foodRef) => {
       console.log("Document written with ID:", foodRef);
-      window.location.href = "mykitchen.html";
+      window.location.href = "mykitchen.html?storage=all_spaces";
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -355,11 +355,20 @@ function showSelectOverlay(userID, spaceName) {
 // Display Food items on My Kitchen page
 function displayFoodByStorageSpace(userID, storageSpace, sortingMethod = 'category') {
     return new Promise((resolve, reject) => {
+        var currentSpaceTitle;
         // Update current space
-        var currentSpaceTitle =
-            storageSpace == "all_spaces"
-                ? "All Spaces"
-                : `My ${convertToTitleCase(storageSpace)}`;
+        switch(storageSpace) {
+            case "all_spaces":
+                currentSpaceTitle = "All Spaces"; 
+                break;
+            case "other":
+                currentSpaceTitle = "Other"; 
+                break;
+            default:
+                currentSpaceTitle = `My ${convertToTitleCase(storageSpace)}`; 
+                break;
+        }
+        
         currentSpace.innerHTML = currentSpaceTitle;
 
         if (foodItemList && foodItemTemplate) {
