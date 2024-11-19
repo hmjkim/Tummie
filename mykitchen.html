@@ -92,7 +92,7 @@
                 fill="currentColor" />
             </svg>
           </div>
-          <h1 class="tw-text-2xl">My Fridge</h1>
+          <h1 class="tw-text-2xl js-storage-space">My Fridge</h1>
           <!-- Down arrow -->
           <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
             <svg class="tw-text-neutral-dark" xmlns="http://www.w3.org/2000/svg" width="16" height="9"
@@ -102,36 +102,9 @@
             </svg>
           </button>
           <!-- Storage Spaces Dropdown -->
-          <div class="js-storage-dropdown tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[115%] tw-w-[240px] tw-z-[1] !tw-mx-0 tw-left-0 tw-w-full lg:tw-max-w-[520px]">
-            <ul>
-              <li>
-                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-                  <span class="tw-font-sansHeading tw-font-semibold">All Spaces</span>
-                  <span># items</span>
-                </button>
-                <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
-              </li>
-              <li>
-                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-                  <span class="tw-font-sansHeading tw-font-semibold">Fridge</span>
-                  <span># items</span>
-                </button>
-              </li>
-              <li>
-                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-                  <span class="tw-font-sansHeading tw-font-semibold">Freezer</span>
-                  <span># items</span>
-                </button>
-              </li>
-              <li>
-                <button class="tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-                  <span class="tw-font-sansHeading tw-font-semibold">Pantry</span>
-                  <span># items</span>
-                </button>
-              </li>
-            </ul>
+          <div class="tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[115%] tw-w-[240px] tw-z-[1] !tw-mx-0 tw-left-0 tw-w-full lg:tw-max-w-[520px]">
+            <ul id="storageSpaceDropdown"></ul>
           </div>
-        </div>
         <!-- (DESKTOP) - Utilities bar -->
         <ul class="tw-hidden tw-text-neutral-dark md:tw-flex tw-space-x-3 tw-items-center">
           <li>
@@ -199,7 +172,7 @@
             </svg>
           </button>
           <!-- Meatball menu overlay -->
-          <div class="js-meatball-dropdown tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[120%] tw-right-0 tw-w-[240px] tw-z-[1] tw-mx-0">
+          <div class="js-meatball-dropdown tw-hidden tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[120%] tw-right-0 tw-w-[240px] tw-z-[1] tw-mx-0">
             <ul>
               <li>
                 <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-text-neutral">
@@ -336,6 +309,32 @@
         <p class="tw-text-neutral tw-max-w-[90%] tw-mx-auto tw-text-center tw-mb-4">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
         <a href="/addfood.html" title="Add a new food item" class="btn btn-primary md:tw-w-fit">Add Item</a>
       </section>
+    </template>
+    <!-- Storage Space Change Dropdown -->
+
+        <template id="storageDropdownTemplate" >
+          <li>
+            <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+              <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Individual</span>
+              <span class="js-storage-space-num"># items</span>
+            </a>
+          </li>
+        </template>
+        <!-- <li>
+          <a href="mykitchen.html?storage=all_spaces" class="js-all-spaces tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+            <span class="tw-font-sansHeading tw-font-semibold js-all-spaces-title">All Spaces</span>
+            <span class="js-all-spaces-num"># items</span>
+          </a>
+          <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
+        </li>
+        <li>
+          <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+            <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Individual</span>
+            <span class="js-storage-space-num"># items</span>
+          </a>
+        </li> -->
+      </ul>
+    </div>
     </template>
   </main>
   <footer id="footerContent"></footer>
