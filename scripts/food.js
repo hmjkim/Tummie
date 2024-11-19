@@ -59,6 +59,7 @@ firebase.auth().onAuthStateChanged((user) => {
             // When food subcollection has more than one entry
             if (subCollection.docs.length > 0) {
               console.log("food collection exists");
+              document.querySelector('.js-sub-header').classList.remove('tw-hidden');
 
               let spaceName = getURLParams("storage");
               console.log(spaceName);
@@ -72,8 +73,8 @@ firebase.auth().onAuthStateChanged((user) => {
                 .then(() => {
                     console.log("All food items have been displayed.");
                     // Now setup the select functionality
-                    showSelectOverlay();
-                    deleteFood(userID, spaceName);
+                    showSelectOverlay(userID, spaceName);
+                    // deleteFood(userID, spaceName);
                 })
                 .catch((error) => {
                     console.error("Failed to display food items:", error);
@@ -245,7 +246,7 @@ function createStorageSpaceDropdown(userID) {
   });
 }
 
-function showSelectOverlay() {
+function showSelectOverlay(userID, spaceName) {
     // Select items
     const searchBtn = document.querySelector(".js-search-btn");
     const doneBtn = document.querySelector(".js-done-btn");
@@ -253,6 +254,8 @@ function showSelectOverlay() {
         document.querySelector(".js-meatball-menu");
     const selectOverlay = document.querySelector(".js-select-overlay");
     const checkboxes = document.querySelectorAll('#foodItemList .form-check');
+    // Get a list of items to be deleted 
+    var deleteList = [];
 
     // Function to toggle visibility of multiple elements
     function toggleElementsVisibility(elements) {
@@ -291,39 +294,36 @@ function showSelectOverlay() {
         meatballOverlayTrigger.classList.remove("tw-text-neutral");
         toggleCheckboxesDisplay(false);
         itemCounter.innerHTML = '0 item(s) selected';
+        // reset the list
+        deleteList = [];
 
         // Uncheck the checked boxes
         foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
             checkbox.checked = false;
         });
-
-        // Get a list of items to be deleted & reset the list
-        let deleteList = [];
-        foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
-            // console.log(checkbox);
-            checkbox.addEventListener("click", () => {
-            let itemID = checkbox.dataset.id;
-            if (checkbox.checked) {
-                if (!deleteList.includes(itemID)) {
-                    deleteList.push(itemID);
-                }
-                // console.log(deleteList.length);
-
-                // Show number of selected items
-                itemCounter.innerHTML = `${deleteList.length} item(s) selected`;
-                console.log(checkbox, 'checked');
-            } else {
-                // Get everything except for the selected item
-                deleteList = deleteList.filter((id) => id !== itemID);
-                console.log(checkbox, "unchecked");
+    });
+    foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
+        // console.log(checkbox);
+        checkbox.addEventListener("click", () => {
+        let itemID = checkbox.dataset.id;
+        if (checkbox.checked) {
+            if (!deleteList.includes(itemID)) {
+                deleteList.push(itemID);
             }
-            console.log(deleteList);
-            });
+            // console.log(deleteList.length);
+
+            // Show number of selected items
+            itemCounter.innerHTML = `${deleteList.length} item(s) selected`;
+            console.log(checkbox, 'checked');
+        } else {
+            // Get everything except for the selected item
+            deleteList = deleteList.filter((id) => id !== itemID);
+            console.log(checkbox, "unchecked");
+        }
+        console.log(deleteList);
         });
     });
-}
 
-function deleteFood(userID, spaceName) {
     const deleteBtn = document.querySelector('.js-delete-btn');
     deleteBtn.addEventListener('click', () => {
         deleteList.forEach((itemID) => {
@@ -336,6 +336,20 @@ function deleteFood(userID, spaceName) {
         });
     });
 }
+
+// function deleteFood(userID, spaceName) {
+//     const deleteBtn = document.querySelector('.js-delete-btn');
+//     deleteBtn.addEventListener('click', () => {
+//         deleteList.forEach((itemID) => {
+//             db.collection("users").doc(userID).collection("food").doc(itemID).delete().then(() => {
+//                 console.log("Document successfully deleted!");
+//                 window.location.href = `mykitchen.html?storage=${spaceName}`;
+//             }).catch((error) => {
+//                 console.error("Error removing document: ", error);
+//             });
+//         });
+//     });
+// }
 
 // Display Food items on My Kitchen page
     function displayFoodByStorageSpace(userID, storageSpace) {
@@ -601,7 +615,7 @@ function updateFoodItem(userID) {
     })
     .then((foodRef) => {
       console.log("Document updated with ID:", foodRef);
-      window.location.href = "mykitchen.html";
+      window.location.href = "mykitchen.html?storage=${}";
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
