@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const goBackBtn = document.getElementById("go-back");
     const cancelBtn = document.querySelector(".js-cancel-btn");
-    if (!goBackBtn || !cancelBtn) {
+    if (!goBackBtn && !cancelBtn) {
         return;
     }
     [goBackBtn,cancelBtn].forEach((el) => {
