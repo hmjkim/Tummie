@@ -179,7 +179,21 @@
       $('#datepickerInput').datepicker({
           uiLibrary: 'bootstrap5'
       });
+      function previewFile(input) {
+        var file = $("input[type=file]").get(0).files[0];
+
+        if (file) {
+          var reader = new FileReader();
+
+          reader.onload = function () {
+            $("#previewImg").attr("src", reader.result);
+          };
+
+          reader.readAsDataURL(file);
+        }
+    }
     </script>
+    
     <!-- Link to scripts of your own -->
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/firebaseAPI_DTC02.js"></script>
