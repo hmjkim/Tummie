@@ -1,6 +1,5 @@
 import {
-  createSortByCategoryContainer,
-  displayFoodItemsByCategory,
+    displayFoodItemsByCategory,
   displayFoodItemsByExpiryDate,
   displayFoodItemsByName,
   createSortByDateContainer,
@@ -34,6 +33,10 @@ const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
 const meatballOverlay = document.querySelector(".js-meatball-dropdown");
 
 const itemCounter = document.querySelector('.js-item-counter');
+
+const sortBtn = document.querySelector('.js-sort-btn');
+const sortOverlay = document.querySelector('.js-sort-overlay');
+const closeBtn = document.querySelector('.js-close-btn');
 
 // MAIN FUNCTION FOR MY KITCHEN PAGE
 // Get the currently signed-in user
@@ -75,6 +78,17 @@ firebase.auth().onAuthStateChanged((user) => {
                     // Now setup the select functionality
                     showSelectOverlay(userID, spaceName);
                     // deleteFood(userID, spaceName);
+
+                    sortBtn.addEventListener('click', () => {
+                        toggleElementsVisibility([sortOverlay, meatballOverlay]);
+                    });
+                    closeBtn.addEventListener('click', () => {
+                        toggleElementsVisibility([sortOverlay]);
+                    });
+
+                    // Set up sorting options
+                    setupSortingOptions(userID, spaceName);
+                    
                 })
                 .catch((error) => {
                     console.error("Failed to display food items:", error);
@@ -246,6 +260,12 @@ function createStorageSpaceDropdown(userID) {
   });
 }
 
+
+// Function to toggle visibility of multiple elements
+function toggleElementsVisibility(elements) {
+    elements.forEach((element) => element.classList.toggle("tw-hidden"));
+}
+
 function showSelectOverlay(userID, spaceName) {
     // Select items
     const searchBtn = document.querySelector(".js-search-btn");
@@ -256,11 +276,6 @@ function showSelectOverlay(userID, spaceName) {
     const checkboxes = document.querySelectorAll('#foodItemList .form-check');
     // Get a list of items to be deleted 
     var deleteList = [];
-
-    // Function to toggle visibility of multiple elements
-    function toggleElementsVisibility(elements) {
-        elements.forEach((element) => element.classList.toggle("tw-hidden"));
-    }
 
     // Function to toggle checkboxes' display style
     function toggleCheckboxesDisplay(show) {
@@ -337,78 +352,91 @@ function showSelectOverlay(userID, spaceName) {
     });
 }
 
-// function deleteFood(userID, spaceName) {
-//     const deleteBtn = document.querySelector('.js-delete-btn');
-//     deleteBtn.addEventListener('click', () => {
-//         deleteList.forEach((itemID) => {
-//             db.collection("users").doc(userID).collection("food").doc(itemID).delete().then(() => {
-//                 console.log("Document successfully deleted!");
-//                 window.location.href = `mykitchen.html?storage=${spaceName}`;
-//             }).catch((error) => {
-//                 console.error("Error removing document: ", error);
-//             });
-//         });
-//     });
-// }
-
 // Display Food items on My Kitchen page
-    function displayFoodByStorageSpace(userID, storageSpace) {
-        return new Promise((resolve, reject) => {
-          // Update current space
-          var currentSpaceTitle =
+function displayFoodByStorageSpace(userID, storageSpace, sortingMethod = 'category') {
+    return new Promise((resolve, reject) => {
+        // Update current space
+        var currentSpaceTitle =
             storageSpace == "all_spaces"
-              ? "All Spaces"
-              : `My ${convertToTitleCase(storageSpace)}`;
-          currentSpace.innerHTML = currentSpaceTitle;
-      
-          if (foodItemList && foodItemTemplate) {
+                ? "All Spaces"
+                : `My ${convertToTitleCase(storageSpace)}`;
+        currentSpace.innerHTML = currentSpaceTitle;
+
+        if (foodItemList && foodItemTemplate) {
             // Clear existing items
             foodItemList.innerHTML = "";
-      
+
             let allFoodItems = db.collection("users").doc(userID).collection("food");
             let filteredItems = allFoodItems.where("storage_space", "==", convertToTitleCase(storageSpace));
-      
+
             let ref = storageSpace == "all_spaces" ? allFoodItems : filteredItems;
-      
+
             ref.get()
-              .then((allItems) => {
-                allItems.forEach((doc) => {
-                  // Extract data from each document
-                  let docID = doc.id;
-                  let title = doc.data().title;
-                  let expiry_date = doc.data().expiry_date;
-                  let quantity = doc.data().quantity;
-                  let image = doc.data().image;
-                  let daysLeft = calculateTimeLeft(expiry_date);
-      
-                  // Copy the content of the template
-                  let foodItemCard = foodItemTemplate.content.cloneNode(true);
-      
-                  // Populate card content
-                  foodItemCard.querySelector(".food-title").innerHTML = title;
-                  foodItemCard.querySelector(".food-link").href = "/eachFood.html?docID=" + docID;
-                  foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft, expiry_date);
-                  foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
-                  foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
-                  foodItemCard.querySelector(".food-img").alt = `${title} icon`;
-                  foodItemCard.querySelector(".form-check-input").dataset.id = docID;
-      
-                  // Append the populated card to the list
-                  foodItemList.appendChild(foodItemCard);
+                .then((querySnapshot) => {
+                    let items = [];
+                    querySnapshot.forEach((doc) => {
+                        items.push({ id: doc.id, data: doc.data() });
+                        console.log(items);
+                    });
+
+                    // Call the appropriate display function based on sorting method
+                    switch (sortingMethod) {
+                        case 'category':
+                            displayFoodItemsByCategory(items);
+                            break;
+                        case 'date':
+                            createSortByDateContainer(items).then(() => {
+                                displayFoodItemsByExpiryDate(items);
+                            });
+                            break;
+                        case 'name':
+                            createSortByNameContainer(items).then(() => {
+                                displayFoodItemsByName(items);
+                            });
+                            break;
+                        default:
+                            displayFoodItemsByCategory(items);
+                    }
+
+                    resolve(); // Resolve the promise after all items are processed
+                })
+                .catch((error) => {
+                    console.error("Error getting documents:", error);
+                    reject(error);
                 });
-      
-                resolve(); // Resolve the promise after all items are appended
-              })
-              .catch((error) => {
-                console.error("Error getting documents:", error);
-                reject(error); // Reject the promise if there's an error
-              });
-          } else {
+        } else {
             reject(new Error("foodItemList or foodItemTemplate is missing"));
-          }
-        });
-      }
+        }
+    });
+}
+
       
+function setupSortingOptions(userID, storageSpace) {
+    const sortingOptions = document.querySelectorAll('input[name="flexRadioDefault"]');
+
+    sortingOptions.forEach((option) => {
+        option.addEventListener('change', function () {
+            if (this.checked) {
+                let sortingMethod = this.value;
+
+                // Clear existing items
+                foodItemList.innerHTML = '';
+
+                // Call displayFoodByStorageSpace with the selected sorting method
+                displayFoodByStorageSpace(userID, storageSpace, sortingMethod)
+                    .then(() => {
+                        console.log(`Items sorted by ${sortingMethod} have been displayed.`);
+                        // Close the sort overlay if needed
+                        toggleElementsVisibility([sortOverlay]);
+                    })
+                    .catch((error) => {
+                        console.error("Failed to display food items:", error);
+                    });
+            }
+        });
+    });
+}
+
 
 function calculateTimeLeft(date) {
   // Define two Date objects representing the start and end dates
