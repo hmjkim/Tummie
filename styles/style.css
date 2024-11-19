@@ -53,6 +53,10 @@ main {
   width: 40px;
 }
 
+#stickyMobileNav .active p {
+  color: #1D6961;
+}
+
 .footer {
   width: 100%;
 }
