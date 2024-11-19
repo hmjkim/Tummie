@@ -156,8 +156,10 @@
         </ul>
         <!-- (MOBILE) - Search & Meatball icon container -->
         <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3 md:tw-hidden tw-relative">
+          <!-- Select Items Done button -->
+          <button class="js-done-btn tw-hidden tw-text-primary tw-font-semibold">Done</button>
           <!-- Search button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center hover:tw-text-neutral tw-transition">
+          <button class="js-search-btn tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center hover:tw-text-neutral tw-transition">
             <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M21.4433 22.1226L14.7452 15.4245M16.9779 9.84276C16.9779 14.1586 13.4793 17.6572 9.16346 17.6572C4.84765 17.6572 1.349 14.1586 1.349 9.84276C1.349 5.52695 4.84765 2.02829 9.16346 2.02829C13.4793 2.02829 16.9779 5.52695 16.9779 9.84276Z"
@@ -176,7 +178,7 @@
           <div class="js-meatball-dropdown tw-hidden tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[120%] tw-right-0 tw-w-[240px] tw-z-[1] tw-mx-0">
             <ul>
               <li class="tw-p-2">
-                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg">
+                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg js-select-items-btn">
                   <span>Select Items</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                     <path d="M16.7917 0.125H2.20833C1.6558 0.125 1.12589 0.344493 0.735194 0.735194C0.344493 1.12589 0.125 1.6558 0.125 2.20833V16.7917C0.125 17.3442 0.344493 17.8741 0.735194 18.2648C1.12589 18.6555 1.6558 18.875 2.20833 18.875H16.7917C17.3442 18.875 17.8741 18.6555 18.2648 18.2648C18.6555 17.8741 18.875 17.3442 18.875 16.7917V2.20833C18.875 1.6558 18.6555 1.12589 18.2648 0.735194C17.8741 0.344493 17.3442 0.125 16.7917 0.125ZM16.7917 2.20833V16.7917H2.20833V2.20833H16.7917ZM7.41667 14.7083L3.25 10.5417L4.71875 9.0625L7.41667 11.7604L14.2812 4.89583L15.75 6.375" fill="currentColor"></path>
@@ -290,11 +292,43 @@
         </li>
       </ul>
     </div>
-    <div id="stickyMobileNav"></div>
+    <div id="stickyMobileNav"></div> 
+    <!-- Select Option Overlay -->
+    <div class="js-select-overlay tw-hidden tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)]">
+      <div class="container">
+        <p class="tw-p-3 tw-border-solid tw-border-b tw-border-neutral-light tw-text-center">0 item(s) selected</p>
+      </div>
+      <div class="tw-w-full tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
+      <div>
+        <ul class="container tw-flex tw-items-center tw-space-x-5 tw-text-neutral">
+          <li>
+            <button class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-p-5 hover:tw-text-primary tw-transition">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <path d="M23.75 8.75L22.6658 23.9281C22.5724 25.2364 21.4838 26.25 20.1722 26.25H9.8278C8.5162 26.25 7.4276 25.2364 7.33415 23.9281L6.25 8.75M12.5 13.75V21.25M17.5 13.75V21.25M18.75 8.75V5C18.75 4.30964 18.1904 3.75 17.5 3.75H12.5C11.8096 3.75 11.25 4.30964 11.25 5V8.75M5 8.75H25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+                <p class="m-0 label">Delete</p>
+            </button>
+          </li>
+          <li>
+            <button class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-p-5 hover:tw-text-primary tw-transition">
+              <svg xmlns="http://www.w3.org/2000/svg" width="31" height="30" viewBox="0 0 31 30" fill="none">
+                <path d="M4.42871 8.75V21.25C4.42871 22.6307 5.548 23.75 6.92871 23.75H24.4287C25.8094 23.75 26.9287 22.6307 26.9287 21.25V11.25C26.9287 9.86929 25.8094 8.75 24.4287 8.75H16.9287L14.4287 6.25H6.92871C5.548 6.25 4.42871 7.36929 4.42871 8.75Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <p class="m-0 label">Move</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+      </div>
+    </div>
 
     <template id="foodItemTemplate">
-      <li class="tw-border-neutral-light tw-border tw-rounded-lg">
-        <a href="#" class="tw-flex tw-space-x-4 tw-w-full tw-p-4 tw-relative food-link">
+      <li class="tw-flex tw-items-center tw-space-x-2">
+        <div class="form-check tw-hidden">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <!-- <label class="form-check-label" for="flexCheckDefault"></label> -->
+        </div>
+        <a href="#" class="tw-border-neutral-light tw-border tw-rounded-lg  tw-flex tw-space-x-4 tw-w-full tw-p-4 tw-relative food-link">
           <img class="food-img" src="./images/icons/food/carrot.svg" alt="Carrot icon">
           <div class="">
             <h3 class="tw-text-lg food-title">Title

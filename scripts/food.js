@@ -24,6 +24,15 @@ const currentSpace = document.querySelector('.js-current-space');
 const emptyKitchenMessage = document.querySelector("#emptyKitchenMessage");
 const searchBar = document.querySelector(".js-search-bar");
 
+const foodItemTemplate = document.querySelector("#foodItemTemplate");
+const foodItemList = document.querySelector("#foodItemList");
+
+const selectBtn = document.querySelector('.js-select-items-btn');
+const selectOverlay = document.querySelector('.js-select-overlay');
+
+const meatballOverlayTrigger = document.querySelector('.js-meatball-menu');
+const meatballOverlay = document.querySelector('.js-meatball-dropdown');
+
 
 // MAIN FUNCTION FOR MY KITCHEN PAGE
 // Get the currently signed-in user
@@ -53,10 +62,15 @@ firebase.auth().onAuthStateChanged((user) => {
                         let spaceName = getURLParams('storage');
                         console.log(spaceName);
 
+                        
+                        // deleteFood()
                         toggleStorageDropdown();
                         toggleMeatballOverlay()
                         createStorageSpaceDropdown(userID);
                         displayFoodByStorageSpace(userID, spaceName);
+                        
+
+                        // createSortByCategoryContainer(userID);
                         // createSortByCategoryContainer(userID);
                         // displayFoodItemsByCategory(userID);
                     // When food subcollection has no documents
@@ -89,12 +103,17 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
+function checkStatus() {
+    console.log(foodItemList.querySelector('.form-check-input').checked);
+}
+
 function toggleMeatballOverlay() {
-    const overlayTrigger = document.querySelector('.js-meatball-menu');
-    const overlay = document.querySelector('.js-meatball-dropdown');
-    overlayTrigger.addEventListener('click', () => {
-        overlay.classList.toggle('tw-hidden');
-        overlayTrigger.classList.toggle('tw-text-neutral');
+    meatballOverlayTrigger.addEventListener('click', () => {
+        // Show or hide the overlay based on the new state
+        meatballOverlay.classList.toggle('tw-hidden');
+
+        // Adjust the button text color accordingly
+        meatballOverlayTrigger.classList.toggle('tw-text-neutral');
     });
 }
 
@@ -190,7 +209,7 @@ function createStorageSpaceDropdown(userID) {
         underlineDiv.classList.add("tw-w-[90%]", "tw-h-[1px]", "tw-bg-neutral-light", "tw-mx-auto");
         storageSpaceDropdown.appendChild(underlineDiv);
 
-        // Step 2: Handle individual storage spaces (Fridge, Freezer, Pantry, Other)
+        // Handle individual storage spaces (Fridge, Freezer, Pantry, Other)
         storageSpaceList.forEach((space) => {
             let filteredItems = db.collection("users").doc(userID).collection("food").where("storage_space", "==", space).get().then((doc) => {
                 let spaceSize = doc.size;
@@ -226,8 +245,6 @@ function createStorageSpaceDropdown(userID) {
 // Display Food items on My Kitchen page
 function displayFoodByStorageSpace(userID, storageSpace) {
 
-    let foodItemTemplate = document.querySelector("#foodItemTemplate");
-    let foodItemList = document.querySelector("#foodItemList");
 
 
     // Update current space
@@ -271,10 +288,58 @@ function displayFoodByStorageSpace(userID, storageSpace) {
                 foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
                 foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
                 foodItemCard.querySelector(".food-img").alt = `${title} icon`;
-                
+
                 foodItemList.appendChild(foodItemCard);
 
-            })
+                // deleteFood();
+
+                // let checkboxes = foodItemList.querySelectorAll('.form-check-input');
+                // checkboxes.forEach((checkbox) => {
+                //     checkbox.addEventListener('click', () =>{
+                //         if (checkbox.checked == true) {
+                //             console.log('checked');
+                //         }
+                //     });
+                // });
+
+                // Select items
+
+
+                // Query the elements once
+                const checkboxes = foodItemList.querySelectorAll('.form-check');
+                const searchBtn = document.querySelector('.js-search-btn');
+                const doneBtn = document.querySelector('.js-done-btn');
+                const meatballOverlayTrigger = document.querySelector('.js-meatball-menu');
+                const selectOverlay = document.querySelector('.js-select-overlay');  // Assuming selectOverlay was not defined
+
+                // Function to toggle visibility of multiple elements
+                function toggleElementsVisibility(elements) {
+                    elements.forEach(element => element.classList.toggle('tw-hidden'));
+                }
+
+                // Function to toggle checkboxes' display style
+                function toggleCheckboxesDisplay(show) {
+                    checkboxes.forEach(checkbox => {
+                        checkbox.style.display = show ? 'block' : 'none';
+                    });
+                }
+
+                // Select button event listener
+                selectBtn.addEventListener('click', () => {
+                    toggleElementsVisibility([selectOverlay, meatballOverlay, searchBtn, meatballOverlayTrigger, doneBtn]);
+                    toggleCheckboxesDisplay(true);
+                });
+
+                // Done button event listener
+                doneBtn.addEventListener('click', () => {
+                    toggleElementsVisibility([selectOverlay, meatballOverlay, searchBtn, meatballOverlayTrigger, doneBtn]);
+                    meatballOverlay.classList.add('tw-hidden');  // Explicitly hide meatballOverlay
+                    meatballOverlayTrigger.classList.remove('tw-text-neutral');
+                    toggleCheckboxesDisplay(false);
+                });
+                
+
+            });
 
         })
 
