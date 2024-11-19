@@ -33,6 +33,8 @@ const selectOverlay = document.querySelector(".js-select-overlay");
 const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
 const meatballOverlay = document.querySelector(".js-meatball-dropdown");
 
+const itemCounter = document.querySelector('.js-item-counter');
+
 // MAIN FUNCTION FOR MY KITCHEN PAGE
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
@@ -288,28 +290,40 @@ function showSelectOverlay() {
         meatballOverlay.classList.add("tw-hidden"); // Explicitly hide meatballOverlay
         meatballOverlayTrigger.classList.remove("tw-text-neutral");
         toggleCheckboxesDisplay(false);
+        itemCounter.innerHTML = '0 item(s) selected';
+
+        // Uncheck the checked boxes
+        foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+
+        // Get a list of items to be deleted & reset the list
+        let deleteList = [];
+        foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
+            // console.log(checkbox);
+            checkbox.addEventListener("click", () => {
+            let itemID = checkbox.dataset.id;
+            if (checkbox.checked) {
+                if (!deleteList.includes(itemID)) {
+                    deleteList.push(itemID);
+                }
+                // console.log(deleteList.length);
+
+                // Show number of selected items
+                itemCounter.innerHTML = `${deleteList.length} item(s) selected`;
+                console.log(checkbox, 'checked');
+            } else {
+                // Get everything except for the selected item
+                deleteList = deleteList.filter((id) => id !== itemID);
+                console.log(checkbox, "unchecked");
+            }
+            console.log(deleteList);
+            });
+        });
     });
 }
 
 function deleteFood(userID, spaceName) {
-    let deleteList = [];
-    foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
-        // console.log(checkbox);
-        checkbox.addEventListener("click", () => {
-        let itemID = checkbox.dataset.id;
-        if (checkbox.checked) {
-            if (!deleteList.includes(itemID)) {
-                deleteList.push(itemID);
-            }
-            // console.log(checkbox, 'checked');
-        } else {
-            // Get everything except for the selected item
-            deleteList = deleteList.filter((id) => id !== itemID);
-            // console.log(checkbox, "unchecked");
-        }
-      });
-    });
-    
     const deleteBtn = document.querySelector('.js-delete-btn');
     deleteBtn.addEventListener('click', () => {
         deleteList.forEach((itemID) => {
