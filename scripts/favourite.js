@@ -7,7 +7,7 @@ function pageSetup() {
             currentUser = db.collection("users").doc(user.uid); //global
 
             // the following functions are always called when someone is logged in
-            populateFavoriteRecipes(currentUser, pageNumber);
+            populateFavoriteRecipes(currentUser);
 
         } else {
             // When no user is signed in, forcefully direct the user to login.html
@@ -20,21 +20,24 @@ pageSetup();
 
 
 //------------------------------------------------------------------------------
-// Set initial page number for pagination
-//------------------------------------------------------------------------------
-var pageNumber = 1
-
-//------------------------------------------------------------------------------
 // Set the number of recipes per page for pagination
 //------------------------------------------------------------------------------
 const CARDS_PER_PAGE = 3;
 
 // Function to populate users' saved recipes
-function populateFavoriteRecipes(currentUser, pageNumber) {
+function populateFavoriteRecipes(currentUser) {
     var params = new URL(window.location.href)
-    pageNumber = params.searchParams.get("page")
+
+    // Get page number from URL
+    var pageNumber = params.searchParams.get("page")
     if (pageNumber == null) {
         pageNumber = 1
+    }
+
+    // Get cuisine from URL
+    var cuisine = params.searchParams.get("cuisine")
+    if (cuisine == null) {
+        cuisine = 'All'
     }
 
     currentUser.get()
@@ -42,7 +45,6 @@ function populateFavoriteRecipes(currentUser, pageNumber) {
 
             // Get the Array of bookmarks
             var favorites = userDoc.data().favorites.reverse();
-            // console.log(favorites);
 
             // Create an array containing recipes on the current page only
             var favoritesCurrentPage = []
@@ -60,7 +62,9 @@ function populateFavoriteRecipes(currentUser, pageNumber) {
             const TOTAL_NUMBER_OF_PAGES = Math.ceil(favorites.length / CARDS_PER_PAGE);
 
             // Display page info
-            if (pageNumber * CARDS_PER_PAGE > favorites.length) {
+            if (favorites.length < 2) {
+                document.getElementById("pageInfo").innerHTML = `Showing ${favorites.length} of ${favorites.length} Recipes`
+            } else if (pageNumber * CARDS_PER_PAGE > favorites.length) {
                 document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${favorites.length} of ${favorites.length} Recipes`
             } else {
                 document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${favorites.length} Recipes`
@@ -81,7 +85,7 @@ function populateFavoriteRecipes(currentUser, pageNumber) {
                     //update title and text and image
                     newcard.querySelector('.card-title').innerHTML = title;
                     newcard.querySelector('.card-image').src = link;
-                    newcard.querySelector('.card-button').href = `eachFavouriteRecipe.html?page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
+                    newcard.querySelector('.card-button').href = `eachFavouriteRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
                     newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                     newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
@@ -100,12 +104,12 @@ function populateFavoriteRecipes(currentUser, pageNumber) {
             })
 
             // Create pagination
-            pagination(pageNumber, TOTAL_NUMBER_OF_PAGES)
+            pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES)
         })
 }
 
 
-function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
+function pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES) {
 
     // Clear existing pagination buttons before loading new buttons
     document.getElementById("prevBtn").innerHTML = ``
@@ -225,8 +229,8 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber > 1) {
         document.getElementById("prevBtnLink").addEventListener("click", () => {
             pageNumber--
-            document.getElementById("prevBtnLink").href = `favourite.html?page=${pageNumber}`
-            populateFavoriteRecipes(currentUser, pageNumber)
+            document.getElementById("prevBtnLink").href = `favourite.html?cuisine=${cuisine}&page=${pageNumber}`
+            populateFavoriteRecipes(currentUser)
         })
     }
 
@@ -234,8 +238,8 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     for (let i = 0; i < btnsDisplayed.length; i++) {
         btnsDisplayed[i].addEventListener("click", () => {
             pageNumber = parseInt(btnsDisplayed[i].innerText)
-            btnsDisplayed[i].href = `favourite.html?page=${pageNumber}`
-            populateFavoriteRecipes(currentUser, pageNumber)
+            btnsDisplayed[i].href = `favourite.html?cuisine=${cuisine}&page=${pageNumber}`
+            populateFavoriteRecipes(currentUser)
         })
     }
 
@@ -243,8 +247,8 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber < TOTAL_NUMBER_OF_PAGES) {
         document.getElementById("nextBtnLink").addEventListener("click", () => {
             pageNumber++
-            document.getElementById("nextBtnLink").href = `favourite.html?page=${pageNumber}`
-            populateFavoriteRecipes(currentUser, pageNumber)
+            document.getElementById("nextBtnLink").href = `favourite.html?cuisine=${cuisine}&page=${pageNumber}`
+            populateFavoriteRecipes(currentUser)
         })
     }
 }
@@ -274,7 +278,7 @@ function savetoFavorite(recipesDocID) {
                 document.getElementById(iconID).innerText = 'favorite_border';
 
                 document.getElementById("recipes-go-here").innerText = ""; // clear all cards 
-                populateFavoriteRecipes(currentUser, pageNumber); // re-populate favorite recipes again
+                populateFavoriteRecipes(currentUser); // re-populate favorite recipes again
             });
     });
 }

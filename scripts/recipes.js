@@ -7,7 +7,7 @@ function pageSetup() {
             currentUser = db.collection("users").doc(user.uid); //global
 
             // the following functions are always called when someone is logged in
-            displayCardsDynamically("recipes", pageNumber);  //input param is the name of the collection
+            displayCardsDynamically("recipes");  //input param is the name of the collection
 
         } else {
             // When no user is signed in, forcefully direct the user to login.html
@@ -82,10 +82,6 @@ async function readJSONrecipes() {
     }
 }
 
-//------------------------------------------------------------------------------
-// Set initial page number for pagination
-//------------------------------------------------------------------------------
-var pageNumber = 1
 
 //------------------------------------------------------------------------------
 // Set the number of recipes per page for pagination
@@ -95,100 +91,117 @@ const CARDS_PER_PAGE = 3;
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
-function displayCardsDynamically(recipes, pageNumber) {
+function displayCardsDynamically(recipes) {
     var params = new URL(window.location.href)
-    pageNumber = params.searchParams.get("page")
+
+    // Get page number from URL
+    var pageNumber = params.searchParams.get("page")
     if (pageNumber == null) {
         pageNumber = 1
     }
 
-    let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
+    // Get cuisine from URL
+    var cuisine = params.searchParams.get("cuisine")
+    if (cuisine == null) {
+        cuisine = 'All'
+    }
 
     // Clear existing recipe cards before loading new cards
     document.getElementById("recipes-go-here").innerHTML = ``
 
-    db.collection(recipes).get() // the collection called "recipes"
-        .then(allRecipes => {
-            const TOTAL_NUMBER_OF_PAGES = Math.ceil(allRecipes.docs.length / CARDS_PER_PAGE);
+    if (cuisine == 'All') {
+        db.collection(recipes).get() // the collection called "recipes"
+            .then(allRecipes => {
+                const TOTAL_NUMBER_OF_PAGES = Math.ceil(allRecipes.docs.length / CARDS_PER_PAGE);
 
-            // Display page info
-            if (pageNumber * CARDS_PER_PAGE > allRecipes.docs.length) {
-                document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${allRecipes.docs.length} of ${allRecipes.docs.length} Recipes`
-            } else {
-                document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${allRecipes.docs.length} Recipes`
-            }
+                // Display page info
+                if (allRecipes.docs.length < 2) {
+                    document.getElementById("pageInfo").innerHTML = `Showing ${allRecipes.docs.length} of ${allRecipes.docs.length} Recipes`
+                } else if (pageNumber * CARDS_PER_PAGE > allRecipes.docs.length) {
+                    document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${allRecipes.docs.length} of ${allRecipes.docs.length} Recipes`
+                } else {
+                    document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${allRecipes.docs.length} Recipes`
+                }
 
-            if (pageNumber == 1) {
-                db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
-                    .then(allRecipes => {
-                        allRecipes.forEach(doc => { //iterate through each doc
-                            var title = doc.data().strMeal;       // get value of the "strMeal" key
-                            var link = doc.data().strMealThumb;    // get link of the recipe image
-                            var docID = doc.id;   // get document ID
-                            let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+                // Display recipe cards
+                if (pageNumber == 1) {
+                    db.collection(recipes).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
+                        .then(allRecipes => createCards(allRecipes, cuisine, pageNumber))
+                } else {
+                    LastVisible = allRecipes.docs[(CARDS_PER_PAGE * (pageNumber - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
 
-                            //update title, text, and image
-                            newcard.querySelector('.card-title').innerHTML = title;  // update title
-                            newcard.querySelector('.card-image').src = link; // update image
-                            newcard.querySelector('.card-button').href = `eachRecipe.html?page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
-                            newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
-                            newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
+                    db.collection(recipes).startAfter(LastVisible).limit(CARDS_PER_PAGE).get() // display the next batch using the cursor
+                        .then(allRecipes => createCards(allRecipes, cuisine, pageNumber))
+                }
 
-                            // Check if the recipe is already saved or not
-                            currentUser.get().then(userDoc => {
-                                var favorites = userDoc.data().favorites;
-                                if (favorites) {
-                                    if (favorites.includes(docID)) {
-                                        document.getElementById('save-' + docID).innerText = 'favorite';
-                                    }
-                                }
-                            })
+                // Create pagination
+                pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES)
+            })
+    } else {
+        db.collection(recipes).where('strArea', '==', cuisine).get() // the collection called "recipes"
+            .then(allRecipes => {
+                const TOTAL_NUMBER_OF_PAGES = Math.ceil(allRecipes.docs.length / CARDS_PER_PAGE);
 
-                            //attach to gallery, Example: "recipes-go-here"
-                            document.getElementById(recipes + "-go-here").appendChild(newcard);
-                        })
-                    })
-            } else {
-                LastVisible = allRecipes.docs[(CARDS_PER_PAGE * (pageNumber - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
+                // Display page info
+                if (allRecipes.docs.length < 2) {
+                    document.getElementById("pageInfo").innerHTML = `Showing ${allRecipes.docs.length} of ${allRecipes.docs.length} Recipes`
+                } else if (pageNumber * CARDS_PER_PAGE > allRecipes.docs.length) {
+                    document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${allRecipes.docs.length} of ${allRecipes.docs.length} Recipes`
+                } else {
+                    document.getElementById("pageInfo").innerHTML = `Showing ${(pageNumber - 1) * CARDS_PER_PAGE + 1} - ${pageNumber * CARDS_PER_PAGE} of ${allRecipes.docs.length} Recipes`
+                }
 
-                db.collection(recipes).startAfter(LastVisible).limit(CARDS_PER_PAGE).get() // display the next batch using the cursor
-                    .then(allRecipes => {
-                        allRecipes.forEach(doc => { //iterate thru each doc
-                            var title = doc.data().strMeal;       // get value of the "strMeal" key
-                            var link = doc.data().strMealThumb;    // get link of the recipe image
-                            var docID = doc.id;   // get document ID
-                            let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+                // Display recipe cards
+                if (pageNumber == 1) {
+                    db.collection(recipes).where('strArea', '==', cuisine).limit(CARDS_PER_PAGE).get() // display (CARDS_PER_PAGE) recipe cards only
+                        .then(allRecipes => createCards(allRecipes, cuisine, pageNumber))
+                } else {
+                    LastVisible = allRecipes.docs[(CARDS_PER_PAGE * (pageNumber - 1)) - 1] // use the last document in a batch as the start of a cursor for the next batch
 
-                            //update title and text and image
-                            newcard.querySelector('.card-title').innerHTML = title;  // update title
-                            newcard.querySelector('.card-image').src = link; // update image
-                            newcard.querySelector('.card-button').href = `eachRecipe.html?page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
-                            newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
-                            newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
+                    db.collection(recipes).where('strArea', '==', cuisine).startAfter(LastVisible).limit(CARDS_PER_PAGE).get() // display the next batch using the cursor
+                        .then(allRecipes => createCards(allRecipes, cuisine, pageNumber))
+                }
 
-                            // Check if the recipe is already saved or not
-                            currentUser.get().then(userDoc => {
-                                var favorites = userDoc.data().favorites;
-                                if (favorites) {
-                                    if (favorites.includes(docID)) {
-                                        document.getElementById('save-' + docID).innerText = 'favorite';
-                                    }
-                                }
-                            })
-
-                            //attach to gallery, Example: "recipes-go-here"
-                            document.getElementById(recipes + "-go-here").appendChild(newcard);
-                        })
-                    })
-            }
-
-            // Create pagination
-            pagination(pageNumber, TOTAL_NUMBER_OF_PAGES)
-        })
+                // Create pagination
+                pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES)
+            })
+    }
 }
 
 
-function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
+function createCards(allRecipes, cuisine, pageNumber) {
+    let cardTemplate = document.getElementById("recipeCardTemplate"); // Retrieve the HTML element with the ID "recipeCardTemplate" and store it in the cardTemplate variable.
+
+    allRecipes.forEach(doc => { //iterate through each doc
+        var title = doc.data().strMeal;       // get value of the "strMeal" key
+        var link = doc.data().strMealThumb;    // get link of the recipe image
+        var docID = doc.id;   // get document ID
+        let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+
+        //update title, text, and image
+        newcard.querySelector('.card-title').innerHTML = title;  // update title
+        newcard.querySelector('.card-image').src = link; // update image
+        newcard.querySelector('.card-button').href = `eachRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
+        newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
+        newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
+
+        // Check if the recipe is already saved or not
+        currentUser.get().then(userDoc => {
+            var favorites = userDoc.data().favorites;
+            if (favorites) {
+                if (favorites.includes(docID)) {
+                    document.getElementById('save-' + docID).innerText = 'favorite';
+                }
+            }
+        })
+
+        //attach to "recipes-go-here"
+        document.getElementById("recipes-go-here").appendChild(newcard);
+    })
+}
+
+
+function pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES) {
 
     // Clear existing pagination buttons before loading new buttons
     document.getElementById("prevBtn").innerHTML = ``
@@ -308,8 +321,8 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber > 1) {
         document.getElementById("prevBtnLink").addEventListener("click", () => {
             pageNumber--
-            document.getElementById("prevBtnLink").href = `recipes.html?page=${pageNumber}`
-            displayCardsDynamically("recipes", pageNumber)
+            document.getElementById("prevBtnLink").href = `recipes.html?cuisine=${cuisine}&page=${pageNumber}`
+            displayCardsDynamically("recipes")
         })
     }
 
@@ -317,8 +330,8 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     for (let i = 0; i < btnsDisplayed.length; i++) {
         btnsDisplayed[i].addEventListener("click", () => {
             pageNumber = parseInt(btnsDisplayed[i].innerText)
-            btnsDisplayed[i].href = `recipes.html?page=${pageNumber}`
-            displayCardsDynamically("recipes", pageNumber)
+            btnsDisplayed[i].href = `recipes.html?cuisine=${cuisine}&page=${pageNumber}`
+            displayCardsDynamically("recipes")
         })
     }
 
@@ -326,8 +339,8 @@ function pagination(pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber < TOTAL_NUMBER_OF_PAGES) {
         document.getElementById("nextBtnLink").addEventListener("click", () => {
             pageNumber++
-            document.getElementById("nextBtnLink").href = `recipes.html?page=${pageNumber}`
-            displayCardsDynamically("recipes", pageNumber)
+            document.getElementById("nextBtnLink").href = `recipes.html?cuisine=${cuisine}&page=${pageNumber}`
+            displayCardsDynamically("recipes")
         })
     }
 }
