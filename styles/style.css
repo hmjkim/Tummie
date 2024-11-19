@@ -192,6 +192,16 @@ select {
   background-position: right 0.7rem center;
 }
 
+.form-check-input:checked {
+  border-color: #1D6961;
+  background-color: #1D6961;
+}
+
+.form-check-input:focus {
+  border-color: #609690;
+  box-shadow: 0 0 0 .1rem #016a5e21;
+}
+
 .is-active {
   display: block !important;
 }
