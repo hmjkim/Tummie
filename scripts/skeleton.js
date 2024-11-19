@@ -28,7 +28,7 @@ function updateActiveNavLink() {
   const currentURL = window.location.pathname;
 
   navLinks.forEach((link) => {
-    if (currentURL.includes(link.getAttribute('href'))) {
+    if (link.getAttribute('href').includes(currentURL)) {
       let linkText = link.innerText;
       link.classList.add('active');
       link.querySelector('img').src = `./images/icons/${slugify(linkText)}-active.svg`
