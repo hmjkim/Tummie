@@ -20,70 +20,72 @@ var foodNotes = document.getElementById("notesInput");
 const emptyKitchenMessageTemplate = document.querySelector(
   "#emptyKitchenMessageTemplate"
 );
-const currentSpace = document.querySelector('.js-current-space');
+const currentSpace = document.querySelector(".js-current-space");
 const emptyKitchenMessage = document.querySelector("#emptyKitchenMessage");
 const searchBar = document.querySelector(".js-search-bar");
 
 const foodItemTemplate = document.querySelector("#foodItemTemplate");
 const foodItemList = document.querySelector("#foodItemList");
 
-const selectBtn = document.querySelector('.js-select-items-btn');
-const selectOverlay = document.querySelector('.js-select-overlay');
+const selectBtn = document.querySelector(".js-select-items-btn");
+const selectOverlay = document.querySelector(".js-select-overlay");
 
-const meatballOverlayTrigger = document.querySelector('.js-meatball-menu');
-const meatballOverlay = document.querySelector('.js-meatball-dropdown');
-
+const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
+const meatballOverlay = document.querySelector(".js-meatball-dropdown");
 
 // MAIN FUNCTION FOR MY KITCHEN PAGE
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        // console.log("current user", user)
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/v8/firebase.User
-        var userID = user.uid;
+  if (user) {
+    // console.log("current user", user)
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/v8/firebase.User
+    var userID = user.uid;
 
-        if (editForm) {
-            // Edit form page
-            populateFoodInfo();
-        } else {
-            // My Kitchen page
+    if (editForm) {
+      // Edit form page
+      populateFoodInfo();
+    } else {
+      // My Kitchen page
 
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .get()
+        .then((subCollection) => {
+          if (emptyKitchenMessage && searchBar) {
+            // When food subcollection has more than one entry
+            if (subCollection.docs.length > 0) {
+              console.log("food collection exists");
 
-            db.collection("users").doc(userID).collection("food").get().then(subCollection => {
+              let spaceName = getURLParams("storage");
+              console.log(spaceName);
+                // Execute necessary setup before displaying items
+                toggleStorageDropdown();
+                toggleMeatballOverlay();
+                createStorageSpaceDropdown(userID);
 
-                if (emptyKitchenMessage && searchBar) {
-                    // When food subcollection has more than one entry
-                    if (subCollection.docs.length > 0) {
-                        console.log('food collection exists');
+                // Display food items and chain the rest of the actions
+                displayFoodByStorageSpace(userID, spaceName)
+                .then(() => {
+                    console.log("All food items have been displayed.");
+                    // Now setup the select functionality
+                    showSelectOverlay();
+                    deleteFood(userID, spaceName);
+                })
+                .catch((error) => {
+                    console.error("Failed to display food items:", error);
+                });
 
-
-                        
-                        let spaceName = getURLParams('storage');
-                        console.log(spaceName);
-
-                        
-                        // deleteFood()
-                        toggleStorageDropdown();
-                        toggleMeatballOverlay()
-                        createStorageSpaceDropdown(userID);
-                        displayFoodByStorageSpace(userID, spaceName);
-                        
-
-                        // createSortByCategoryContainer(userID);
-                        // createSortByCategoryContainer(userID);
-                        // displayFoodItemsByCategory(userID);
-                    // When food subcollection has no documents
-                    } else {
-                        console.log('food collection does not exist');
-                        let node = emptyKitchenMessageTemplate.content.cloneNode(true);
-                        emptyKitchenMessage.appendChild(node);
-                        searchBar.style.display = "none";
-                    }
-                }
-            });
-            
-        }
+            } else {
+                console.log("food collection does not exist");
+                let node = emptyKitchenMessageTemplate.content.cloneNode(true);
+                emptyKitchenMessage.appendChild(node);
+                searchBar.style.display = "none";
+            }
+          }
+        });
+    }
 
     const saveBtn = document.querySelector(".save-btn");
     if (saveBtn) {
@@ -103,32 +105,30 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-function checkStatus() {
-    console.log(foodItemList.querySelector('.form-check-input').checked);
-}
-
 function toggleMeatballOverlay() {
-    meatballOverlayTrigger.addEventListener('click', () => {
-        // Show or hide the overlay based on the new state
-        meatballOverlay.classList.toggle('tw-hidden');
+  meatballOverlayTrigger.addEventListener("click", () => {
+    // Show or hide the overlay based on the new state
+    meatballOverlay.classList.toggle("tw-hidden");
 
-        // Adjust the button text color accordingly
-        meatballOverlayTrigger.classList.toggle('tw-text-neutral');
-    });
+    // Adjust the button text color accordingly
+    meatballOverlayTrigger.classList.toggle("tw-text-neutral");
+  });
 }
 
 function toggleStorageDropdown() {
-    const storageBtn = document.querySelector('.js-show-storage-list');
-    const btnArrow = storageBtn.querySelector('.js-down-arrow');
-    const storageDropdownContainer = document.querySelector('.js-storage-dropdown');
+  const storageBtn = document.querySelector(".js-show-storage-list");
+  const btnArrow = storageBtn.querySelector(".js-down-arrow");
+  const storageDropdownContainer = document.querySelector(
+    ".js-storage-dropdown"
+  );
 
-    if (!storageBtn && !btnArrow && !storageDropdownContainer) {
-        return;
-    }
-    storageBtn.addEventListener('click', () => {
-        storageDropdownContainer.classList.toggle('tw-hidden');
-        btnArrow.classList.toggle('tw-rotate-180');
-    });
+  if (!storageBtn && !btnArrow && !storageDropdownContainer) {
+    return;
+  }
+  storageBtn.addEventListener("click", () => {
+    storageDropdownContainer.classList.toggle("tw-hidden");
+    btnArrow.classList.toggle("tw-rotate-180");
+  });
 }
 
 // Add food items
@@ -159,192 +159,228 @@ function writeFood(userID) {
     });
 }
 
-// function getStorageSpace() {
-//     let spaceName = getURLParams('storage');
-//     console.log(spaceName);
-//     // var spaceName = 'All Spaces'; 
-//     // const storageDropdown = document.querySelector('.js-storage-dropdown');
-//     // const storageSpaces = storageDropdown.querySelectorAll('a');
-//     // storageSpaces.forEach((storageSpace) => {
-//     //     storageSpace.addEventListener("click", (event) => {
-//     //         event.preventDefault();
-//     //         spaceName = storageSpace.querySelector('.js-storage-space').textContent;
-//     //     });
-//     // })
-
-//     return spaceName;
-// }
-
 function createStorageSpaceDropdown(userID) {
-    let storageDropdownTemplate = document.getElementById("storageDropdownTemplate");
-    let storageSpaceDropdown = document.getElementById("storageSpaceDropdown");
-    var storageSpaceList = ['Fridge', 'Freezer', 'Pantry', 'Other'];
+  let storageDropdownTemplate = document.getElementById(
+    "storageDropdownTemplate"
+  );
+  let storageSpaceDropdown = document.getElementById("storageSpaceDropdown");
+  var storageSpaceList = ["Fridge", "Freezer", "Pantry", "Other"];
 
-    // Handle the "All Spaces" entry first
-    let allFoodItems = db.collection("users").doc(userID).collection("food");
-    allFoodItems.get().then((doc) => {
-        let allSpacesSize = doc.size;
-        
-        // Clone the template for "All Spaces"
-        let allSpacesBtn = storageDropdownTemplate.content.cloneNode(true);
+  // Handle the "All Spaces" entry first
+  let allFoodItems = db.collection("users").doc(userID).collection("food");
+  allFoodItems.get().then((doc) => {
+    let allSpacesSize = doc.size;
 
-        // Update the number of items for "All Spaces"
-        let allSpacesNumElement = allSpacesBtn.querySelector(".js-storage-space-num");
-        if (allSpacesNumElement) {
-            allSpacesNumElement.innerHTML = `${allSpacesSize} items`;
+    // Clone the template for "All Spaces"
+    let allSpacesBtn = storageDropdownTemplate.content.cloneNode(true);
+
+    // Update the number of items for "All Spaces"
+    let allSpacesNumElement = allSpacesBtn.querySelector(
+      ".js-storage-space-num"
+    );
+    if (allSpacesNumElement) {
+      allSpacesNumElement.innerHTML = `${allSpacesSize} items`;
+    }
+
+    // Update the title for "All Spaces" directly in the anchor tag
+    let allSpacesLinkElement = allSpacesBtn.querySelector("a");
+    if (allSpacesLinkElement) {
+      allSpacesLinkElement.href = "mykitchen.html?storage=all_spaces";
+      allSpacesLinkElement.querySelector(".js-storage-space-title").innerHTML =
+        "All Spaces";
+    }
+
+    // Append the "All Spaces" button to the dropdown
+    storageSpaceDropdown.appendChild(allSpacesBtn);
+
+    // Add the underline only under "All Spaces"
+    let underlineDiv = document.createElement("div");
+    underlineDiv.classList.add(
+      "tw-w-[90%]",
+      "tw-h-[1px]",
+      "tw-bg-neutral-light",
+      "tw-mx-auto"
+    );
+    storageSpaceDropdown.appendChild(underlineDiv);
+
+    // Handle individual storage spaces (Fridge, Freezer, Pantry, Other)
+    storageSpaceList.forEach((space) => {
+      let filteredItems = db
+        .collection("users")
+        .doc(userID)
+        .collection("food")
+        .where("storage_space", "==", space)
+        .get()
+        .then((doc) => {
+          let spaceSize = doc.size;
+
+          // Clone the template for each individual space
+          let spaceBtn = storageDropdownTemplate.content.cloneNode(true);
+
+          // Find and update the number of items for the storage space
+          let spaceNumElement = spaceBtn.querySelector(".js-storage-space-num");
+          if (spaceNumElement) {
+            spaceNumElement.innerHTML = `${spaceSize} items`;
+          }
+
+          // Find and update the title for the storage space
+          let spaceTitleElement = spaceBtn.querySelector(
+            ".js-storage-space-title"
+          );
+          if (spaceTitleElement) {
+            spaceTitleElement.innerHTML = space;
+          }
+
+          // Update the title directly in the anchor tag
+          let spaceLinkElement = spaceBtn.querySelector("a");
+          if (spaceLinkElement) {
+            spaceLinkElement.href = `mykitchen.html?storage=${slugify(space)}`;
+          }
+          // Append to the dropdown
+          storageSpaceDropdown.appendChild(spaceBtn);
+        });
+    });
+  });
+}
+
+function showSelectOverlay() {
+    // Select items
+    const searchBtn = document.querySelector(".js-search-btn");
+    const doneBtn = document.querySelector(".js-done-btn");
+    const meatballOverlayTrigger =
+        document.querySelector(".js-meatball-menu");
+    const selectOverlay = document.querySelector(".js-select-overlay");
+    const checkboxes = document.querySelectorAll('#foodItemList .form-check');
+
+    // Function to toggle visibility of multiple elements
+    function toggleElementsVisibility(elements) {
+        elements.forEach((element) => element.classList.toggle("tw-hidden"));
+    }
+
+    // Function to toggle checkboxes' display style
+    function toggleCheckboxesDisplay(show) {
+        checkboxes.forEach((checkbox) => {
+        checkbox.style.display = show ? "block" : "none";
+        });
+    }
+
+    // Select button event listener
+    selectBtn.addEventListener("click", () => {
+        toggleElementsVisibility([
+        selectOverlay,
+        meatballOverlay,
+        searchBtn,
+        meatballOverlayTrigger,
+        doneBtn,
+        ]);
+        toggleCheckboxesDisplay(true);
+    });
+
+    // Done button event listener
+    doneBtn.addEventListener("click", () => {
+        toggleElementsVisibility([
+        selectOverlay,
+        meatballOverlay,
+        searchBtn,
+        meatballOverlayTrigger,
+        doneBtn,
+        ]);
+        meatballOverlay.classList.add("tw-hidden"); // Explicitly hide meatballOverlay
+        meatballOverlayTrigger.classList.remove("tw-text-neutral");
+        toggleCheckboxesDisplay(false);
+    });
+}
+
+function deleteFood(userID, spaceName) {
+    let deleteList = [];
+    foodItemList.querySelectorAll('.form-check-input').forEach((checkbox) => {
+        // console.log(checkbox);
+        checkbox.addEventListener("click", () => {
+        let itemID = checkbox.dataset.id;
+        if (checkbox.checked) {
+            if (!deleteList.includes(itemID)) {
+                deleteList.push(itemID);
+            }
+            // console.log(checkbox, 'checked');
+        } else {
+            // Get everything except for the selected item
+            deleteList = deleteList.filter((id) => id !== itemID);
+            // console.log(checkbox, "unchecked");
         }
-
-        // Update the title for "All Spaces" directly in the anchor tag
-        let allSpacesLinkElement = allSpacesBtn.querySelector("a");
-        if (allSpacesLinkElement) {
-            allSpacesLinkElement.href = "mykitchen.html?storage=all_spaces";
-            allSpacesLinkElement.querySelector(".js-storage-space-title").innerHTML = "All Spaces";
-        }
-
-        // Append the "All Spaces" button to the dropdown
-        storageSpaceDropdown.appendChild(allSpacesBtn);
-
-        // Add the underline only under "All Spaces"
-        let underlineDiv = document.createElement("div");
-        underlineDiv.classList.add("tw-w-[90%]", "tw-h-[1px]", "tw-bg-neutral-light", "tw-mx-auto");
-        storageSpaceDropdown.appendChild(underlineDiv);
-
-        // Handle individual storage spaces (Fridge, Freezer, Pantry, Other)
-        storageSpaceList.forEach((space) => {
-            let filteredItems = db.collection("users").doc(userID).collection("food").where("storage_space", "==", space).get().then((doc) => {
-                let spaceSize = doc.size;
-
-                // Clone the template for each individual space
-                let spaceBtn = storageDropdownTemplate.content.cloneNode(true);
-
-                // Find and update the number of items for the storage space
-                let spaceNumElement = spaceBtn.querySelector(".js-storage-space-num");
-                if (spaceNumElement) {
-                    spaceNumElement.innerHTML = `${spaceSize} items`;
-                }
-
-                // Find and update the title for the storage space
-                let spaceTitleElement = spaceBtn.querySelector(".js-storage-space-title");
-                if (spaceTitleElement) {
-                    spaceTitleElement.innerHTML = space;
-                }
-
-                // Update the title directly in the anchor tag
-                let spaceLinkElement = spaceBtn.querySelector("a");
-                if (spaceLinkElement) {
-                    spaceLinkElement.href = `mykitchen.html?storage=${slugify(space)}`;
-                }
-                // Append to the dropdown
-                storageSpaceDropdown.appendChild(spaceBtn);
+      });
+    });
+    
+    const deleteBtn = document.querySelector('.js-delete-btn');
+    deleteBtn.addEventListener('click', () => {
+        deleteList.forEach((itemID) => {
+            db.collection("users").doc(userID).collection("food").doc(itemID).delete().then(() => {
+                console.log("Document successfully deleted!");
+                window.location.href = `mykitchen.html?storage=${spaceName}`;
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
             });
         });
     });
 }
 
-
 // Display Food items on My Kitchen page
-function displayFoodByStorageSpace(userID, storageSpace) {
-
-
-
-    // Update current space
-    var currentSpaceTitle = storageSpace == 'all_spaces' ? "All Spaces" : `My ${convertToTitleCase(storageSpace)}`;
-    currentSpace.innerHTML = currentSpaceTitle;
-
-    if (foodItemList && foodItemTemplate) {
-        let allFoodItems = db.collection("users").doc(userID).collection("food");
-        let filteredItems = db.collection("users").doc(userID).collection("food")
-        .where("storage_space", "==", convertToTitleCase(storageSpace)); 
-
-        let ref = storageSpace == "all_spaces" ? allFoodItems : filteredItems;
-        ref
-        .get()
-        .then((allItems) => {
-            allItems.forEach((doc) => {
-                // console.log(doc.id, " => ", doc.data());
-                let docID = doc.id;
-                let title = doc.data().title;
-                let slug = doc.data().slug;
-                let expiry_date = doc.data().expiry_date;
-                let category = doc.data().category;
-                let storage_space = doc.data().storage_space;
-                let quantity = doc.data().quantity;
-                let image = doc.data().image;
-                let notes = doc.data().notes;
-                let dateCreated = doc.data().date_created;
-                let daysLeft = calculateTimeLeft(expiry_date)
-                // let currentTime = new Date().toLocaleString();
-
-                // console.log(title, expiry_date, category, storage_space, quantity, image, notes, "dateCreated", dateCreated, "daysLeft", daysLeft)
-
-                // Copy the content of template
-                let foodItemCard = foodItemTemplate.content.cloneNode(true);
-
-                // Populate card content
-                foodItemCard.querySelector(".food-title").innerHTML = title;
-                foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
-
-                foodItemCard.querySelector(".food-days-left").innerHTML =  determineRemainingDaysMessage(daysLeft, expiry_date)
-                foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
-                foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
-                foodItemCard.querySelector(".food-img").alt = `${title} icon`;
-
-                foodItemList.appendChild(foodItemCard);
-
-                // deleteFood();
-
-                // let checkboxes = foodItemList.querySelectorAll('.form-check-input');
-                // checkboxes.forEach((checkbox) => {
-                //     checkbox.addEventListener('click', () =>{
-                //         if (checkbox.checked == true) {
-                //             console.log('checked');
-                //         }
-                //     });
-                // });
-
-                // Select items
-
-
-                // Query the elements once
-                const checkboxes = foodItemList.querySelectorAll('.form-check');
-                const searchBtn = document.querySelector('.js-search-btn');
-                const doneBtn = document.querySelector('.js-done-btn');
-                const meatballOverlayTrigger = document.querySelector('.js-meatball-menu');
-                const selectOverlay = document.querySelector('.js-select-overlay');  // Assuming selectOverlay was not defined
-
-                // Function to toggle visibility of multiple elements
-                function toggleElementsVisibility(elements) {
-                    elements.forEach(element => element.classList.toggle('tw-hidden'));
-                }
-
-                // Function to toggle checkboxes' display style
-                function toggleCheckboxesDisplay(show) {
-                    checkboxes.forEach(checkbox => {
-                        checkbox.style.display = show ? 'block' : 'none';
-                    });
-                }
-
-                // Select button event listener
-                selectBtn.addEventListener('click', () => {
-                    toggleElementsVisibility([selectOverlay, meatballOverlay, searchBtn, meatballOverlayTrigger, doneBtn]);
-                    toggleCheckboxesDisplay(true);
+    function displayFoodByStorageSpace(userID, storageSpace) {
+        return new Promise((resolve, reject) => {
+          // Update current space
+          var currentSpaceTitle =
+            storageSpace == "all_spaces"
+              ? "All Spaces"
+              : `My ${convertToTitleCase(storageSpace)}`;
+          currentSpace.innerHTML = currentSpaceTitle;
+      
+          if (foodItemList && foodItemTemplate) {
+            // Clear existing items
+            foodItemList.innerHTML = "";
+      
+            let allFoodItems = db.collection("users").doc(userID).collection("food");
+            let filteredItems = allFoodItems.where("storage_space", "==", convertToTitleCase(storageSpace));
+      
+            let ref = storageSpace == "all_spaces" ? allFoodItems : filteredItems;
+      
+            ref.get()
+              .then((allItems) => {
+                allItems.forEach((doc) => {
+                  // Extract data from each document
+                  let docID = doc.id;
+                  let title = doc.data().title;
+                  let expiry_date = doc.data().expiry_date;
+                  let quantity = doc.data().quantity;
+                  let image = doc.data().image;
+                  let daysLeft = calculateTimeLeft(expiry_date);
+      
+                  // Copy the content of the template
+                  let foodItemCard = foodItemTemplate.content.cloneNode(true);
+      
+                  // Populate card content
+                  foodItemCard.querySelector(".food-title").innerHTML = title;
+                  foodItemCard.querySelector(".food-link").href = "/eachFood.html?docID=" + docID;
+                  foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft, expiry_date);
+                  foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
+                  foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
+                  foodItemCard.querySelector(".food-img").alt = `${title} icon`;
+                  foodItemCard.querySelector(".form-check-input").dataset.id = docID;
+      
+                  // Append the populated card to the list
+                  foodItemList.appendChild(foodItemCard);
                 });
-
-                // Done button event listener
-                doneBtn.addEventListener('click', () => {
-                    toggleElementsVisibility([selectOverlay, meatballOverlay, searchBtn, meatballOverlayTrigger, doneBtn]);
-                    meatballOverlay.classList.add('tw-hidden');  // Explicitly hide meatballOverlay
-                    meatballOverlayTrigger.classList.remove('tw-text-neutral');
-                    toggleCheckboxesDisplay(false);
-                });
-                
-
-            });
-
-        })
-
-    }
-}
+      
+                resolve(); // Resolve the promise after all items are appended
+              })
+              .catch((error) => {
+                console.error("Error getting documents:", error);
+                reject(error); // Reject the promise if there's an error
+              });
+          } else {
+            reject(new Error("foodItemList or foodItemTemplate is missing"));
+          }
+        });
+      }
+      
 
 function calculateTimeLeft(date) {
   // Define two Date objects representing the start and end dates
@@ -441,12 +477,11 @@ function slugify(str) {
 }
 
 function convertToTitleCase(str) {
-    if (!str) {
-        return ""
-    }
-    return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
+  if (!str) {
+    return "";
   }
-  
+  return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
+}
 
 function getURLParams(key) {
   const params = new URL(window.location.href).searchParams; // get the url from the search bar and its search parameters
@@ -463,7 +498,7 @@ function populateFoodInfo() {
         .collection("users")
         .doc(user.uid)
         .collection("food")
-        .doc(getURLParams('docID'));
+        .doc(getURLParams("docID"));
       foodItemRef
         .get()
         .then((doc) => {
@@ -534,7 +569,7 @@ function updateFoodItem(userID) {
     .collection("users")
     .doc(userID)
     .collection("food")
-    .doc(getURLParams('docID'));
+    .doc(getURLParams("docID"));
   let foodSlug = slugify(foodName.value);
 
   foodRef
