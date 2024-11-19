@@ -47,17 +47,13 @@ firebase.auth().onAuthStateChanged((user) => {
                     // When food subcollection has more than one entry
                     if (subCollection.docs.length > 0) {
                         console.log('food collection exists');
-                        const storageBtn = document.querySelector('.js-show-storage-list');
-                        const storageDropdownContainer = document.querySelector('.js-storage-dropdown');
-                        storageBtn.addEventListener('click', () => {
-                            storageDropdownContainer.classList.toggle('tw-hidden');
-                            storageBtn.classList.toggle('tw-rotate-180');
-                        });
+
 
                         
                         let spaceName = getURLParams('storage');
                         console.log(spaceName);
-
+                        
+                        toggleStorageDropdown();
                         createStorageSpaceDropdown(userID);
                         displayFoodByStorageSpace(userID, spaceName);
                         // createSortByCategoryContainer(userID);
@@ -91,6 +87,16 @@ firebase.auth().onAuthStateChanged((user) => {
     window.location.href = "login.html";
   }
 });
+
+function toggleStorageDropdown() {
+    const storageBtn = document.querySelector('.js-show-storage-list');
+    const btnArrow = storageBtn.querySelector('.js-down-arrow');
+    const storageDropdownContainer = document.querySelector('.js-storage-dropdown');
+    storageBtn.addEventListener('click', () => {
+        storageDropdownContainer.classList.toggle('tw-hidden');
+        btnArrow.classList.toggle('tw-rotate-180');
+    });
+}
 
 // Add food items
 function writeFood(userID) {
