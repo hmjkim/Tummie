@@ -188,7 +188,7 @@
               <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
               <li class="tw-p-2">
                 <!-- Sort button -->
-                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-transition hover:tw-bg-[#f9f9f9] tw-items-center tw-rounded-lg">
+                <button class="js-sort-btn tw-w-full tw-flex tw-justify-between tw-p-5 tw-transition hover:tw-bg-[#f9f9f9] tw-items-center tw-rounded-lg">
                   <div class="tw-text-left">
                     <p>Sort by</p>
                     <p class="tw-text-sm tw-text-neutral">Category</p>
@@ -320,6 +320,52 @@
         </ul>
       </div>
       </div>
+    </div>
+
+    <!-- Sort Overlay -->
+    <div class="js-sort-overlay tw-hidden">
+      <div class="tw-py-10 tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-1/2">
+        <div class="container tw-px-6">
+          <div class="tw-flex tw-items-center tw-justify-between tw-mb-10">
+            <h2 class="tw-text-3xl">Sort By</h2>
+            <button class="js-close-btn">
+              <svg xmlns="http://www.w3.org/2000/svg"class="tw-w-8" viewBox="0 0 25 25" fill="none">
+                <path d="M6.25 18.75L18.75 6.25M6.25 6.25L18.75 18.75" stroke="#575757" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+          </div>
+          <form class="js-sort-by">
+          <ul>
+            <li class="tw-mb-8">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="sortByCategory" checked>
+                <label class="form-check-label tw-text-xl" for="sortByCategory">
+                  Category
+                </label>
+              </div>
+            </li>
+            <li class="tw-mb-8">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="sortByDate">
+                <label class="form-check-label tw-text-xl" for="sortByDate">
+                  Expiration Date
+                </label>
+              </div>
+            </li>
+            <li class="tw-mb-8">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="sortByName">
+                <label class="form-check-label tw-text-xl" for="sortByName">
+                  Name
+                </label>
+              </div>
+            </li>
+          </ul>
+          </form>
+        </div>
+      </div>
+      <!-- BG Overlay -->
+      <div class="tw-fixed tw-inset-0 tw-bg-black/20"></div>
     </div>
 
     <template id="foodItemTemplate">
