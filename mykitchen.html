@@ -165,7 +165,7 @@
             </svg>
           </button>
           <!-- Meatball menu button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center hover:tw-text-neutral tw-transition">
+          <button class="js-meatball-menu tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center hover:tw-text-neutral tw-transition">
             <svg width="25" height="6" viewBox="0 0 25 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M3.54714 3.07546H3.56054M12.9245 3.07546H12.9379M22.3019 3.07546H22.3153M4.88676 3.07546C4.88676 3.81532 4.287 4.41509 3.54714 4.41509C2.80729 4.41509 2.20752 3.81532 2.20752 3.07546C2.20752 2.33561 2.80729 1.73584 3.54714 1.73584C4.287 1.73584 4.88676 2.33561 4.88676 3.07546ZM14.2641 3.07546C14.2641 3.81532 13.6644 4.41509 12.9245 4.41509C12.1846 4.41509 11.5849 3.81532 11.5849 3.07546C11.5849 2.33561 12.1846 1.73584 12.9245 1.73584C13.6644 1.73584 14.2641 2.33561 14.2641 3.07546ZM23.6415 3.07546C23.6415 3.81532 23.0417 4.41509 22.3019 4.41509C21.562 4.41509 20.9622 3.81532 20.9622 3.07546C20.9622 2.33561 21.562 1.73584 22.3019 1.73584C23.0417 1.73584 23.6415 2.33561 23.6415 3.07546Z"
@@ -175,18 +175,18 @@
           <!-- Meatball menu overlay -->
           <div class="js-meatball-dropdown tw-hidden tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[120%] tw-right-0 tw-w-[240px] tw-z-[1] tw-mx-0">
             <ul>
-              <li>
-                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-text-neutral">
+              <li class="tw-p-2">
+                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg">
                   <span>Select Items</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                     <path d="M16.7917 0.125H2.20833C1.6558 0.125 1.12589 0.344493 0.735194 0.735194C0.344493 1.12589 0.125 1.6558 0.125 2.20833V16.7917C0.125 17.3442 0.344493 17.8741 0.735194 18.2648C1.12589 18.6555 1.6558 18.875 2.20833 18.875H16.7917C17.3442 18.875 17.8741 18.6555 18.2648 18.2648C18.6555 17.8741 18.875 17.3442 18.875 16.7917V2.20833C18.875 1.6558 18.6555 1.12589 18.2648 0.735194C17.8741 0.344493 17.3442 0.125 16.7917 0.125ZM16.7917 2.20833V16.7917H2.20833V2.20833H16.7917ZM7.41667 14.7083L3.25 10.5417L4.71875 9.0625L7.41667 11.7604L14.2812 4.89583L15.75 6.375" fill="currentColor"></path>
                   </svg>
                 </button>
-                <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
               </li>
-              <li>
+              <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
+              <li class="tw-p-2">
                 <!-- Sort button -->
-                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-transition hover:tw-text-neutral tw-items-center">
+                <button class="tw-w-full tw-flex tw-justify-between tw-p-5 tw-transition hover:tw-bg-[#f9f9f9] tw-items-center tw-rounded-lg">
                   <div class="tw-text-left">
                     <p>Sort by</p>
                     <p class="tw-text-sm tw-text-neutral">Category</p>

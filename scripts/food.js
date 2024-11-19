@@ -52,8 +52,9 @@ firebase.auth().onAuthStateChanged((user) => {
                         
                         let spaceName = getURLParams('storage');
                         console.log(spaceName);
-                        
+
                         toggleStorageDropdown();
+                        toggleMeatballOverlay()
                         createStorageSpaceDropdown(userID);
                         displayFoodByStorageSpace(userID, spaceName);
                         // createSortByCategoryContainer(userID);
@@ -88,10 +89,23 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
+function toggleMeatballOverlay() {
+    const overlayTrigger = document.querySelector('.js-meatball-menu');
+    const overlay = document.querySelector('.js-meatball-dropdown');
+    overlayTrigger.addEventListener('click', () => {
+        overlay.classList.toggle('tw-hidden');
+        overlayTrigger.classList.toggle('tw-text-neutral');
+    });
+}
+
 function toggleStorageDropdown() {
     const storageBtn = document.querySelector('.js-show-storage-list');
     const btnArrow = storageBtn.querySelector('.js-down-arrow');
     const storageDropdownContainer = document.querySelector('.js-storage-dropdown');
+
+    if (!storageBtn && !btnArrow && !storageDropdownContainer) {
+        return;
+    }
     storageBtn.addEventListener('click', () => {
         storageDropdownContainer.classList.toggle('tw-hidden');
         btnArrow.classList.toggle('tw-rotate-180');
@@ -256,7 +270,8 @@ function displayFoodByStorageSpace(userID, storageSpace) {
                 foodItemCard.querySelector(".food-days-left").innerHTML =  determineRemainingDaysMessage(daysLeft, expiry_date)
                 foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${quantity}`;
                 foodItemCard.querySelector(".food-img").src = `../images/icons/food/${image}`;
-
+                foodItemCard.querySelector(".food-img").alt = `${title} icon`;
+                
                 foodItemList.appendChild(foodItemCard);
 
             })
