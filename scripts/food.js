@@ -132,7 +132,7 @@ function createStorageSpaceDropdown(userID) {
     let storageSpaceDropdown = document.getElementById("storageSpaceDropdown");
     var storageSpaceList = ['Fridge', 'Freezer', 'Pantry', 'Other'];
 
-    // Step 1: Handle the "All Spaces" entry first
+    // Handle the "All Spaces" entry first
     let allFoodItems = db.collection("users").doc(userID).collection("food");
     allFoodItems.get().then((doc) => {
         let allSpacesSize = doc.size;
@@ -149,7 +149,7 @@ function createStorageSpaceDropdown(userID) {
         // Update the title for "All Spaces" directly in the anchor tag
         let allSpacesLinkElement = allSpacesBtn.querySelector("a");
         if (allSpacesLinkElement) {
-            allSpacesLinkElement.href = "mykitchen.html?storage=all_spaces"; // or whatever URL for all spaces
+            allSpacesLinkElement.href = "mykitchen.html?storage=all_spaces";
             allSpacesLinkElement.querySelector(".js-storage-space-title").innerHTML = "All Spaces";
         }
 
@@ -160,7 +160,6 @@ function createStorageSpaceDropdown(userID) {
         let underlineDiv = document.createElement("div");
         underlineDiv.classList.add("tw-w-[90%]", "tw-h-[1px]", "tw-bg-neutral-light", "tw-mx-auto");
         storageSpaceDropdown.appendChild(underlineDiv);
-
 
         // Step 2: Handle individual storage spaces (Fridge, Freezer, Pantry, Other)
         storageSpaceList.forEach((space) => {
@@ -188,21 +187,6 @@ function createStorageSpaceDropdown(userID) {
         });
     });
 }
-
-
-    // filteredItems.get().then((doc) => {
-        
-    // })
-    // ref
-    // .get()
-    // .then((doc) => {
-    //     console.log(doc);
-    //     let totalAmount = doc.size;
-    //     console.log(totalAmount);
-    //     // let spaceBtn = storageDropdownTemplate.content.cloneNode(true);
-    //     // spaceBtn.querySelector(".js-storage-space-title").innerHTML = totalAmount;
-    //     // storageSpaceDropdown.appendChild(spaceBtn);
-    // });
 
 
 // Display Food items on My Kitchen page

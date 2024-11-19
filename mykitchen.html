@@ -105,6 +105,7 @@
           <div class="tw-bg-white tw-rounded-lg tw-shadow-[0_4px_13px_0_rgba(0,0,0,0.06)] tw-absolute tw-top-[115%] tw-w-[240px] tw-z-[1] !tw-mx-0 tw-left-0 tw-w-full lg:tw-max-w-[520px]">
             <ul id="storageSpaceDropdown"></ul>
           </div>
+        </div>
         <!-- (DESKTOP) - Utilities bar -->
         <ul class="tw-hidden tw-text-neutral-dark md:tw-flex tw-space-x-3 tw-items-center">
           <li>
@@ -199,6 +200,7 @@
               </li>
             </ul>
           </div>
+        </div>
         </div>
       </div>
       <!-- Search bar -->
@@ -311,30 +313,13 @@
       </section>
     </template>
     <!-- Storage Space Change Dropdown -->
-
-        <template id="storageDropdownTemplate" >
-          <li>
-            <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-              <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Individual</span>
-              <span class="js-storage-space-num"># items</span>
-            </a>
-          </li>
-        </template>
-        <!-- <li>
-          <a href="mykitchen.html?storage=all_spaces" class="js-all-spaces tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-            <span class="tw-font-sansHeading tw-font-semibold js-all-spaces-title">All Spaces</span>
-            <span class="js-all-spaces-num"># items</span>
-          </a>
-          <div class="tw-w-[90%] tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
-        </li>
-        <li>
-          <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-            <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Individual</span>
-            <span class="js-storage-space-num"># items</span>
-          </a>
-        </li> -->
-      </ul>
-    </div>
+    <template id="storageDropdownTemplate" >
+      <li>
+        <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+          <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Individual</span>
+          <span class="js-storage-space-num"># items</span>
+        </a>
+      </li>
     </template>
   </main>
   <footer id="footerContent"></footer>
