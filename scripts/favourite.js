@@ -22,7 +22,7 @@ pageSetup();
 //------------------------------------------------------------------------------
 // Set the number of recipes per page for pagination
 //------------------------------------------------------------------------------
-const CARDS_PER_PAGE = 3;
+const CARDS_PER_PAGE = 9;
 
 // Function to populate users' saved recipes
 function populateFavoriteRecipes(currentUser) {
@@ -32,6 +32,8 @@ function populateFavoriteRecipes(currentUser) {
     var pageNumber = params.searchParams.get("page")
     if (pageNumber == null) {
         pageNumber = 1
+    } else {
+        pageNumber = parseInt(pageNumber)
     }
 
     // Get cuisine from URL
