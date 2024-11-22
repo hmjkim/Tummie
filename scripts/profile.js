@@ -114,7 +114,11 @@ function populateUserInfo() {
 
 
 function editAccountInfo() {
-    document.getElementById('accountInfoFields').disabled = false;
+    if (document.getElementById('accountInfoFields').disabled) {
+        document.getElementById('accountInfoFields').disabled = false;
+    } else {
+        document.getElementById('accountInfoFields').disabled = true;
+    }
 }
 
 function saveAccountInfo() {
@@ -143,7 +147,11 @@ function saveAccountInfo() {
 
 
 function editSetting() {
-    document.getElementById('settingFields').disabled = false;
+    if (document.getElementById('settingFields').disabled) {
+        document.getElementById('settingFields').disabled = false;
+    } else {
+        document.getElementById('settingFields').disabled = true;
+    }
 }
 
 

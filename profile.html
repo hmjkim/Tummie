@@ -77,7 +77,8 @@
 </head>
 
 <body class="tw-relative">
-  <div id="backgroundOverlay" class="tw-absolute tw-inset-0 tw-w-full tw-h-full tw-bg-black/10 tw-z-[1050] tw-hidden"></div>
+  <div id="backgroundOverlay" class="tw-absolute tw-inset-0 tw-w-full tw-h-full tw-bg-black/10 tw-z-[1050] tw-hidden">
+  </div>
   <!------------------------------>
   <!-- Your HTML Layout go here -->
   <header id="headerContent"></header>
@@ -250,8 +251,10 @@
               <!-- Notification style/methods -->
               <div class="form-group" id="notificationStyle">
                 <label>Notification Style</label><br>
-                <input type="checkbox" id="notifyInApp" value=true> In-app
-                <input type="checkbox" id="notifyByEmail" value=true> Email
+                <input type="checkbox" id="notifyInApp" value=true>
+                <label for="notifyInApp">In-app</label>
+                <input type="checkbox" id="notifyByEmail" value=true>
+                <label for="notifyByEmail">Email</label>
               </div>
             </fieldset>
             <!-- Edit and Save buttons -->
