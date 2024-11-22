@@ -42,12 +42,16 @@ function getNameFromAuth() {
 // function to open a content box for each button on profile.html
 function openContentBox(contentbox) {
     contentbox.classList.remove("tw-hidden")
+    contentbox.classList.add("tw-block")
+    document.querySelector("#backgroundOverlay").classList.remove("tw-hidden")
 }
 
 
 // function to collapse a content box; attached to X button on content box
 function closeContentBox(contentbox) {
     contentbox.classList.add("tw-hidden")
+    contentbox.classList.remove("tw-block")
+    document.querySelector("#backgroundOverlay").classList.add("tw-hidden")
 }
 
 
