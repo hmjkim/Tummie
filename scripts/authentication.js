@@ -21,8 +21,7 @@ var uiConfig = {
                     name: user.displayName,                    //"users" collection
                     email: user.email,                         //with authenticated user's ID (user.uid)
                     notification_preference: true,
-                    inapp_notification: true,
-                    email_notification: true,
+                    default_sorting: "defaultSortByDate"
                 }).then(function () {
                     console.log("New user added to firestore");
                     window.location.assign("mykitchen.html?storage=all_spaces");       //re-direct to main.html after signup

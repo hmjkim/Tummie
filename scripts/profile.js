@@ -70,9 +70,7 @@ function populateUserInfo() {
                     let userEmail = userDoc.data().email;
                     let userCountry = userDoc.data().country;
                     let userCity = userDoc.data().city;
-                    let userNotification = userDoc.data().notification_preference;
-                    let userNotifyInApp = userDoc.data().inapp_notification;
-                    let userNotifyByEmail = userDoc.data().email_notification;
+                    let defaultSortingPreference = userDoc.data().default_sorting;
 
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
@@ -89,20 +87,8 @@ function populateUserInfo() {
                     if (userCity != null) {
                         document.getElementById("cityInput").value = userCity;
                     }
-                    if (userNotification) {
-                        document.getElementById("notificationInput").value = "notificationOn";
-                    } else {
-                        document.getElementById("notificationInput").value = "notificationOff";
-                    }
-                    if (userNotifyInApp) {
-                        document.getElementById("notifyInApp").checked = true;
-                    } else {
-                        document.getElementById("notifyInApp").checked = false;
-                    }
-                    if (userNotifyByEmail) {
-                        document.getElementById("notifyByEmail").checked = true;
-                    } else {
-                        document.getElementById("notifyByEmail").checked = false;
+                    if (defaultSortingPreference != null) {
+                        document.getElementById("defaultSorting").value = defaultSortingPreference;
                     }
                 })
         } else {
@@ -141,6 +127,7 @@ function saveAccountInfo() {
     //c) functions after saving
     document.getElementById('accountInfoFields').disabled = true;
     document.getElementById('profileAccount').classList.add("tw-hidden");
+    document.querySelector("#backgroundOverlay").classList.add("tw-hidden");
     getNameFromAuth()
     populateUserInfo()
 }
@@ -158,26 +145,10 @@ function editSetting() {
 function saveSetting() {
     //enter code here
     //a) get user entered values
-    if (document.getElementById('notificationInput').value == "notificationOn") {
-        userNotification = true
-    } else {
-        userNotification = false
-    }
-    if (document.getElementById('notifyInApp').checked) {
-        notifyInApp = true
-    } else {
-        notifyInApp = false
-    }
-    if (document.getElementById('notifyByEmail').checked) {
-        notifyByEmail = true
-    } else {
-        notifyByEmail = false
-    }
+    defaultSortingPreference = document.getElementById('defaultSorting').value
     //b) update user's document in Firestore
     currentUser.update({
-        notification_preference: userNotification,
-        inapp_notification: notifyInApp,
-        email_notification: notifyByEmail,
+        default_sorting: defaultSortingPreference,
     })
         .then(() => {
             console.log("Your setting has been successfully updated!");
@@ -185,11 +156,7 @@ function saveSetting() {
     //c) functions after saving
     document.getElementById('settingFields').disabled = true;
     document.getElementById('profileSetting').classList.add("tw-hidden");
-}
-
-
-function editSupportRequest() {
-    document.getElementById('supportRequestFields').disabled = false;
+    document.querySelector("#backgroundOverlay").classList.add("tw-hidden")
 }
 
 
@@ -209,5 +176,6 @@ function submitSupportRequest() {
             console.log("Your service request has been successfully submitted!");
             document.getElementById('profileSupport').classList.add("tw-hidden");
             document.getElementById('requestDescriptionInput').value = "";
+            document.querySelector("#backgroundOverlay").classList.add("tw-hidden")
         })
 }

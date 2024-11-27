@@ -242,20 +242,22 @@
             <fieldset class="tw-space-y-4 tw-font-sans" id="settingFields" disabled>
               <!-- Notification on/off -->
               <div class="form-group">
-                <label for="categoryInput">Notification</label>
-                <select class="form-control" id="notificationInput">
-                  <option value="notificationOn">On</option>
-                  <option value="notificationOff">Off</option>
+                <label for="defaultSorting">Preference</label>
+                <p class="tw-text-neutral">Your preference is used for the default sorting for My Kitchen page.</p>
+                <select class="form-control" id="defaultSorting">
+                  <option value="defaultSortByDate">Sort By Date</option>
+                  <option value="defaultSortByCategory">Sort By Category</option>
+                  <option value="defaultSortByName">Sort By Name</option>
                 </select>
               </div>
-              <!-- Notification style/methods -->
+              <!-- Notification style/methods
               <div class="form-group" id="notificationStyle">
                 <label>Notification Style</label><br>
                 <input type="checkbox" id="notifyInApp" value=true>
                 <label for="notifyInApp">In-app</label>
                 <input type="checkbox" id="notifyByEmail" value=true>
                 <label for="notifyByEmail">Email</label>
-              </div>
+              </div> -->
             </fieldset>
             <!-- Edit and Save buttons -->
             <div class="d-flex justify-content-end tw-mt-10">
@@ -291,14 +293,12 @@
         </div>
         <div class="tw-space-y-4">
           <p class="tw-font-sans">This application, Tummie, is a food expiration tracker built on the web with an aim to
-            tackle the growing
-            food waste concern.
+            tackle the growing food waste concern.
             The app allows users to monitor the grocery items in their homes and recommends personalized recipe
             based on the almost-expired items, so as to encourage timely consumption of food.
             Additionally, users can share surplus food in their neighborhood for free. Through the development of this
             app, we aim to reduce food waste at the household level while promoting resource redistribution within
-            local
-            communities.
+            local communities.
           </p>
           <p class="tw-font-sans">Tummie is developed by three students at British Columbia Institute of Technology
             (BCIT) for
