@@ -121,6 +121,23 @@ main {
   background-color: #1D6961 !important;
 }
 
+.btn-secondary {
+  background-color: #EC651B;
+  color: #fff;
+  border-color: #EC651B;
+}
+
+.btn-secondary:hover {
+  background-color: #EC651Bb8;
+  color: #fff;
+  border-color: #EC651Bb8;
+}
+
+.btn-secondary:active {
+  border-color: #EC651B !important;
+  background-color: #EC651B !important;
+}
+
 .btn-white {
   background-color: #fff;
   color: #575757;
@@ -213,6 +230,10 @@ select {
 .form-control:focus {
   border-color: #609690;
   box-shadow: 0 0 0 .1rem #016a5e21;
+}
+
+.gj-datepicker {
+  margin-bottom: 0 !important;
 }
 
 .gj-datepicker .btn {

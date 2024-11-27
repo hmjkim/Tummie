@@ -106,7 +106,6 @@ firebase.auth().onAuthStateChanged((user) => {
     if (saveBtns.length > 0) {
       saveBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
-          console.log("clicked");
           if (editForm) {
             // Edit form page
             updateFoodItem(userID);
@@ -121,6 +120,30 @@ firebase.auth().onAuthStateChanged((user) => {
     console.log("No user is signed in");
     window.location.href = "login.html";
   }
+
+  const deleteBtns = document.querySelectorAll(".js-delete-btn");
+  if (deleteBtns.length < 0) {
+    return
+  }
+  deleteBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      console.log("clicked")
+        db.collection("users")
+          .doc(userID)
+          .collection("food")
+          .doc(getURLParams("docID"))
+          .delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+            history.back();
+            // window.location.href = `mykitchen.html?storage=${spaceName}`;
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+    });
+  });
+
 });
 
 function toggleMeatballOverlay() {
