@@ -91,13 +91,13 @@
     <main class="container py-3 tw-relative">
       <!-- Content -->
        <section>
-        <div class="tw-flex md:tw-block tw-items-center tw-mb-6">
+        <div class="tw-flex md:tw-block tw-items-center tw-mb-6 md:tw-static tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 tw-bg-white tw-z-[999]">
           <button id="go-back" class="tw-basis-[5%] md:tw-hidden">
             <img class="" src="./images/icons/arrow-left.svg" alt="Left arrow">
           </button>
           <h1 class="tw-text-2xl tw-basis-[95%] tw-text-center md:tw-text-left">Add New Item</h1>
         </div>
-        <form>
+        <form class="tw-pt-12 md:tw-pt-0">
           <fieldset class="tw-grid tw-gap-5 md:tw-gap-8" id="personalInfoFields">
             <div class="form-group tw-relative tw-block tw-mx-auto">
               <label for="imageUpload" class="tw-inline-block tw-cursor-pointer">
@@ -125,6 +125,11 @@
                   <label for="datepickerInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Expiry Date</label>
                   <input id="datepickerInput" type="text" class="form-control" placeholder="Select date">
               </div>
+              <!-- Quantity -->
+              <div class="form-group">
+                <label for="quantityInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Quantity</label>
+                <input type="text" id="quantityInput" class="form-control" placeholder="Enter the amount">
+              </div>
               <!-- Storage Space -->
               <div class="form-group">
                 <label for="storageSpaceInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Storage Space</label>
@@ -146,11 +151,6 @@
                   <option>Other</option>
                 </select>
               </div>
-              <!-- Quantity -->
-              <div class="form-group">
-                <label for="quantityInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Quantity</label>
-                <input type="text" id="quantityInput" class="form-control" placeholder="Enter the amount">
-              </div>
             </div>
             <!-- Additional Notes -->
             <div class="form-group">
@@ -159,15 +159,20 @@
             </div>
         </fieldset>
         <div class="tw-mt-10 tw-flex tw-space-x-8">
-          <button type="button" class="btn btn-primary save-btn md:tw-w-fit">Save</button>
+          <button type="button" class="btn btn-primary save-btn tw-hidden md:tw-inline-block md:tw-w-fit">Save</button>
           <button type="button" class="js-cancel-btn tw-hidden md:tw-block tw-text-primary tw-font-semibold">Cancel</button>
         </div>
         </form>
         
        </section>
-      <div id="stickyMobileNav"></div>
+       <div class="sticky-bar fixed-bottom">
+        <div class="container py-3">
+          <button type="button" class="btn btn-primary save-btn md:tw-w-fit">Save</button>
+        </div>
+       </div>
+      <!-- <div id="stickyMobileNav"></div> -->
     </main>
-    <footer id="footerContent"></footer>
+    <!-- <footer id="footerContent"></footer> -->
 
     <!------------------------------>
     <!-- Stuff for body goes here -->
