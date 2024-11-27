@@ -267,7 +267,7 @@
           </a>
         </li>
         <li>
-          <a href="#"
+          <a href="/addfood.html"
             class="tw-flex tw-py-2 tw-my-1 tw-px-5 tw-rounded-lg hover:tw-bg-[#609690] tw-items-center tw-space-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="36" viewBox="0 0 35 36" fill="none">
               <path d="M19.0002 15.4024V5.29585L6.0061 21.1775H16.1126L16.1126 31.284L29.1067 15.4024L19.0002 15.4024Z"
@@ -277,7 +277,7 @@
           </a>
         </li>
         <li>
-          <a href="#"
+          <a href="/addfood.html"
             class="tw-flex tw-py-2 tw-my-1 tw-px-5 tw-rounded-lg hover:tw-bg-[#609690] tw-items-center tw-space-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="36" viewBox="0 0 35 36" fill="none">
               <path
@@ -302,8 +302,7 @@
     </div>
     <div id="stickyMobileNav"></div>
     <!-- Select Option Overlay -->
-    <div
-      class="js-select-overlay tw-hidden tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)]">
+    <div class="js-select-overlay tw-hidden tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.2)]">
       <div class="container">
         <p class="js-item-counter tw-p-3 tw-border-solid tw-border-b tw-border-neutral-light tw-text-center">0 item(s)
           selected</p>
@@ -311,17 +310,6 @@
       <div class="tw-w-full tw-h-[1px] tw-bg-neutral-light tw-mx-auto"></div>
       <div>
         <ul class="container tw-flex tw-items-center tw-space-x-5 tw-text-neutral">
-          <li>
-            <button
-              class="js-delete-btn tw-flex tw-flex-col tw-justify-center tw-items-center tw-p-5 hover:tw-text-primary tw-transition">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                <path
-                  d="M23.75 8.75L22.6658 23.9281C22.5724 25.2364 21.4838 26.25 20.1722 26.25H9.8278C8.5162 26.25 7.4276 25.2364 7.33415 23.9281L6.25 8.75M12.5 13.75V21.25M17.5 13.75V21.25M18.75 8.75V5C18.75 4.30964 18.1904 3.75 17.5 3.75H12.5C11.8096 3.75 11.25 4.30964 11.25 5V8.75M5 8.75H25"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              <p class="m-0 label">Delete</p>
-            </button>
-          </li>
           <li>
             <button
               class="js-move-btn tw-flex tw-flex-col tw-justify-center tw-items-center tw-p-5 hover:tw-text-primary tw-transition">
@@ -333,6 +321,15 @@
               <p class="m-0 label">Move</p>
             </button>
           </li>
+          <li>
+            <button type="button" class="js-delete-btn tw-flex tw-flex-col tw-justify-center tw-items-center tw-p-5 hover:tw-text-[#FF2525]/80 tw-transition tw-text-[#FF2525]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <path d="M23.75 8.75L22.6658 23.9281C22.5724 25.2364 21.4838 26.25 20.1722 26.25H9.8278C8.5162 26.25 7.4276 25.2364 7.33415 23.9281L6.25 8.75M12.5 13.75V21.25M17.5 13.75V21.25M18.75 8.75V5C18.75 4.30964 18.1904 3.75 17.5 3.75H12.5C11.8096 3.75 11.25 4.30964 11.25 5V8.75M5 8.75H25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+                <p class="m-0 label">Delete</p>
+            </button>
+          </li>
+
         </ul>
       </div>
     </div>
@@ -435,42 +432,39 @@
         <div class="tw-fixed tw-inset-0 tw-bg-black/20"></div>
       </div>
 
-      <template id="foodItemTemplate">
-        <li class="tw-flex tw-items-center tw-space-x-2">
-          <div class="form-check tw-hidden">
-            <input class="form-check-input" type="checkbox" value="" data-id="" id="flexCheckDefault">
-            <!-- <label class="form-check-label" for="flexCheckDefault"></label> -->
+    <template id="foodItemTemplate">
+      <li class="tw-flex tw-items-center">
+        <div class="form-check tw-hidden tw-mr-2">
+          <input class="form-check-input" type="checkbox" value="" data-id="" id="flexCheckDefault">
+          <!-- <label class="form-check-label" for="flexCheckDefault"></label> -->
+        </div>
+        <a href="#" class="tw-border-neutral-light tw-border tw-rounded-lg  tw-flex tw-space-x-4 tw-w-full tw-p-4 tw-relative food-link">
+          <img class="food-img" src="./images/icons/food/carrot.svg" alt="Carrot icon">
+          <div class="">
+            <h3 class="tw-text-lg food-title">Title
+            </h3>
+            <p class="tw-text-sm food-quantity">Quantity:</p>
           </div>
-          <a href="#"
-            class="tw-border-neutral-light tw-border tw-rounded-lg  tw-flex tw-space-x-4 tw-w-full tw-p-4 tw-relative food-link">
-            <img class="food-img" src="./images/icons/food/carrot.svg" alt="Carrot icon">
-            <div class="">
-              <h3 class="tw-text-lg food-title">Title
-              </h3>
-              <p class="tw-text-sm food-quantity">Quantity:</p>
-            </div>
-            <p class="tw-absolute tw-bottom-0 tw-right-0 tw-pr-4 tw-pb-4 tw-font-semibold food-days-left"> day left</p>
-          </a>
-        </li>
-      </template>
-      <template id="emptyKitchenMessageTemplate">
-        <!-- Content - Message when empty -->
-        <section class="tw-pt-14 tw-text-center">
-          <p class="tw-text-neutral tw-max-w-[90%] tw-mx-auto tw-text-center tw-mb-4">You don’t have anything in your
-            fridge yet. Please start filling up by adding your items!</p>
-          <a href="/addfood.html" title="Add a new food item" class="btn btn-primary md:tw-w-fit">Add Item</a>
-        </section>
-      </template>
-      <!-- Storage Space Change Dropdown -->
-      <template id="storageDropdownTemplate">
-        <li>
-          <a href="mykitchen.html?storage=fridge"
-            class="js-storage-space tw-transition tw-rounded-lg hover:tw-bg-[#f9f9f9] tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
-            <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Space Name</span>
-            <span class="js-storage-space-num"># items</span>
-          </a>
-        </li>
-      </template>
+          <p class="tw-absolute tw-bottom-0 tw-right-0 tw-pr-4 tw-pb-4 tw-font-semibold food-days-left"> day left</p>
+        </a>
+      </li>
+    </template>
+    <template id="emptyKitchenMessageTemplate">
+      <!-- Content - Message when empty -->
+      <section class="tw-pt-14 tw-text-center">
+        <p class="tw-text-neutral tw-max-w-[90%] tw-mx-auto tw-text-center tw-mb-4">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
+        <a href="/addfood.html" title="Add a new food item" class="btn btn-primary md:tw-w-fit">Add Item</a>
+      </section>
+    </template>
+    <!-- Storage Space Change Dropdown -->
+    <template id="storageDropdownTemplate">
+      <li>
+        <a href="mykitchen.html?storage=fridge" class="js-storage-space tw-transition tw-rounded-lg hover:tw-bg-[#f9f9f9] tw-flex tw-justify-between tw-w-full tw-items-center tw-p-5">
+          <span class="tw-font-sansHeading tw-font-semibold js-storage-space-title">Space Name</span>
+          <span class="js-storage-space-num"># items</span>
+        </a>
+      </li>
+    </template>
   </main>
   <footer id="footerContent"></footer>
 
