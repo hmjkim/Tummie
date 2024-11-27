@@ -154,6 +154,19 @@ function toggleMeatballOverlay() {
     // Adjust the button text color accordingly
     meatballOverlayTrigger.classList.toggle("tw-text-neutral");
   });
+
+    // Close overlay when clicking outside of it
+    document.addEventListener("click", (event) => {
+    // overlay open, not clicking inside of overlay or overlay trigger button
+    if (
+      !meatballOverlay.contains(event.target) &&
+      !meatballOverlayTrigger.contains(event.target)
+    ) {
+      // Close overlay
+      meatballOverlay.classList.add("tw-hidden");
+      meatballOverlayTrigger.classList.remove("tw-text-neutral");
+    }
+  });
 }
 
 function toggleStorageDropdown() {
@@ -166,10 +179,23 @@ function toggleStorageDropdown() {
   if (!storageBtn && !btnArrow && !storageDropdownContainer) {
     return;
   }
-  storageBtn.addEventListener("click", () => {
+  storageBtn.addEventListener("click", (e) => {
     storageDropdownContainer.classList.toggle("tw-hidden");
     btnArrow.classList.toggle("tw-rotate-180");
   });
+
+    // Close overlay when clicking outside of it
+    document.addEventListener("click", (event) => {
+      // overlay open, not clicking inside of overlay or storage button
+      if (
+        !storageDropdownContainer.contains(event.target) &&
+        !storageBtn.contains(event.target)
+      ) {
+        // Close overlay
+        storageDropdownContainer.classList.add("tw-hidden");
+        btnArrow.classList.remove("tw-rotate-180");
+      }
+    });
 }
 
 // Add food items
