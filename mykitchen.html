@@ -81,7 +81,7 @@
   <!-- Your HTML Layout go here -->
   <header id="headerContent"></header>
   <main class="container py-3 tw-relative">
-    <section class="js-sub-header">
+    <section class="js-sub-header md:tw-static tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 tw-bg-white tw-z-[999]">
       <!-- Header -->
       <div class="tw-flex tw-justify-between tw-relative">
         <div class="tw-flex tw-items-center tw-space-x-4 js-show-storage-list tw-cursor-pointer">
@@ -224,7 +224,7 @@
     <!-- Content - Message when empty -->
     <div id="emptyKitchenMessage"></div>
     <!-- Content - Food Items Grid-->
-    <section class="tw-pt-10">
+    <section class="tw-pt-14">
       <ul id="foodItemList"
         class="tw-list-none tw-m-0 tw-grid tw-gap-3 md:tw-gap-6">
       </ul>
@@ -387,7 +387,7 @@
     </template>
     <template id="emptyKitchenMessageTemplate">
       <!-- Content - Message when empty -->
-      <section class="tw-pt-10 tw-text-center">
+      <section class="tw-pt-14 tw-text-center">
         <p class="tw-text-neutral tw-max-w-[90%] tw-mx-auto tw-text-center tw-mb-4">You don’t have anything in your fridge yet. Please start filling up by adding your items!</p>
         <a href="/addfood.html" title="Add a new food item" class="btn btn-primary md:tw-w-fit">Add Item</a>
       </section>
