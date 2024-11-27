@@ -321,9 +321,9 @@ function showSelectOverlay(userID, spaceName) {
   const doneBtn = document.querySelector(".js-done-btn");
   const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
   const selectOverlay = document.querySelector(".js-select-overlay");
-  const checkboxes = document.querySelectorAll("#foodItemList .form-check");
-  // Get a list of items to be deleted
-  var deleteList = [];
+  const checkboxes = document.querySelectorAll('#foodItemList .form-check');
+  // Get a list of items to be deleted or moved
+  var selectedList = [];
 
   // Function to toggle checkboxes' display style
   function toggleCheckboxesDisplay(show) {
@@ -367,7 +367,7 @@ function showSelectOverlay(userID, spaceName) {
     });
 
     // reset the list
-    deleteList = [];
+    selectedList = [];
 
     // Uncheck the checked boxes
     foodItemList.querySelectorAll(".form-check-input").forEach((checkbox) => {
@@ -379,37 +379,108 @@ function showSelectOverlay(userID, spaceName) {
     checkbox.addEventListener("click", () => {
       let itemID = checkbox.dataset.id;
       if (checkbox.checked) {
-        if (!deleteList.includes(itemID)) {
-          deleteList.push(itemID);
+        if (!selectedList.includes(itemID)) {
+          selectedList.push(itemID);
         }
-        // console.log(deleteList.length);
+        // console.log(selectedList.length);
 
         // Show number of selected items
-        itemCounter.innerHTML = `${deleteList.length} item(s) selected`;
-        console.log(checkbox, "checked");
+        itemCounter.innerHTML = `${selectedList.length} item(s) selected`;
+        console.log(checkbox, 'checked');
       } else {
         // Get everything except for the selected item
-        deleteList = deleteList.filter((id) => id !== itemID);
+        selectedList = selectedList.filter((id) => id !== itemID);
         console.log(checkbox, "unchecked");
       }
-      console.log(deleteList);
+      console.log(selectedList);
     });
   });
 
-  const deleteBtn = document.querySelector(".js-delete-btn");
-  deleteBtn.addEventListener("click", () => {
-    deleteList.forEach((itemID) => {
-      db.collection("users")
-        .doc(userID)
-        .collection("food")
-        .doc(itemID)
-        .delete()
+  const deleteBtn = document.querySelector('.js-delete-btn');
+  deleteBtn.addEventListener('click', () => {
+    selectedList.forEach((itemID) => {
+      db.collection("users").doc(userID).collection("food").doc(itemID).delete().then(() => {
+        console.log("Document successfully deleted!");
+        window.location.href = `mykitchen.html?storage=${spaceName}`;
+      }).catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+    });
+  });
+
+  // Open and close move items overlay
+  const moveBtn = document.querySelector('.js-move-btn');
+  const moveOverlay = document.querySelector('.js-move-overlay')
+  const closeMoveBtn = document.querySelector('.js-close-move-btn')
+  moveBtn.addEventListener('click', () => {
+    toggleElementsVisibility([
+      selectOverlay,
+      moveOverlay,
+      doneBtn,
+    ]);
+  });
+  closeMoveBtn.addEventListener('click', () => {
+    toggleElementsVisibility([
+      selectOverlay,
+      moveOverlay,
+      doneBtn,
+    ]);
+  });
+
+  // Write new storage place to database
+  const moveToFridge = document.querySelector('#moveToFridge');
+  const moveToFreezer = document.querySelector('#moveToFreezer');
+  const moveToPantry = document.querySelector('#moveToPantry');
+  const moveToOther = document.querySelector('#moveToOther');
+
+  moveToFridge.addEventListener('click', () => {
+    selectedList.forEach((itemID) => {
+      db.collection("users").doc(userID).collection("food").doc(itemID).update({
+        storage_space: "Fridge",
+      })
         .then(() => {
-          console.log("Document successfully deleted!");
           window.location.href = `mykitchen.html?storage=${spaceName}`;
-        })
-        .catch((error) => {
-          console.error("Error removing document: ", error);
+        }).catch((error) => {
+          console.error("Error moving item: ", error);
+        });
+    });
+  });
+
+  moveToFreezer.addEventListener('click', () => {
+    selectedList.forEach((itemID) => {
+      db.collection("users").doc(userID).collection("food").doc(itemID).update({
+        storage_space: "Freezer",
+      })
+        .then(() => {
+          window.location.href = `mykitchen.html?storage=${spaceName}`;
+        }).catch((error) => {
+          console.error("Error moving item: ", error);
+        });
+    });
+  });
+
+  moveToPantry.addEventListener('click', () => {
+    selectedList.forEach((itemID) => {
+      db.collection("users").doc(userID).collection("food").doc(itemID).update({
+        storage_space: "Pantry",
+      })
+        .then(() => {
+          window.location.href = `mykitchen.html?storage=${spaceName}`;
+        }).catch((error) => {
+          console.error("Error moving item: ", error);
+        });
+    });
+  });
+
+  moveToOther.addEventListener('click', () => {
+    selectedList.forEach((itemID) => {
+      db.collection("users").doc(userID).collection("food").doc(itemID).update({
+        storage_space: "Other",
+      })
+        .then(() => {
+          window.location.href = `mykitchen.html?storage=${spaceName}`;
+        }).catch((error) => {
+          console.error("Error moving item: ", error);
         });
     });
   });
