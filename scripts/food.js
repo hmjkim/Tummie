@@ -341,8 +341,6 @@ function showSelectOverlay(userID, spaceName) {
     });
 
     // reset the list
-    deleteList = [];
-    // reset the list
     selectedList = [];
 
     // Uncheck the checked boxes
