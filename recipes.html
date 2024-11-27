@@ -101,7 +101,7 @@
             </svg>
           </button>
           <!-- filter button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+          <button class="js-filter tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sliders"
               viewBox="0 0 16 16">
               <path fill-rule="evenodd"
@@ -128,16 +128,16 @@
       </div>
 
       <!-- Link to saved recipes -->
-      <a href="favourite.html">
-        <div class="tw-my-5 d-flex col justify-content-end gap-2">
+      <div class="tw-my-5 d-flex col justify-content-end gap-2">
+        <a href="favourite.html" class="tw-flex flex-col tw-gap-2">
           <h1 class="tw-text-lg">Go to My Favourite</h1>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1D6961"
             class="bi bi-arrow-right-circle-fill inline-block align-self-center" viewBox="0 0 16 16">
             <path
               d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
           </svg>
-        </div>
-      </a>
+        </a>
+      </div>
 
       <!-- Here is the container for cards  -->
       <div id="recipes-go-here" class="row row-cols-1 row-cols-md-3 g-4 tw-mt-5">
@@ -176,6 +176,42 @@
 
     </div>
     <div id="stickyMobileNav"></div>
+
+    <div class="js-filter-overlay tw-hidden">
+      <div
+        class="tw-py-10 tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-1/2 overflow-auto">
+        <div class="container tw-px-6">
+          <div class="tw-flex tw-items-center tw-justify-between tw-mb-10">
+            <h2 class="tw-text-3xl">Filter By</h2>
+            <button class="js-close-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="tw-w-8" viewBox="0 0 25 25" fill="none">
+                <path d="M6.25 18.75L18.75 6.25M6.25 6.25L18.75 18.75" stroke="#575757" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+          </div>
+          <form class="js-filter-by">
+            <ul id="filterCuisine-go-here">
+            </ul>
+          </form>
+        </div>
+      </div>
+      <!-- BG Overlay -->
+      <div class="tw-fixed tw-inset-0 tw-bg-black/20"></div>
+    </div>
+
+    <!-- Template for filter by cuisine element -->
+    <template id="filterCuisineTemplate">
+      <a href="#" class="filter-link">
+        <li class="tw-mb-8">
+          <input class="form-check-input" type="radio" value="cuisine" name="flexRadioDefault" id="filterCuisine">
+          <label class="form-check-label tw-text-xl" for="filterCuisine">
+            Cuisine
+          </label>
+        </li>
+      </a>
+    </template>
+
   </main>
   <footer id="footerContent"></footer>
 

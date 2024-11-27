@@ -1,3 +1,7 @@
+const filterOverlay = document.querySelector('.js-filter-overlay');
+const filterOverlayTrigger = document.querySelector(".js-filter");
+const closeBtn = document.querySelector('.js-close-btn');
+
 var currentUser;               //global variable which points to the document of the user who is logged in
 
 //Function that calls everything needed for the main page  
@@ -8,6 +12,8 @@ function pageSetup() {
 
             // the following functions are always called when someone is logged in
             displayCardsDynamically("recipes");  //input param is the name of the collection
+            toggleFilterOverlay()
+            populateFilterByCuisineList()
 
         } else {
             // When no user is signed in, forcefully direct the user to login.html
@@ -384,4 +390,36 @@ function savetoFavorite(recipesDocID) {
                 });
         }
     });
+}
+
+
+function toggleFilterOverlay() {
+    filterOverlayTrigger.addEventListener("click", () => {
+        // Show or hide the overlay based on the new state
+        filterOverlay.classList.toggle("tw-hidden");
+
+        closeBtn.addEventListener('click', () => {
+            filterOverlay.classList.toggle("tw-hidden");
+        });
+    });
+}
+
+
+function populateFilterByCuisineList() {
+    let filterCuisineTemplate = document.getElementById("filterCuisineTemplate"); // Retrieve the HTML element with the ID "filterCuisineTemplate" and store it in the filterCuisineTemplate variable.
+
+    // Clear existing recipe cards before loading new cards
+    document.getElementById("filterCuisine-go-here").innerHTML = ``
+
+    cuisines = ['All', 'American', 'British', 'Canadian', 'Chinese', 'Croatian', 'Dutch', 'Egyptian', 'Filipino', 'French', 'Greek', 'Indian', 'Irish', 'Italian', 'Jamaican', 'Japanese', 'Kenyan', 'Malaysian', 'Mexican', 'Moroccan', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Thai', 'Tunisian', 'Turkish', 'Ukrainian', 'Vietnamese']
+
+    cuisines.forEach(cuisine => { //iterate through each item
+        let newCuisine = filterCuisineTemplate.content.cloneNode(true); // Clone the HTML template to create a new cuisine option
+
+        newCuisine.querySelector('.form-check-label').innerHTML = cuisine;  // update name
+        newCuisine.querySelector('.filter-link').href = `recipes.html?cuisine=${cuisine}`; // update the link with the cuisine selected from the filter
+
+        //attach to "filterCuisine-go-here"
+        document.getElementById("filterCuisine-go-here").appendChild(newCuisine);
+    })
 }
