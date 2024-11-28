@@ -397,10 +397,11 @@ function toggleFilterOverlay() {
     filterOverlayTrigger.addEventListener("click", () => {
         // Show or hide the overlay based on the new state
         filterOverlay.classList.toggle("tw-hidden");
+    });
 
-        closeBtn.addEventListener('click', () => {
-            filterOverlay.classList.toggle("tw-hidden");
-        });
+    // Close overlay when clicking the close button
+    closeBtn.addEventListener('click', () => {
+        filterOverlay.classList.toggle("tw-hidden");
     });
 }
 
