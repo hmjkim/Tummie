@@ -34,6 +34,7 @@ const itemCounter = document.querySelector(".js-item-counter");
 
 const sortBtn = document.querySelector(".js-sort-btn");
 const sortOverlay = document.querySelector(".js-sort-overlay");
+const bgOverlay = document.querySelector(".js-sort-overlay .js-bg-overlay");
 const closeBtn = document.querySelector(".js-close-btn");
 
 // MAIN FUNCTION FOR MY KITCHEN PAGE
@@ -61,7 +62,7 @@ firebase.auth().onAuthStateChanged((user) => {
             if (subCollection.docs.length > 0) {
               console.log("food collection exists");
               //   document.querySelector('.js-sub-header').classList.remove('tw-hidden');
-
+              
               let spaceName = getURLParams("storage");
               console.log(spaceName);
               // Execute necessary setup before displaying items
@@ -392,6 +393,20 @@ function showSelectOverlay(userID, spaceName) {
       }
       console.log(selectedList);
     });
+
+    // Close overlay when clicking outside of it
+    document.addEventListener("click", (event) => {
+      if (!sortOverlay) {
+        return 
+      }
+      // overlay open, not clicking inside of overlay or overlay trigger button
+      if (
+        bgOverlay.contains(event.target)
+      ) {
+        // Close overlay
+        sortOverlay.classList.add("tw-hidden");
+      }
+    });
   });
 
   const deleteBtn = document.querySelector('.js-delete-btn');
@@ -488,7 +503,7 @@ function showSelectOverlay(userID, spaceName) {
 function displayFoodByStorageSpace(
   userID,
   storageSpace,
-  sortingMethod = "category"
+  sortingMethod = "Category"
 ) {
   return new Promise((resolve, reject) => {
     var currentSpaceTitle;
@@ -523,24 +538,19 @@ function displayFoodByStorageSpace(
       ref
         .get()
         .then((items) => {
-          // let items = [];
-          // items.forEach((doc) => {
-          // //   items.push({ id: doc.id, data: doc.data() });
-          //   // console.log(doc);
-          //   // console.log("Document data:", doc.data());
-          //   console.log('category', doc.data().category)
-          // });
-          // console.log(items)
+
+          // Get the sorting method from url (set by sort radio buttons )
+          sortingMethod = getURLParams('sort');
 
           // Call the appropriate display function based on sorting method
           switch (sortingMethod) {
-            case "category":
+            case "Category":
               displayFoodItemsByCategory(items);
               break;
-            case "date":
+            case "Expiration Date":
                 displayFoodItemsByExpiryDate(items);
               break;
-            case "name":
+            case "Name":
                 displayFoodItemsByName(items);
               break;
             default:
@@ -560,6 +570,7 @@ function displayFoodByStorageSpace(
 }
 
 function setupSortingOptions(userID, storageSpace) {
+  const sortPreview = document.querySelector('.js-sort-preview');
   const sortingOptions = document.querySelectorAll(
     '.js-sort-by input[type="radio"]'
   );
@@ -569,9 +580,12 @@ function setupSortingOptions(userID, storageSpace) {
       if (this.checked) {
         let sortingMethod = this.value;
 
+        setURLParams('sort', sortingMethod)
         // Clear existing items
         foodItemList.innerHTML = "";
 
+        // Update text under sort menu
+        sortPreview.innerHTML = sortingMethod ;
         // Call displayFoodByStorageSpace with the selected sorting method
         displayFoodByStorageSpace(userID, storageSpace, sortingMethod)
           .then(() => {
@@ -695,6 +709,14 @@ function getURLParams(key) {
   const value = params.get(key);
 
   return value;
+}
+
+function setURLParams(key, value) {
+  let url = new URL(window.location.href);
+  url.searchParams.set(key, value) // get the search parameter and add a new query string with key value
+
+  // Go to url without reloading
+  history.pushState(null, '', url);
 }
 
 function populateFoodInfo() {

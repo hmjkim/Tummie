@@ -200,7 +200,7 @@
                   class="js-sort-btn tw-w-full tw-flex tw-justify-between tw-p-5 tw-transition hover:tw-bg-[#f9f9f9] tw-items-center tw-rounded-lg">
                   <div class="tw-text-left">
                     <p>Sort by</p>
-                    <p class="tw-text-sm tw-text-neutral">Category</p>
+                    <p class="tw-text-sm tw-text-neutral js-sort-preview">Category</p>
                   </div>
                   <svg class="tw-w-6" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -353,7 +353,7 @@
             <ul>
               <li class="tw-mb-8">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="category" name="flexRadioDefault"
+                  <input class="form-check-input" type="radio" value="Category" name="flexRadioDefault"
                     id="sortByCategory" checked>
                   <label class="form-check-label tw-text-xl" for="sortByCategory">
                     Category
@@ -362,7 +362,7 @@
               </li>
               <li class="tw-mb-8">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="date" name="flexRadioDefault" id="sortByDate">
+                  <input class="form-check-input" type="radio" value="Expiration Date" name="flexRadioDefault" id="sortByDate">
                   <label class="form-check-label tw-text-xl" for="sortByDate">
                     Expiration Date
                   </label>
@@ -370,7 +370,7 @@
               </li>
               <li class="tw-mb-8">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="name" name="flexRadioDefault" id="sortByName">
+                  <input class="form-check-input" type="radio" value="Name" name="flexRadioDefault" id="sortByName">
                   <label class="form-check-label tw-text-xl" for="sortByName">
                     Name
                   </label>
@@ -381,7 +381,7 @@
         </div>
       </div>
       <!-- BG Overlay -->
-      <div class="tw-fixed tw-inset-0 tw-bg-black/20"></div>
+      <div class="js-bg-overlay tw-fixed tw-inset-0 tw-bg-black/20 tw-z-[999]"></div>
     </div>
 
     <!-- Move Overlay -->
@@ -429,7 +429,7 @@
           </div>
         </div>
         <!-- BG Overlay -->
-        <div class="tw-fixed tw-inset-0 tw-bg-black/20"></div>
+        <div class="tw-fixed tw-inset-0 tw-bg-black/20 tw-z-[999]"></div>
       </div>
 
     <template id="foodItemTemplate">
