@@ -2,8 +2,6 @@ import {
   displayFoodItemsByCategory,
   displayFoodItemsByExpiryDate,
   displayFoodItemsByName,
-  createSortByDateContainer,
-  createSortByNameContainer,
 } from "./sort-food.js";
 
 var currentUser;
@@ -524,12 +522,15 @@ function displayFoodByStorageSpace(
 
       ref
         .get()
-        .then((querySnapshot) => {
-          let items = [];
-          querySnapshot.forEach((doc) => {
-            items.push({ id: doc.id, data: doc.data() });
-            console.log(items);
-          });
+        .then((items) => {
+          // let items = [];
+          // items.forEach((doc) => {
+          // //   items.push({ id: doc.id, data: doc.data() });
+          //   // console.log(doc);
+          //   // console.log("Document data:", doc.data());
+          //   console.log('category', doc.data().category)
+          // });
+          // console.log(items)
 
           // Call the appropriate display function based on sorting method
           switch (sortingMethod) {
@@ -537,14 +538,10 @@ function displayFoodByStorageSpace(
               displayFoodItemsByCategory(items);
               break;
             case "date":
-              createSortByDateContainer(items).then(() => {
                 displayFoodItemsByExpiryDate(items);
-              });
               break;
             case "name":
-              createSortByNameContainer(items).then(() => {
                 displayFoodItemsByName(items);
-              });
               break;
             default:
               displayFoodItemsByCategory(items);
@@ -564,7 +561,7 @@ function displayFoodByStorageSpace(
 
 function setupSortingOptions(userID, storageSpace) {
   const sortingOptions = document.querySelectorAll(
-    'input[name="flexRadioDefault"]'
+    '.js-sort-by input[type="radio"]'
   );
 
   sortingOptions.forEach((option) => {
