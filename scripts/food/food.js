@@ -4,6 +4,8 @@ import {
   displayFoodItemsByName,
 } from "./sort-food.js";
 
+import { updateSortingMethod } from "./sort.js";
+
 var currentUser;
 // split path by \ and get the last one
 const editForm = document.querySelector(".js-edit-form");
@@ -51,98 +53,146 @@ firebase.auth().onAuthStateChanged((user) => {
       populateFoodInfo();
     } else {
       // My Kitchen page
+      // Get the sorting method from URL if it exists
+      let urlSortingMethod = getURLParams("sort");
+      if (urlSortingMethod) {
+        // If there's a sort parameter in the URL, use it
+        displayFoodItems(userID, urlSortingMethod);
+      } else {
+        // Otherwise, use the user's default sorting preference from Firestore
+        db.collection("users")
+          .doc(userID)
+          .get()
+          .then((userDoc) => {
+            let defaultSortingPreference = userDoc.data().default_sorting;
+            let sortingMethod;
 
-      db.collection("users")
-        .doc(userID)
-        .collection("food")
-        .get()
-        .then((subCollection) => {
-          if (emptyKitchenMessage && searchBar) {
-            // When food subcollection has more than one entry
-            if (subCollection.docs.length > 0) {
-              console.log("food collection exists");
-              //   document.querySelector('.js-sub-header').classList.remove('tw-hidden');
-              
-              let spaceName = getURLParams("storage");
-              console.log(spaceName);
-              // Execute necessary setup before displaying items
-              toggleStorageDropdown();
-              toggleMeatballOverlay();
-              createStorageSpaceDropdown(userID);
-
-              // Display food items and chain the rest of the actions
-              displayFoodByStorageSpace(userID, spaceName)
-                .then(() => {
-                  console.log("All food items have been displayed.");
-                  // Now setup the select functionality
-                  showSelectOverlay(userID, spaceName);
-                  // deleteFood(userID, spaceName);
-
-                  sortBtn.addEventListener("click", () => {
-                    toggleElementsVisibility([sortOverlay, meatballOverlay]);
-                  });
-                  closeBtn.addEventListener("click", () => {
-                    toggleElementsVisibility([sortOverlay]);
-                  });
-
-                  // Set up sorting options
-                  setupSortingOptions(userID, spaceName);
-                })
-                .catch((error) => {
-                  console.error("Failed to display food items:", error);
-                });
-            } else {
-              console.log("food collection does not exist");
-              let node = emptyKitchenMessageTemplate.content.cloneNode(true);
-              emptyKitchenMessage.appendChild(node);
-              searchBar.style.display = "none";
+            switch (defaultSortingPreference) {
+              case "defaultSortByDate":
+                sortingMethod = "Expiration Date";
+                break;
+              case "defaultSortByCategory":
+                sortingMethod = "Category";
+                break;
+              case "defaultSortByName":
+                sortingMethod = "Name";
+                break;
+              default:
+                sortingMethod = "Expiration Date";
             }
-          }
-        });
-    }
-
-    const saveBtns = document.querySelectorAll(".save-btn");
-    if (saveBtns.length > 0) {
-      saveBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          if (editForm) {
-            // Edit form page
-            updateFoodItem(userID);
-          } else {
-            // Add form page
-            writeFood(userID);
-          }
-        });
-      });
+            setURLParams('sort', sortingMethod);
+            
+            // Display food items with the default sorting method
+            displayFoodItems(userID, sortingMethod);
+          });
+      }
     }
   } else {
     console.log("No user is signed in");
     window.location.href = "login.html";
   }
 
+  // Helper function to display items with appropriate sorting method
+  function displayFoodItems(userID, sortingMethod) {
+  
+    db.collection("users")
+      .doc(userID)
+      .collection("food")
+      .get()
+      .then((subCollection) => {
+        if (emptyKitchenMessage && searchBar) {
+          // When food subcollection has more than one entry
+          if (subCollection.docs.length > 0) {
+            console.log("food collection exists");
+            //   document.querySelector('.js-sub-header').classList.remove('tw-hidden');
+
+            let spaceName = getURLParams("storage");
+            console.log(spaceName);
+            // Execute necessary setup before displaying items
+            toggleStorageDropdown();
+            toggleMeatballOverlay();
+            createStorageSpaceDropdown(userID);
+
+            // Display food items and chain the rest of the actions
+            displayFoodByStorageSpace(
+              userID,
+              spaceName,
+              sortingMethod
+            )
+              .then(() => {
+                console.log("Items sorted by:", sortingMethod);
+                console.log("All food items have been displayed.");
+
+                // Now setup the select functionality
+                showSelectOverlay(userID, spaceName);
+                // deleteFood(userID, spaceName);
+
+                sortBtn.addEventListener("click", () => {
+                  toggleElementsVisibility([
+                    sortOverlay,
+                    meatballOverlay,
+                  ]);
+                });
+                closeBtn.addEventListener("click", () => {
+                  toggleElementsVisibility([sortOverlay]);
+                });
+
+                // Set up sorting options
+                setupSortingOptions(userID, spaceName, sortingMethod);
+              })
+              .catch((error) => {
+                console.error("Failed to display food items:", error);
+              });
+          } else {
+            console.log("food collection does not exist");
+            let node = emptyKitchenMessageTemplate.content.cloneNode(true);
+              emptyKitchenMessage.appendChild(node);
+              searchBar.style.display = "none";
+          }
+        }
+      });
+    
+  }
+  
+  // SAVE BUTTON
+  const saveBtns = document.querySelectorAll(".save-btn");
+  if (saveBtns.length > 0) {
+    saveBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (editForm) {
+          // Edit form page
+          updateFoodItem(userID);
+        } else {
+          // Add form page
+          writeFood(userID);
+        }
+      });
+    });
+  }
+
+  // DELETE FUNCTION
   const deleteBtns = document.querySelectorAll(".js-delete-btn");
   if (deleteBtns.length < 0) {
-    return
+    return;
   }
   deleteBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      console.log("clicked")
-        db.collection("users")
-          .doc(userID)
-          .collection("food")
-          .doc(getURLParams("docID"))
-          .delete()
-          .then(() => {
-            console.log("Document successfully deleted!");
-            history.back();
-            // window.location.href = `mykitchen.html?storage=${spaceName}`;
-          })
-          .catch((error) => {
-            console.error("Error removing document: ", error);
-          });
+      console.log("clicked");
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .doc(getURLParams("docID"))
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+          history.back();
+          // window.location.href = `mykitchen.html?storage=${spaceName}`;
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
     });
   });
-
 });
 
 function toggleMeatballOverlay() {
@@ -154,8 +204,8 @@ function toggleMeatballOverlay() {
     meatballOverlayTrigger.classList.toggle("tw-text-neutral");
   });
 
-    // Close overlay when clicking outside of it
-    document.addEventListener("click", (event) => {
+  // Close overlay when clicking outside of it
+  document.addEventListener("click", (event) => {
     // overlay open, not clicking inside of overlay or overlay trigger button
     if (
       !meatballOverlay.contains(event.target) &&
@@ -183,18 +233,18 @@ function toggleStorageDropdown() {
     btnArrow.classList.toggle("tw-rotate-180");
   });
 
-    // Close overlay when clicking outside of it
-    document.addEventListener("click", (event) => {
-      // overlay open, not clicking inside of overlay or storage button
-      if (
-        !storageDropdownContainer.contains(event.target) &&
-        !storageBtn.contains(event.target)
-      ) {
-        // Close overlay
-        storageDropdownContainer.classList.add("tw-hidden");
-        btnArrow.classList.remove("tw-rotate-180");
-      }
-    });
+  // Close overlay when clicking outside of it
+  document.addEventListener("click", (event) => {
+    // overlay open, not clicking inside of overlay or storage button
+    if (
+      !storageDropdownContainer.contains(event.target) &&
+      !storageBtn.contains(event.target)
+    ) {
+      // Close overlay
+      storageDropdownContainer.classList.add("tw-hidden");
+      btnArrow.classList.remove("tw-rotate-180");
+    }
+  });
 }
 
 // Add food items
@@ -320,7 +370,7 @@ function showSelectOverlay(userID, spaceName) {
   const doneBtn = document.querySelector(".js-done-btn");
   const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
   const selectOverlay = document.querySelector(".js-select-overlay");
-  const checkboxes = document.querySelectorAll('#foodItemList .form-check');
+  const checkboxes = document.querySelectorAll("#foodItemList .form-check");
   // Get a list of items to be deleted or moved
   var selectedList = [];
 
@@ -385,7 +435,7 @@ function showSelectOverlay(userID, spaceName) {
 
         // Show number of selected items
         itemCounter.innerHTML = `${selectedList.length} item(s) selected`;
-        console.log(checkbox, 'checked');
+        console.log(checkbox, "checked");
       } else {
         // Get everything except for the selected item
         selectedList = selectedList.filter((id) => id !== itemID);
@@ -397,102 +447,118 @@ function showSelectOverlay(userID, spaceName) {
     // Close overlay when clicking outside of it
     document.addEventListener("click", (event) => {
       if (!sortOverlay) {
-        return 
+        return;
       }
       // overlay open, not clicking inside of overlay or overlay trigger button
-      if (
-        bgOverlay.contains(event.target)
-      ) {
+      if (bgOverlay.contains(event.target)) {
         // Close overlay
         sortOverlay.classList.add("tw-hidden");
       }
     });
   });
 
-  const deleteBtn = document.querySelector('.js-delete-btn');
-  deleteBtn.addEventListener('click', () => {
+  const deleteBtn = document.querySelector(".js-delete-btn");
+  deleteBtn.addEventListener("click", () => {
     selectedList.forEach((itemID) => {
-      db.collection("users").doc(userID).collection("food").doc(itemID).delete().then(() => {
-        console.log("Document successfully deleted!");
-        window.location.href = `mykitchen.html?storage=${spaceName}`;
-      }).catch((error) => {
-        console.error("Error removing document: ", error);
-      });
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .doc(itemID)
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+          window.location.href = `mykitchen.html?storage=${spaceName}`;
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
     });
   });
 
   // Open and close move items overlay
-  const moveBtn = document.querySelector('.js-move-btn');
-  const moveOverlay = document.querySelector('.js-move-overlay')
-  const closeMoveBtn = document.querySelector('.js-close-move-btn')
-  moveBtn.addEventListener('click', () => {
-    toggleElementsVisibility([
-      selectOverlay,
-      moveOverlay,
-      doneBtn,
-    ]);
+  const moveBtn = document.querySelector(".js-move-btn");
+  const moveOverlay = document.querySelector(".js-move-overlay");
+  const closeMoveBtn = document.querySelector(".js-close-move-btn");
+  moveBtn.addEventListener("click", () => {
+    toggleElementsVisibility([selectOverlay, moveOverlay, doneBtn]);
   });
-  closeMoveBtn.addEventListener('click', () => {
-    toggleElementsVisibility([
-      selectOverlay,
-      moveOverlay,
-      doneBtn,
-    ]);
+  closeMoveBtn.addEventListener("click", () => {
+    toggleElementsVisibility([selectOverlay, moveOverlay, doneBtn]);
   });
 
   // Write new storage place to database
-  const moveToFridge = document.querySelector('#moveToFridge');
-  const moveToFreezer = document.querySelector('#moveToFreezer');
-  const moveToPantry = document.querySelector('#moveToPantry');
-  const moveToOther = document.querySelector('#moveToOther');
+  const moveToFridge = document.querySelector("#moveToFridge");
+  const moveToFreezer = document.querySelector("#moveToFreezer");
+  const moveToPantry = document.querySelector("#moveToPantry");
+  const moveToOther = document.querySelector("#moveToOther");
 
-  moveToFridge.addEventListener('click', () => {
+  moveToFridge.addEventListener("click", () => {
     selectedList.forEach((itemID) => {
-      db.collection("users").doc(userID).collection("food").doc(itemID).update({
-        storage_space: "Fridge",
-      })
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .doc(itemID)
+        .update({
+          storage_space: "Fridge",
+        })
         .then(() => {
           window.location.href = `mykitchen.html?storage=${spaceName}`;
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error moving item: ", error);
         });
     });
   });
 
-  moveToFreezer.addEventListener('click', () => {
+  moveToFreezer.addEventListener("click", () => {
     selectedList.forEach((itemID) => {
-      db.collection("users").doc(userID).collection("food").doc(itemID).update({
-        storage_space: "Freezer",
-      })
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .doc(itemID)
+        .update({
+          storage_space: "Freezer",
+        })
         .then(() => {
           window.location.href = `mykitchen.html?storage=${spaceName}`;
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error moving item: ", error);
         });
     });
   });
 
-  moveToPantry.addEventListener('click', () => {
+  moveToPantry.addEventListener("click", () => {
     selectedList.forEach((itemID) => {
-      db.collection("users").doc(userID).collection("food").doc(itemID).update({
-        storage_space: "Pantry",
-      })
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .doc(itemID)
+        .update({
+          storage_space: "Pantry",
+        })
         .then(() => {
           window.location.href = `mykitchen.html?storage=${spaceName}`;
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error moving item: ", error);
         });
     });
   });
 
-  moveToOther.addEventListener('click', () => {
+  moveToOther.addEventListener("click", () => {
     selectedList.forEach((itemID) => {
-      db.collection("users").doc(userID).collection("food").doc(itemID).update({
-        storage_space: "Other",
-      })
+      db.collection("users")
+        .doc(userID)
+        .collection("food")
+        .doc(itemID)
+        .update({
+          storage_space: "Other",
+        })
         .then(() => {
           window.location.href = `mykitchen.html?storage=${spaceName}`;
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error moving item: ", error);
         });
     });
@@ -500,11 +566,7 @@ function showSelectOverlay(userID, spaceName) {
 }
 
 // Display Food items on My Kitchen page
-function displayFoodByStorageSpace(
-  userID,
-  storageSpace,
-  sortingMethod = "Category"
-) {
+function displayFoodByStorageSpace(userID, storageSpace, sortingMethod) {
   return new Promise((resolve, reject) => {
     var currentSpaceTitle;
     // Update current space
@@ -538,9 +600,8 @@ function displayFoodByStorageSpace(
       ref
         .get()
         .then((items) => {
-
-          // Get the sorting method from url (set by sort radio buttons )
-          sortingMethod = getURLParams('sort');
+          // Get the sorting method from url if default doesn't exist(set by sort radio buttons )
+          sortingMethod = sortingMethod ? sortingMethod : getURLParams("sort");
 
           // Call the appropriate display function based on sorting method
           switch (sortingMethod) {
@@ -548,10 +609,10 @@ function displayFoodByStorageSpace(
               displayFoodItemsByCategory(items);
               break;
             case "Expiration Date":
-                displayFoodItemsByExpiryDate(items);
+              displayFoodItemsByExpiryDate(items);
               break;
             case "Name":
-                displayFoodItemsByName(items);
+              displayFoodItemsByName(items);
               break;
             default:
               displayFoodItemsByCategory(items);
@@ -569,23 +630,31 @@ function displayFoodByStorageSpace(
   });
 }
 
-function setupSortingOptions(userID, storageSpace) {
-  const sortPreview = document.querySelector('.js-sort-preview');
+function setupSortingOptions(userID, storageSpace, defaultSortingMethod) {
+  const sortPreview = document.querySelector(".js-sort-preview");
   const sortingOptions = document.querySelectorAll(
     '.js-sort-by input[type="radio"]'
   );
+
+  // Pre-select the appropriate sorting radio button based on the current sorting method
+  sortingOptions.forEach((option) => {
+    if (option.value === defaultSortingMethod) {
+      option.checked = true;
+      sortPreview.innerHTML = defaultSortingMethod; // Update preview text to reflect the current sorting method
+    }
+  });
 
   sortingOptions.forEach((option) => {
     option.addEventListener("change", function () {
       if (this.checked) {
         let sortingMethod = this.value;
 
-        setURLParams('sort', sortingMethod)
+        setURLParams("sort", sortingMethod);
         // Clear existing items
         foodItemList.innerHTML = "";
 
         // Update text under sort menu
-        sortPreview.innerHTML = sortingMethod ;
+        sortPreview.innerHTML = sortingMethod;
         // Call displayFoodByStorageSpace with the selected sorting method
         displayFoodByStorageSpace(userID, storageSpace, sortingMethod)
           .then(() => {
@@ -713,10 +782,10 @@ function getURLParams(key) {
 
 function setURLParams(key, value) {
   let url = new URL(window.location.href);
-  url.searchParams.set(key, value) // get the search parameter and add a new query string with key value
+  url.searchParams.set(key, value); // get the search parameter and add a new query string with key value
 
   // Go to url without reloading
-  history.pushState(null, '', url);
+  history.pushState(null, "", url);
 }
 
 function populateFoodInfo() {
