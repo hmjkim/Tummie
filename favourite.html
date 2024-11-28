@@ -84,64 +84,66 @@
   <header id="headerContent"></header>
   <main class="container">
     <div class="justify-content-between align-items-center py-3">
-      <div class="tw-flex tw-justify-between">
-        <div class="d-flex col gap-3 align-items-center">
-          <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
-            <img class="nav-icon" src="./images/icons/recipes-active.svg" alt="" />
+      <section class="md:tw-static tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 md:tw-py-0 tw-bg-white tw-z-[999]">
+        <div class="tw-flex tw-justify-between">
+          <div class="d-flex col gap-3 align-items-center">
+            <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
+              <img class="nav-icon" src="./images/icons/recipes-active.svg" alt="" />
+            </div>
+            <h1 class="tw-text-2xl">My Favourite</h1>
           </div>
-          <h1 class="tw-text-2xl">My Favourite</h1>
+          <!-- (MOBILE) - Search & filter icon container -->
+          <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3">
+            <!-- Search button -->
+            <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center md:tw-hidden">
+              <svg width="24" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M21.4433 22.1226L14.7452 15.4245M16.9779 9.84276C16.9779 14.1586 13.4793 17.6572 9.16346 17.6572C4.84765 17.6572 1.349 14.1586 1.349 9.84276C1.349 5.52695 4.84765 2.02829 9.16346 2.02829C13.4793 2.02829 16.9779 5.52695 16.9779 9.84276Z"
+                  stroke="currentColor" stroke-width="2.67925" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <!-- filter button -->
+            <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sliders"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
+              </svg>
+            </button>
+          </div>
         </div>
-        <!-- (MOBILE) - Search & filter icon container -->
-        <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3">
-          <!-- Search button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center md:tw-hidden">
-            <svg width="24" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M21.4433 22.1226L14.7452 15.4245M16.9779 9.84276C16.9779 14.1586 13.4793 17.6572 9.16346 17.6572C4.84765 17.6572 1.349 14.1586 1.349 9.84276C1.349 5.52695 4.84765 2.02829 9.16346 2.02829C13.4793 2.02829 16.9779 5.52695 16.9779 9.84276Z"
-                stroke="currentColor" stroke-width="2.67925" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
-          <!-- filter button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sliders"
-              viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
-            </svg>
-          </button>
-        </div>
-      </div>
 
-      <!-- (DESKTOP) - Search bar -->
-      <div class="tw-px-4 md:tw-px-0 tw-mt-5 tw-hidden md:tw-block">
-        <div class="input-group flex-nowrap">
-          <span class="input-group-text" id="addon-wrapping">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-              viewBox="0 0 16 16">
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0">
-              </path>
-            </svg>
-          </span>
-          <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-            aria-describedby="addon-wrapping">
+        <!-- (DESKTOP) - Search bar -->
+        <div class="tw-px-4 md:tw-px-0 tw-mt-5 tw-hidden md:tw-block">
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0">
+                </path>
+              </svg>
+            </span>
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+              aria-describedby="addon-wrapping">
+          </div>
         </div>
-      </div>
 
-      <!-- Link to all recipes -->
-      <div class="tw-my-5 d-flex col justify-content-start gap-2">
-        <a href="recipes.html" class="tw-flex flex-col tw-gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1D6961"
-            class="bi bi-arrow-right-circle-fill inline-block align-self-center" viewBox="0 0 16 16">
-            <path
-              d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
-          </svg>
-          <h1 class="tw-text-lg">Back to All Recipes</h1>
-        </a>
-      </div>
+        <!-- Link to all recipes -->
+        <div class="tw-mt-5 d-flex col justify-content-start gap-2">
+          <a href="recipes.html" class="tw-flex flex-col tw-gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1D6961"
+              class="bi bi-arrow-right-circle-fill inline-block align-self-center" viewBox="0 0 16 16">
+              <path
+                d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+            </svg>
+            <h1 class="tw-text-lg">Back to All Recipes</h1>
+          </a>
+        </div>
+      </section>
 
       <!-- Here is the container for cards  -->
-      <div id="recipes-go-here" class="row row-cols-1 row-cols-md-3 g-4 tw-mt-5">
+      <div id="recipes-go-here" class="row row-cols-1 row-cols-md-3 g-4 tw-mt-5 tw-pt-20 md:tw-pt-0">
       </div>
 
       <!-- Template for recipe cards, not displayed -->

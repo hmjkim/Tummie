@@ -83,6 +83,8 @@
   <header id="headerContent"></header>
   <main class="container">
     <div class="justify-content-between align-items-center py-3">
+      <section
+        class="md:tw-static tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 md:tw-py-0 tw-bg-white tw-z-[999]">
       <div class="tw-flex tw-justify-between">
         <div class="d-flex col gap-3 align-items-center">
           <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
@@ -91,7 +93,7 @@
           <h1 class="tw-text-2xl">Recipes</h1>
         </div>
       </div>
-      <div class="tw-my-5 d-flex col justify-content-start gap-2">
+      <div class="tw-mt-5 md:tw-mb-5 d-flex col justify-content-start gap-2">
         <a href="favourite.html" class="tw-flex flex-col tw-gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1D6961"
             class="bi bi-arrow-right-circle-fill inline-block align-self-center" viewBox="0 0 16 16">
@@ -101,8 +103,9 @@
           <h1 class="tw-text-lg">Back to My Favourite</h1>
         </a>
       </div>
+      </section>
 
-      <div class="tw-flex tw-flex-col gap-4">
+      <div class="tw-flex tw-flex-col gap-4 tw-pt-24 md:tw-pt-0">
         <div class="col d-flex justify-content-between align-items-center">
           <h1><span id="recipeName" class="tw-text-2xl">Recipe Name</span></h1>
           <i class="material-icons">favorite_border</i>
