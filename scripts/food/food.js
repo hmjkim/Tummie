@@ -4,7 +4,7 @@ import {
   displayFoodItemsByName,
 } from "./sort-food.js";
 
-import { updateSortingMethod } from "./sort.js";
+// import { updateSortingMethod } from "./sort.js";
 
 var currentUser;
 // split path by \ and get the last one
