@@ -388,7 +388,7 @@
     <div>
       <div class="js-move-overlay tw-hidden">
         <div
-          class="tw-py-10 tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-3/5">
+          class="tw-py-10 tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-[90%]">
           <div class="container tw-px-6">
             <div class="tw-flex tw-items-center tw-justify-between tw-mb-10">
               <h2 class="tw-text-3xl">Choose Location</h2>
@@ -399,32 +399,45 @@
                 </svg>
               </button>
             </div>
-            <ul>
-              <li id="moveToFridge" class="tw-p-2">
-                <button
-                  class="tw-border tw-border-neutral-light tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg js-select-items-btn">
-                  <span>Fridge</span>
-                </button>
-              </li>
-              <li id="moveToFreezer" class="tw-p-2">
-                <button
-                  class="tw-border tw-border-neutral-light tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg js-select-items-btn">
-                  <span>Freezer</span>
-                </button>
-              </li>
-              <li id="moveToPantry" class="tw-p-2">
-                <button
-                  class="tw-border tw-border-neutral-light tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg js-select-items-btn">
-                  <span>Pantry</span>
-                </button>
-              </li>
-              <li id="moveToOther" class="tw-p-2">
-                <button
-                  class="tw-border tw-border-neutral-light tw-w-full tw-flex tw-justify-between tw-p-5 tw-items-center tw-transition hover:tw-bg-[#f9f9f9] tw-rounded-lg js-select-items-btn">
-                  <span>Other</span>
-                </button>
-              </li>
-            </ul>
+
+            <form class="js-move">
+              <ul>
+                <li class="tw-mb-8">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="moveToFridge" name="flexRadioDefault"
+                      id="moveToFridge">
+                    <label class="form-check-label tw-text-xl" for="moveToFridge">
+                      Fridge
+                    </label>
+                  </div>
+                </li>
+                <li class="tw-mb-8">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="moveToFreezer" name="flexRadioDefault" id="moveToFreezer">
+                    <label class="form-check-label tw-text-xl" for="moveToFreezer">
+                      Freezer
+                    </label>
+                  </div>
+                </li>
+                <li class="tw-mb-8">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="moveToPantry" name="flexRadioDefault" id="moveToPantry">
+                    <label class="form-check-label tw-text-xl" for="moveToPantry">
+                      Pantry
+                    </label>
+                  </div>
+                </li>
+                <li class="tw-mb-8">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="moveToOther" name="flexRadioDefault" id="moveToOther">
+                    <label class="form-check-label tw-text-xl" for="moveToOther">
+                      Other
+                    </label>
+                  </div>
+                </li>
+
+              </ul>
+            </form>
 
           </div>
         </div>
