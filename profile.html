@@ -3,8 +3,6 @@
 
 <head>
   <title>Tummie - Food Expiration Tracking App</title>
-
-  <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -83,18 +81,21 @@
   <!-- Your HTML Layout go here -->
   <header id="headerContent"></header>
   <main class="container py-3 tw-relative tw-font-[Poppins]">
-    <div class="d-flex row justify-content-between">
-      <div class="d-flex col gap-3 align-items-center">
-        <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
-          <svg width="30" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M6.43706 22.2547C8.9766 20.8192 11.9105 20 15.0358 20C18.161 20 21.0949 20.8192 23.6345 22.2547M18.7858 12.5C18.7858 14.5711 17.1068 16.25 15.0358 16.25C12.9647 16.25 11.2858 14.5711 11.2858 12.5C11.2858 10.4289 12.9647 8.74999 15.0358 8.74999C17.1068 8.74999 18.7858 10.4289 18.7858 12.5ZM26.2858 15C26.2858 21.2132 21.249 26.25 15.0358 26.25C8.82256 26.25 3.78577 21.2132 3.78577 15C3.78577 8.78679 8.82256 3.74999 15.0358 3.74999C21.249 3.74999 26.2858 8.78679 26.2858 15Z"
-              stroke="#1D6961" stroke-width="2.30769" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </div>
-        <h1 class="tw-text-2xl">Welcome! <span id="displayName" class="tw-text-[#1D6961] tw-uppercase"></span></h1>
-      </div>
-    </div>
+    <div class="justify-content-between align-items-center">
+      <section
+        class="md:tw-static tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 md:tw-p-0 tw-bg-white tw-z-[999]">
+          <div class="d-flex col gap-3 align-items-center">
+            <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
+              <svg width="30" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.43706 22.2547C8.9766 20.8192 11.9105 20 15.0358 20C18.161 20 21.0949 20.8192 23.6345 22.2547M18.7858 12.5C18.7858 14.5711 17.1068 16.25 15.0358 16.25C12.9647 16.25 11.2858 14.5711 11.2858 12.5C11.2858 10.4289 12.9647 8.74999 15.0358 8.74999C17.1068 8.74999 18.7858 10.4289 18.7858 12.5ZM26.2858 15C26.2858 21.2132 21.249 26.25 15.0358 26.25C8.82256 26.25 3.78577 21.2132 3.78577 15C3.78577 8.78679 8.82256 3.74999 15.0358 3.74999C21.249 3.74999 26.2858 8.78679 26.2858 15Z"
+                  stroke="#1D6961" stroke-width="2.30769" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h1 class="tw-text-2xl">Welcome! <span id="displayName" class="tw-text-[#1D6961] tw-uppercase"></span></h1>
+          </div>
+    </section>
+  </div>
 
     <div class="container justify-content-between align-items-center tw-pt-14 tw-px-0">
       <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -166,6 +167,7 @@
         </button>
       </div>
     </div>
+
     <!-- Account Overlay Box -->
     <div id="profileAccount" class="modal tw-hidden">
       <div
@@ -218,6 +220,7 @@
         </form>
       </div>
     </div>
+
     <!-- Setting Overlay Box -->
     <div id="profileSetting" class="modal tw-hidden">
       <div
@@ -240,7 +243,7 @@
         <div class="tw-space-y-4">
           <form>
             <fieldset class="tw-space-y-4 tw-font-sans" id="settingFields" disabled>
-              <!-- Notification on/off -->
+              <!-- Default sorting preference for mykitchen page -->
               <div class="form-group">
                 <label for="defaultSorting">Preference</label>
                 <p class="tw-text-neutral">Your preference is used for the default sorting for My Kitchen page.</p>
@@ -250,14 +253,6 @@
                   <option value="defaultSortByName">Sort By Name</option>
                 </select>
               </div>
-              <!-- Notification style/methods
-              <div class="form-group" id="notificationStyle">
-                <label>Notification Style</label><br>
-                <input type="checkbox" id="notifyInApp" value=true>
-                <label for="notifyInApp">In-app</label>
-                <input type="checkbox" id="notifyByEmail" value=true>
-                <label for="notifyByEmail">Email</label>
-              </div> -->
             </fieldset>
             <!-- Edit and Save buttons -->
             <div class="d-flex justify-content-end tw-mt-10">
@@ -268,10 +263,10 @@
               <span style="width: 10px"></span>
             </div>
           </form>
-
         </div>
       </div>
     </div>
+
     <!-- About Us Overlay Box -->
     <div id="profileAboutUs" class="modal tw-hidden">
       <div
@@ -312,6 +307,7 @@
         </div>
       </div>
     </div>
+
     <!-- Support Overlay Box -->
     <div id="profileSupport" class="modal tw-hidden">
       <div

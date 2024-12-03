@@ -81,58 +81,36 @@
   <!-- Your HTML Layout go here -->
   <header id="headerContent"></header>
   <main class="container py-3 tw-relative">
-    <section>
-      <!-- mobile header -->
+    <section
+      class="md:tw-static tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 md:tw-p-0 tw-bg-white tw-z-[999]">
       <div class="tw-flex tw-justify-between">
-        <div class="tw-flex tw-items-center tw-space-x-4">
-          <div class="tw-bg-[#EEEEEE] tw-text-primary tw-p-1 tw-rounded-md">
-            <svg width="30" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M21.6072 25H27.8572V22.5C27.8572 20.4289 26.1782 18.75 24.1072 18.75C22.9127 18.75 21.8486 19.3085 21.1619 20.1786M21.6072 25H9.10718M21.6072 25V22.5C21.6072 21.6797 21.4491 20.8963 21.1619 20.1786M9.10718 25H2.85718V22.5C2.85718 20.4289 4.53611 18.75 6.60718 18.75C7.80169 18.75 8.86575 19.3085 9.55249 20.1786M9.10718 25V22.5C9.10718 21.6797 9.26521 20.8963 9.55249 20.1786M9.55249 20.1786C10.4741 17.8763 12.7257 16.25 15.3572 16.25C17.9887 16.25 20.2403 17.8763 21.1619 20.1786M19.1072 8.75C19.1072 10.8211 17.4282 12.5 15.3572 12.5C13.2861 12.5 11.6072 10.8211 11.6072 8.75C11.6072 6.67893 13.2861 5 15.3572 5C17.4282 5 19.1072 6.67893 19.1072 8.75ZM26.6072 12.5C26.6072 13.8807 25.4879 15 24.1072 15C22.7265 15 21.6072 13.8807 21.6072 12.5C21.6072 11.1193 22.7265 10 24.1072 10C25.4879 10 26.6072 11.1193 26.6072 12.5ZM9.10718 12.5C9.10718 13.8807 7.98789 15 6.60718 15C5.22647 15 4.10718 13.8807 4.10718 12.5C4.10718 11.1193 5.22647 10 6.60718 10C7.98789 10 9.10718 11.1193 9.10718 12.5Z"
-                stroke="#1D6961" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+        <div class="d-flex col gap-3 align-items-center">
+          <div class="tw-bg-[#EEEEEE] tw-p-1 tw-rounded-md">
+            <img class="nav-icon" src="./images/icons/share-hub-active.svg" alt="" />
           </div>
           <h1 class="tw-text-2xl">Share Hub</h1>
         </div>
-        <!-- (DESKTOP) - Utilities bar -->
-        <ul class="tw-hidden tw-text-neutral-dark md:tw-flex tw-space-x-3 tw-items-center">
-          <!-- Toggle -->
-          <li>
-            <div class="tw-flex tw-border tw-border-neutral-light tw-rounded-xl">
-              <!-- take button -->
-              <button
-                class="tw-w-16 tw-h-[38px] tw-flex tw-justify-center tw-items-center tw-border-r tw-border-neutral-light tw-bg-primary tw-rounded-l-lg">
-                <svg class="tw-w-[21px]" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1"
-                  viewBox="0 0 24 24">
-                  <path
-                    d="m18,0H5.107c-1.516,0-2.835,1.076-3.067,2.503-.143.879.103,1.768.674,2.439.082.096.18.173.272.258l-1.154.535c-.738.311-1.312.892-1.615,1.635-.301.742-.295,1.558.016,2.294.311.738.891,1.312,1.637,1.616.356.144.741.204,1.122.206l-1.674,3.177c-.358.718-.415,1.531-.16,2.291s.791,1.375,1.505,1.729c.418.21.868.316,1.339.316.758,0,1.461-.282,1.999-.766v2.766c0,.882.386,1.715,1.058,2.286.672.572,1.56.815,2.439.674.897-.146,1.657-.723,2.097-1.508.06.089.124.175.193.26.669.818,1.658,1.288,2.714,1.288.633,0,1.253-.172,1.792-.495.402-.24,2.47-1.544,3.723-3.637.043-.072.175-.292,2.745-5.239.811-1.559,1.239-3.312,1.239-5.07v-3.559c0-3.309-2.691-6-6-6ZM5.107,2h4.78l-4.313,2h-.574c-.294,0-.572-.129-.763-.353-.193-.228-.272-.52-.223-.822.075-.463.555-.825,1.093-.825Zm6.893,16.041v-2.041c0-.284.123-.557.336-.747.187-.165.418-.253.664-.253.523,0,.778.311.927.668.298.716-.508,1.394-1.236,1.836-.255.154-.486.336-.69.537Zm10-8.482c0,1.438-.351,2.873-1.014,4.147-2.329,4.482-2.647,5.067-2.688,5.136-1.027,1.717-2.829,2.825-3.033,2.947-.608.364-1.475.213-1.931-.343-.207-.254-.427-.694-.293-1.351.068-.338.318-.659.686-.883,1.949-1.184,2.694-2.756,2.046-4.313-.425-1.021-1.375-1.758-2.422-1.879-.854-.102-1.707.171-2.346.739-.64.57-1.006,1.387-1.006,2.24v4.893c0,.538-.362,1.018-.825,1.093-.3.052-.595-.029-.822-.223-.224-.19-.353-.469-.353-.763v-5c0-2.176,1.398-4.032,3.343-4.717.395-.139.657-.513.657-.931,0-.701-.7-1.17-1.359-.934-1.59.57-2.901,1.708-3.723,3.158l-2.022,3.871c-.238.481-.853.691-1.34.447-.239-.118-.417-.323-.502-.577-.085-.252-.066-.522.054-.763l2.203-4.156c.284-.536.724-.973,1.261-1.254l4.893-2.557c.329-.172.535-.512.535-.884v-.045c0-.752-.801-1.233-1.465-.88l-7.164,3.646c-.232.099-.508.099-.749,0-.247-.101-.442-.293-.546-.54-.106-.248-.107-.512-.005-.763.101-.248.293-.442.516-.537L11.429,3.411c.349-.165.571-.516.571-.901v-.509h6c2.206,0,4,1.794,4,4v3.559Z"
-                    fill="#EEEEEE" />
-                </svg>
-              </button>
-              <!-- give button -->
-              <button class="tw-w-16 tw-h-[38px] tw-flex tw-justify-center tw-items-center tw-rounded-l-lg">
-                <svg class="tw-w-[24px]" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1"
-                  viewBox="0 0 24 24" width="512" height="512">
-                  <path
-                    d="M8.965,24H4a4,4,0,0,1-4-4V15a4,4,0,0,1,4-4h8.857a3.144,3.144,0,0,1,2.69,1.519l3.217-3.535a3.01,3.01,0,0,1,4.254-.2,3.022,3.022,0,0,1,.217,4.23l-6.8,7.637A10.012,10.012,0,0,1,8.965,24ZM4,13a2,2,0,0,0-2,2v5a2,2,0,0,0,2,2H8.965a8.005,8.005,0,0,0,5.972-2.678l6.805-7.638a1.015,1.015,0,0,0-.072-1.421A1.029,1.029,0,0,0,20.942,10a1,1,0,0,0-.7.329L15.816,15.2A3.158,3.158,0,0,1,13.3,17.252l-5.161.738a1,1,0,0,1-.284-1.98l5.162-.737A1.142,1.142,0,0,0,12.857,13Zm7-3.926a1.986,1.986,0,0,1-1.247-.436C8.041,7.264,6,5.2,6,3.2A3.109,3.109,0,0,1,9,0a2.884,2.884,0,0,1,2,.817A2.884,2.884,0,0,1,13,0a3.109,3.109,0,0,1,3,3.2c0,2-2.041,4.064-3.754,5.439A1.986,1.986,0,0,1,11,9.074ZM9,2A1.115,1.115,0,0,0,8,3.2c0,.9,1.151,2.39,3.006,3.879C12.849,5.59,14,4.1,14,3.2A1.115,1.115,0,0,0,13,2a1.115,1.115,0,0,0-1,1.2,1,1,0,0,1-2,0A1.115,1.115,0,0,0,9,2Z"
-                    fill="#7C7C7C" />
-                </svg>
-              </button>
-            </div>
-          </li>
-        </ul>
-        <!-- (MOBILE) - Search & Meatball icon container -->
-        <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3 md:tw-hidden">
+        <!-- (MOBILE) - Search & filter icon container -->
+        <div class="tw-text-neutral-dark tw-flex tw-items-center tw-space-x-3">
           <!-- Search button -->
-          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-            <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <button class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center md:tw-hidden">
+            <svg width="24" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M21.4433 22.1226L14.7452 15.4245M16.9779 9.84276C16.9779 14.1586 13.4793 17.6572 9.16346 17.6572C4.84765 17.6572 1.349 14.1586 1.349 9.84276C1.349 5.52695 4.84765 2.02829 9.16346 2.02829C13.4793 2.02829 16.9779 5.52695 16.9779 9.84276Z"
                 stroke="currentColor" stroke-width="2.67925" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
+          <!-- filter button -->
+          <button class="js-filter tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sliders"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
+            </svg>
+          </button>
         </div>
       </div>
+
       <!-- (DESKTOP) - Search bar -->
       <div class="tw-px-4 md:tw-px-0 tw-mt-5 tw-hidden md:tw-block">
         <div class="input-group flex-nowrap">
@@ -148,21 +126,21 @@
             aria-describedby="addon-wrapping">
         </div>
       </div>
+
       <!-- (MOBILE) - Give and Take -->
       <div
-        class="tw-mt-10 tw-h-12 tw-flex tw-border tw-border-neutral-light tw-rounded-xl tw-items-center tw-px-1 tw-shadow-inner md:tw-hidden">
-        <!-- take button -->
+        class="tw-mt-5 tw-h-12 tw-flex tw-border tw-border-neutral-light tw-rounded-xl tw-items-center tw-px-1 tw-shadow-inner md:tw-hidden">
         <button
           class="tw-w-1/2 tw-h-10 tw-flex tw-justify-center tw-items-center tw-border-r tw-border-neutral-light tw-bg-primary tw-rounded-lg tw-text-[#EEEEEE] tw-font-[Poppins] tw-shadow-lg">Get</button>
-        <!-- give button -->
         <button
           class="tw-w-1/2 tw-h-10 tw-flex tw-justify-center tw-items-center tw-rounded-l-lg tw-text-neutral tw-font-[Poppins]">Give
           Away</button>
       </div>
     </section>
-    <div class="tw-pt-20 text-center tw-text-neutral tw-font-[Poppins] tw-space-y-2">
-      <svg class="tw-inline mb-4" xmlns="http://www.w3.org/2000/svg" width="80" height="80" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512"
-        height="512">
+
+    <div class="container text-center tw-text-neutral tw-font-[Poppins] tw-fixed tw-top-1/2 tw-left-1/2 tw--translate-x-1/2 tw--translate-y-1/2">
+      <svg class="tw-inline mb-4" xmlns="http://www.w3.org/2000/svg" width="80" height="80" id="Layer_1"
+        data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512">
         <path
           d="M11,13V7c0-.55,.45-1,1-1s1,.45,1,1v6c0,.55-.45,1-1,1s-1-.45-1-1Zm1,2c-.83,0-1.5,.67-1.5,1.5s.67,1.5,1.5,1.5,1.5-.67,1.5-1.5-.67-1.5-1.5-1.5Zm11.58,4.88c-.7,1.35-2.17,2.12-4.01,2.12H4.44c-1.85,0-3.31-.77-4.01-2.12-.71-1.36-.51-3.1,.5-4.56L8.97,2.6c.71-1.02,1.83-1.6,3.03-1.6s2.32,.58,3,1.57l8.08,12.77c1.01,1.46,1.2,3.19,.49,4.54Zm-2.15-3.42s-.02-.02-.02-.04L13.34,3.67c-.29-.41-.79-.67-1.34-.67s-1.05,.26-1.36,.71L2.59,16.42c-.62,.88-.76,1.84-.4,2.53,.35,.68,1.15,1.05,2.24,1.05h15.12c1.09,0,1.89-.37,2.24-1.05,.36-.69,.22-1.65-.37-2.49Z"
           fill="#7C7C7C" />
@@ -171,6 +149,7 @@
         construction.</div>
       <div>Come back to check it out later!</div>
     </div>
+
     <div id="stickyMobileNav"></div>
   </main>
 
@@ -186,7 +165,7 @@
   <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/skeleton.js"></script>
   <script src="./scripts/firebaseAPI_DTC02.js"></script>
-    <script src="./scripts/share.js"></script>
+  <script src="./scripts/share.js"></script>
 </body>
 
 </html>
