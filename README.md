@@ -20,7 +20,10 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 - HTML, CSS, JavaScript
 - Bootstrap 5.0 (Frontend library)
 - Firebase 8.0 (BAAS - Backend as a Service)
-- ...
+- Tailwind CSS framework
+- Google fonts and icons
+- Flaticon
+- Free Meal API from TheMealDB.com (https://www.themealdb.com/api.php)
 
 ## 4. Complete setup/installion/usage
 
@@ -43,9 +46,8 @@ Here are some known bugs:
 
 What we'd like to build in the future:
 
-- ...
-- ...
-- ...
+- Auto-recommended recipes for each individual items (by searching the ingredients of recipes).
+- ShareHub feature which allows users to share and get surplus food in their local communities.
 
 ## 7. Contents of Folder
 
@@ -60,11 +62,31 @@ Content of the project folder:
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
 ├── images                   # Folder for images
-    /blah.jpg                # Acknowledge source
+    /about.svg                # Acknowledge source
+    /account.svg
+    /arrow-left.svg
+    /arrow.svg
+    /close.svg
+    /favorite.svg
+    /home.svg
+    /home.svg
+    /logout.svg
+    /my-kitchen-active.svg
+    /mykitchen.svg
+    /placeholder.svg
+    /profile-acitve.svg
+    /profile.svg
+    /recipes-active.svg
+    /recipes.svg
+    /setting.svg
+    /share-hub-active.svg
+    /share-hub.svg
+    /support.svg
+    /warning.svg
 ├── scripts                  # Folder for scripts
     /blah.js                 #
 ├── styles                   # Folder for styles
-    /blah.css                #
+    /style.css                #
 
 
 
