@@ -843,7 +843,7 @@ function populateFoodInfo() {
             }
             if (daysLeft != null) {
               document.querySelector(
-                ".js-edit-form"
+                ".js-edit-form .js-days-remaining"
               ).innerHTML = determineRemainingDaysMessage(
                 daysLeft,
                 expiry_date
