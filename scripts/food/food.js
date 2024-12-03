@@ -682,7 +682,7 @@ function calculateTimeLeft(date) {
 
   // Calculate the time left in days
 
-  var timeDifferenceDays = Math.floor(timeDifference / 86400000);
+  var timeDifferenceDays = Math.ceil(timeDifference / 86400000);
 
   return timeDifferenceDays;
 }
