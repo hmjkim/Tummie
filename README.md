@@ -2,12 +2,9 @@
 
 ## 1. Project Description
 
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ...
+Tummie is a food expiry date tracker which helps reduce the food waste by reminding users of expiring foods and providing recipe suggestions.
 
 ## 2. Names of Contributors
-
-List team members and/or short bio's here...
 
 - Heather Kim
 - Hazel Jeong
@@ -19,10 +16,14 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 
 - HTML, CSS, JavaScript
 - Bootstrap 5.0 (Frontend library)
+- jQuery 3.5.1 (JavaScript library)
 - Firebase 8.0 (BAAS - Backend as a Service)
-- Tailwind CSS framework
+- Tailwind 3.4.13 (CSS framework)
 - Google fonts and icons
-- Flaticon
+    - [Poppins](https://fonts.google.com/specimen/Poppins)
+    - [Inter](https://fonts.google.com/specimen/Inter)
+
+- [Flaticon](https://www.flaticon.com/)
 - Free Meal API from TheMealDB.com (https://www.themealdb.com/api.php)
 
 ## 4. Complete setup/installion/usage
