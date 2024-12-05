@@ -41,6 +41,9 @@ const sortOverlay = document.querySelector(".js-sort-overlay");
 const bgOverlay = document.querySelector(".js-sort-overlay .js-bg-overlay");
 const closeBtn = document.querySelector(".js-close-btn");
 
+const btnAddItem = document.querySelector(".btn-add-item");
+const addOverlay = document.querySelector(".add-overlay");
+
 // MAIN FUNCTION FOR MY KITCHEN PAGE
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
@@ -373,6 +376,8 @@ function showSelectOverlay(userID, spaceName) {
   const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
   const selectOverlay = document.querySelector(".js-select-overlay");
   const checkboxes = document.querySelectorAll("#foodItemList .form-check");
+  const foodCards = document.querySelectorAll(".food-link");
+
   // Get a list of items to be deleted or moved
   var selectedList = [];
 
@@ -394,11 +399,12 @@ function showSelectOverlay(userID, spaceName) {
     ]);
     toggleCheckboxesDisplay(true);
 
-    document.querySelectorAll(".food-link").forEach((link) => {
+    // Disable clicking on the card and add item button
+    [btnAddItem, ...foodCards].forEach((link) => {
       link.style.pointerEvents = "none";
     });
   });
-
+  
   // Done button event listener
   doneBtn.addEventListener("click", () => {
     toggleElementsVisibility([
@@ -413,7 +419,7 @@ function showSelectOverlay(userID, spaceName) {
     toggleCheckboxesDisplay(false);
     itemCounter.innerHTML = "0 item(s) selected";
 
-    document.querySelectorAll(".food-link").forEach((link) => {
+    [btnAddItem, ...foodCards].forEach((link) => {
       link.style.pointerEvents = "auto";
     });
 
@@ -714,8 +720,6 @@ function determineRemainingDaysMessage(daysLeft, date) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btnAddItem = document.querySelector(".btn-add-item");
-  const addOverlay = document.querySelector(".add-overlay");
   if (!btnAddItem || !addOverlay) {
     return;
   }

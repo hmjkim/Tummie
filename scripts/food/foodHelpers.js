@@ -4,7 +4,6 @@ function previewFile(input) {
   
   if (file) {
     var reader = new FileReader();
-    console.log(reader.result)
 
     reader.onload = function () {
       $("#previewImg").attr("src", reader.result);
