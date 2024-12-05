@@ -79,8 +79,8 @@ It has the following subfolders and files:
     /recipes-active.svg
     /recipes.svg
     /setting.svg
-    /share-hub-active.svg
-    /share-hub.svg
+    /sharehub-active.svg
+    /sharehub.svg
     /support.svg
     /warning.svg
 ├── scripts                  # Folder for scripts
