@@ -4,11 +4,17 @@ const foodItemTemplate = document.querySelector("#foodItemTemplate");
 const foodItemList = document.querySelector("#foodItemList");
 
 function populateFoodItemCard(foodItemCard, data, docID, daysLeft) {
+    let iconPath;
     foodItemCard.querySelector(".food-title").innerHTML = data.title;
     foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
     foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft, data.expiry_date);
     foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${data.quantity}`;
-    foodItemCard.querySelector(".food-img").src = `../images/icons/food/${data.image}`;
+    if (data.image) {
+        iconPath = `../images/icons/food/${data.image}`;
+    } else {
+        iconPath = "../images/icons/placeholder.svg";
+    }
+    foodItemCard.querySelector(".food-img").src = iconPath;
     foodItemCard.querySelector(".food-img").alt = `${data.title} icon`;
     foodItemCard.querySelector(".form-check-input").dataset.id = docID;
   }  

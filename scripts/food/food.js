@@ -790,11 +790,12 @@ function populateFoodInfo() {
               document.querySelector(".js-edit-form #quantityInput").value =
                 quantity;
             }
-            if (image != null) {
-              document.querySelector(
-                ".js-edit-form #previewImg"
-              ).src = `../images/icons/food/${image}`;
+            if (image) {
+              iconPath = `../images/icons/food/${image}`;
+            } else {
+                iconPath = "../images/icons/placeholder.svg";
             }
+            document.querySelector(".js-edit-form #previewImg").src = iconPath;
             if (notes != null) {
               document.querySelector(".js-edit-form #notesInput").value = notes;
             }
