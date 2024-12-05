@@ -112,7 +112,7 @@
                   </svg>
                 </span>
               </label>
-              <input type="file" id="imageUpload" name="imageUpload" accept="image/png, image/jpeg, image/svg+xml" onchange="previewFile(this);" style="display: none;" />
+              <input type="file" id="imageUpload" name="imageUpload" accept="image/png, image/jpeg, image/svg+xml" style="display: none;" />
             </div>
             <!-- Name -->
             <div class="form-group">
@@ -184,19 +184,6 @@
       $('#datepickerInput').datepicker({
           uiLibrary: 'bootstrap5'
       });
-      function previewFile(input) {
-        var file = $("input[type=file]").get(0).files[0];
-
-        if (file) {
-          var reader = new FileReader();
-
-          reader.onload = function () {
-            $("#previewImg").attr("src", reader.result);
-          };
-
-          reader.readAsDataURL(file);
-        }
-    }
     </script>
     
     <!-- Link to scripts of your own -->
