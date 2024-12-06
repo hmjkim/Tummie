@@ -32,6 +32,10 @@ Username: `oliviab@test.ca`
 
 Password: `password`
 
+### Image Upload
+
+This project does not utilize Firestore Storage feature. To upload an image for a food item, please download the [food icon folder](https://github.com/hmjkim/1800_202430_DTC02/tree/ce3910810e6dc545669ed6bc98bea0e81105a7f6/images/icons/food) on your local machine and upload one of the predefined images.
+
 ## 5. Known Bugs and Limitations
 
 Here are some known bugs and limitations:

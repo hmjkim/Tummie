@@ -13,10 +13,6 @@ function previewFile(input) {
   }
 }
 
-function loadExistingImageFile(){
-  // currentImagePath = 
-}
-
 function saveFileName(input) {
   var file = $("input[type=file]").get(0).files[0];
   let fileName = file.name;
