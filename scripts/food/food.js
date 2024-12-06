@@ -405,7 +405,7 @@ function createStorageSpaceDropdown(userID) {
   });
 }
 
-// Function to toggle visibility of multiple elements
+// Toggle visibility of multiple elements
 function toggleElementsVisibility(elements) {
   elements.forEach((element) => element.classList.toggle("tw-hidden"));
 }
@@ -416,14 +416,14 @@ function showSelectOverlay(userID, spaceName) {
   const doneBtns = document.querySelectorAll(".js-done-btn");
   const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
   const selectOverlay = document.querySelector(".js-select-overlay");
-  const checkboxes = document.querySelectorAll("#foodItemList .form-check");
   const foodCards = document.querySelectorAll(".food-link");
 
   // Get a list of items to be deleted or moved
   var selectedList = [];
 
-  // Function to toggle checkboxes' display style
+  // Toggle checkboxes' display style
   function toggleCheckboxesDisplay(show) {
+    const checkboxes = document.querySelectorAll("#foodItemList .form-check");
     checkboxes.forEach((checkbox) => {
       checkbox.style.display = show ? "block" : "none";
     });
@@ -511,7 +511,6 @@ function showSelectOverlay(userID, spaceName) {
       // Show number of selected items
       itemCounter.innerHTML = `${selectedList.length} item(s) selected`;
       // console.log(selectedList);
-      // console.log('length of selected list', selectedList.length)
     });
   });
 
