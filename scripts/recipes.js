@@ -414,12 +414,12 @@ function populateFilterByCuisineList() {
 
     cuisines = ['All', 'American', 'British', 'Canadian', 'Chinese', 'Croatian', 'Dutch', 'Egyptian', 'Filipino', 'French', 'Greek', 'Indian', 'Irish', 'Italian', 'Jamaican', 'Japanese', 'Kenyan', 'Malaysian', 'Mexican', 'Moroccan', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Thai', 'Tunisian', 'Turkish', 'Ukrainian', 'Vietnamese']
 
-    cuisines.forEach(cuisine => { //iterate through each item
+    cuisines.forEach(cuisineName => { //iterate through each item
         let newCuisine = filterCuisineTemplate.content.cloneNode(true); // Clone the HTML template to create a new cuisine option
 
-        newCuisine.querySelector('.form-check-label').innerHTML = cuisine;  // update label name
-        newCuisine.querySelector('.form-check-input').id = cuisine;     // update 'id' of the radio button
-        newCuisine.querySelector('.form-check-label').htmlFor = cuisine;   // update 'for' of the label
+        newCuisine.querySelector('.form-check-label').innerHTML = cuisineName;  // update label name
+        newCuisine.querySelector('.form-check-input').id = cuisineName;     // update 'id' of the radio button
+        newCuisine.querySelector('.form-check-label').htmlFor = cuisineName;   // update 'for' of the label
 
         //attach to "filterCuisine-go-here"
         document.getElementById("filterCuisine-go-here").appendChild(newCuisine);
