@@ -92,89 +92,6 @@ It has the following subfolders and files:
 ├── styles                   # Folder for styles
     /style.css                #
 
-
-├── 404.html
-├── README.md
-├── firebase.json
-├── firestore.indexes.json
-├── firestore.rules
-├── images
-│   ├── icons
-│   │   ├── about.svg
-│   │   ├── account.svg
-│   │   ├── arrow-left.svg
-│   │   ├── arrow.svg
-│   │   ├── close.svg
-│   │   ├── favorite.svg
-│   │   ├── food
-│   │   │   ├── apple.svg
-│   │   │   ├── carrot.svg
-│   │   │   ├── cheese.svg
-│   │   │   ├── egg.svg
-│   │   │   ├── kiwi.svg
-│   │   │   ├── lemon.svg
-│   │   │   ├── meat.svg
-│   │   │   ├── potato.svg
-│   │   │   └── tomato.svg
-│   │   ├── home.svg
-│   │   ├── logout.svg
-│   │   ├── mykitchen-active.svg
-│   │   ├── mykitchen.svg
-│   │   ├── placeholder.svg
-│   │   ├── profile-active.svg
-│   │   ├── profile.svg
-│   │   ├── recipes-active.svg
-│   │   ├── recipes.svg
-│   │   ├── setting.svg
-│   │   ├── sharehub-active.svg
-│   │   ├── sharehub.svg
-│   │   ├── support.svg
-│   │   └── warning.svg
-│   └── logo
-│       ├── logo-placeholder.svg
-│       ├── logo-white.svg
-│       └── logo.svg
-├── index.html
-├── login.html
-├── mykitchen
-│   ├── addFood.html
-│   └── eachFood.html
-├── mykitchen.html
-├── partials
-│   ├── footer.html
-│   ├── header.html
-│   ├── headerBeforeLogin.html
-│   └── stickyMobileNav.html
-├── profile.html
-├── recipes
-│   ├── eachFavouriteRecipe.html
-│   ├── eachRecipe.html
-│   └── favourite.html
-├── recipes.html
-├── scripts
-│   ├── authentication.js
-│   ├── eachFavouriteRecipe.js
-│   ├── eachRecipe.js
-│   ├── favourite.js
-│   ├── firebaseAPI_DTC02.js
-│   ├── food
-│   │   ├── food.js
-│   │   ├── foodHelpers.js
-│   │   ├── recipes
-│   │   └── sortFood.js
-│   ├── profile.js
-│   ├── recipes.js
-│   ├── script.js
-│   ├── sharehub.js
-│   └── skeleton.js
-├── sharehub.html
-├── styles
-│   └── style.css
-└── tailwind.config.js
-
-12 directories, 67 files
-➜  1800_202430_DTC02 git:(main) ✗ clear
-➜  1800_202430_DTC02 git:(main) tree
 .
 ├── 404.html
 ├── README.md
@@ -254,6 +171,4 @@ It has the following subfolders and files:
 ├── styles
 │   └── style.css
 └── tailwind.config.js
-
-12 directories, 67 files
 ```
