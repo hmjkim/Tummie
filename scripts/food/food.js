@@ -907,7 +907,7 @@ function updateFoodItem(userID) {
     })
     .then((foodRef) => {
       console.log("Document updated with ID:", foodRef);
-      window.location.href = "mykitchen.html?storage=all_spaces";
+      window.location.href = "/mykitchen.html?storage=all_spaces";
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
