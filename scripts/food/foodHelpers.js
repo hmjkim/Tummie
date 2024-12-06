@@ -1,4 +1,5 @@
 // Preview Uploaded Image File before server submission
+// https://javascript.plainenglish.io/how-to-preview-image-before-upload-in-jquery-daca0849e00c
 function previewFile(input) {
   var file = $("input[type=file]").get(0).files[0];
   
@@ -19,6 +20,8 @@ function saveFileName(input) {
   localStorage.setItem('uploadedFileName', fileName);
 }
 
+// Slugify text
+// https://dev.to/bybydev/how-to-slugify-a-string-in-javascript-4o9n
 function slugify(str) {
   str = str.replace(/^\s+|\s+$/g, ""); // trim leading/trailing white space
   str = str.toLowerCase(); // convert string to lowercase
@@ -29,6 +32,8 @@ function slugify(str) {
   return str;
 }
 
+// Change to title case
+// https://dev.to/ypdev19/ways-to-title-case-strings-with-javascript-1dpe
 function convertToTitleCase(str) {
   if (!str) {
     return "";
@@ -43,6 +48,9 @@ function getURLParams(key) {
   return value;
 }
 
+
+// Set query parameters with history push
+// https://zgadzaj.com/development/javascript/how-to-change-url-query-parameter-with-javascript-only
 function setURLParams(key, value) {
   let url = new URL(window.location.href);
   url.searchParams.set(key, value); // get the search parameter and add a new query string with key value
