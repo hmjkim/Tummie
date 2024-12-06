@@ -1,4 +1,5 @@
 import { calculateTimeLeft, determineRemainingDaysMessage} from "./food.js";
+import { convertToTitleCase } from "./foodHelpers.js";
 
 const foodItemTemplate = document.querySelector("#foodItemTemplate");
 const foodItemList = document.querySelector("#foodItemList");
@@ -245,7 +246,7 @@ function displayFoodItemsByName(items) {
             // Populate card content
             populateFoodItemCard(foodItemCard, data, docID, daysLeft);
 
-            let firstLetter = data.title[0]
+            let firstLetter = convertToTitleCase(data.title[0])
             document.querySelector(`#sort_${firstLetter}`).appendChild(foodItemCard);
         });
     }
