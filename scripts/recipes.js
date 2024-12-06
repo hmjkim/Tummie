@@ -407,19 +407,31 @@ function toggleFilterOverlay() {
 
 
 function populateFilterByCuisineList() {
+    // Get cuisine from URL
+    var params = new URL(window.location.href)
+    var cuisine = params.searchParams.get("cuisine")
+    if (cuisine == null) {
+        cuisine = 'All'
+    }
+
     let filterCuisineTemplate = document.getElementById("filterCuisineTemplate"); // Retrieve the HTML element with the ID "filterCuisineTemplate" and store it in the filterCuisineTemplate variable.
 
     // Clear existing recipe cards before loading new cards
     document.getElementById("filterCuisine-go-here").innerHTML = ``
 
-    cuisines = ['All', 'American', 'British', 'Canadian', 'Chinese', 'Croatian', 'Dutch', 'Egyptian', 'Filipino', 'French', 'Greek', 'Indian', 'Irish', 'Italian', 'Jamaican', 'Japanese', 'Kenyan', 'Malaysian', 'Mexican', 'Moroccan', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Thai', 'Tunisian', 'Turkish', 'Ukrainian', 'Vietnamese']
+    cuisineOptions = ['All', 'American', 'British', 'Canadian', 'Chinese', 'Croatian', 'Dutch', 'Egyptian', 'Filipino', 'French', 'Greek', 'Indian', 'Irish', 'Italian', 'Jamaican', 'Japanese', 'Kenyan', 'Malaysian', 'Mexican', 'Moroccan', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Thai', 'Tunisian', 'Turkish', 'Ukrainian', 'Vietnamese']
 
-    cuisines.forEach(cuisineName => { //iterate through each item
+    cuisineOtions.forEach(cuisineName => { //iterate through each item
         let newCuisine = filterCuisineTemplate.content.cloneNode(true); // Clone the HTML template to create a new cuisine option
 
         newCuisine.querySelector('.form-check-label').innerHTML = cuisineName;  // update label name
         newCuisine.querySelector('.form-check-input').id = cuisineName;     // update 'id' of the radio button
         newCuisine.querySelector('.form-check-label').htmlFor = cuisineName;   // update 'for' of the label
+
+        // update radio button to be shown selected when current option
+        if (cuisineName == cuisine) {
+            newCuisine.querySelector('.form-check-input').checked = true;
+        }
 
         //attach to "filterCuisine-go-here"
         document.getElementById("filterCuisine-go-here").appendChild(newCuisine);
