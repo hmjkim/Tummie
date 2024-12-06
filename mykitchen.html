@@ -113,7 +113,7 @@
           <ul class="tw-text-neutral-dark md:tw-flex tw-space-x-3 tw-items-center">
             <li>
               <!-- Select button -->
-              <button class="tw-transition hover:tw-text-neutral tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+              <button class="js-select-items-btn tw-transition hover:tw-text-neutral tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
                 <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M34.0417 5.375H8.95833C8.00797 5.375 7.09654 5.75253 6.42453 6.42453C5.75253 7.09654 5.375 8.00797 5.375 8.95833V34.0417C5.375 34.992 5.75253 35.9035 6.42453 36.5755C7.09654 37.2475 8.00797 37.625 8.95833 37.625H34.0417C34.992 37.625 35.9035 37.2475 36.5755 36.5755C37.2475 35.9035 37.625 34.992 37.625 34.0417V8.95833C37.625 8.00797 37.2475 7.09654 36.5755 6.42453C35.9035 5.75253 34.992 5.375 34.0417 5.375ZM34.0417 8.95833V34.0417H8.95833V8.95833H34.0417ZM17.9167 30.4583L10.75 23.2917L13.2762 20.7475L17.9167 25.3879L29.7237 13.5808L32.25 16.125"
@@ -123,7 +123,7 @@
             </li>
             <li>
               <!-- Sort button -->
-              <button class="tw-transition hover:tw-text-neutral tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+              <button class="js-sort-btn-desktop tw-transition hover:tw-text-neutral tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
                 <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M11.2751 7.69162C11.6111 7.35573 12.0667 7.16704 12.5418 7.16704C13.0169 7.16704 13.4725 7.35573 13.8085 7.69162L20.9752 14.8583C21.3015 15.1962 21.4821 15.6488 21.478 16.1185C21.474 16.5883 21.2855 17.0377 20.9533 17.3699C20.6211 17.7021 20.1718 17.8905 19.702 17.8946C19.2322 17.8987 18.7797 17.7181 18.4417 17.3917L14.3335 13.2834V34.0417C14.3335 34.5168 14.1447 34.9726 13.8087 35.3086C13.4727 35.6446 13.017 35.8333 12.5418 35.8333C12.0666 35.8333 11.6109 35.6446 11.2749 35.3086C10.9389 34.9726 10.7501 34.5168 10.7501 34.0417V13.2834L6.64183 17.3917C6.30392 17.7181 5.85134 17.8987 5.38157 17.8946C4.9118 17.8905 4.46243 17.7021 4.13024 17.3699C3.79805 17.0377 3.60962 16.5883 3.60554 16.1185C3.60145 15.6488 3.78204 15.1962 4.10841 14.8583L11.2751 7.69162ZM28.6668 29.7166V8.95832C28.6668 8.48314 28.8556 8.02743 29.1916 7.69142C29.5276 7.35542 29.9833 7.16666 30.4585 7.16666C30.9336 7.16666 31.3894 7.35542 31.7254 7.69142C32.0614 8.02743 32.2501 8.48314 32.2501 8.95832V29.7166L36.3584 25.6083C36.6963 25.2819 37.1489 25.1013 37.6187 25.1054C38.0884 25.1095 38.5378 25.2979 38.87 25.6301C39.2022 25.9623 39.3906 26.4117 39.3947 26.8814C39.3988 27.3512 39.2182 27.8038 38.8918 28.1417L31.7252 35.3084C31.3892 35.6443 30.9335 35.8329 30.4585 35.8329C29.9834 35.8329 29.5277 35.6443 29.1917 35.3084L22.0251 28.1417C21.6987 27.8038 21.5181 27.3512 21.5222 26.8814C21.5263 26.4117 21.7147 25.9623 22.0469 25.6301C22.3791 25.2979 22.8285 25.1095 23.2982 25.1054C23.768 25.1013 24.2206 25.2819 24.5585 25.6083L28.6668 29.7166Z"
@@ -158,36 +158,36 @@
               </li> -->
           </ul>
           <!-- (DESKTOP) - Sort Overlay -->
-          <div class="js-sort-overlay-desktop tw-absolute tw-top-[100%] tw-right-0 tw-z-[9999]">
+          <div class="tw-hidden js-sort-overlay-desktop tw-absolute tw-top-[100%] tw-right-0">
             <div
-              class="tw-py-[27px] tw-px-4 tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-1/2 tw-rounded-lg">
+              class="tw-py-[27px] tw-px-4 tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-1/2 tw-rounded-lg tw-relative tw-z-[9999]">
               <div class="container tw-px-6">
                 <div class="tw-flex tw-items-center tw-justify-between tw-mb-4">
                   <h2 class="tw-text-2xl">Sort By</h2>
                 </div>
-                <form class="js-sort-by">
+                <form class="js-sort-by-desktop">
                   <ul class="tw-gap-4 tw-grid">
                     <li>
                       <div class="form-check">
                         <input class="form-check-input" type="radio" value="Category" name="flexRadioDefault"
-                          id="sortByCategory" checked>
-                        <label class="form-check-label tw-text-xl" for="sortByCategory">
+                          id="sortByFoodCategoryDesktop">
+                        <label class="form-check-label tw-text-xl" for="sortByFoodCategoryDesktop">
                           Category
                         </label>
                       </div>
                     </li>
                     <li>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Expiration Date" name="flexRadioDefault" id="sortByDate">
-                        <label class="form-check-label tw-text-xl" for="sortByDate">
+                        <input class="form-check-input" type="radio" value="Expiration Date" name="flexRadioDefault" id="sortByDateDesktop">
+                        <label class="form-check-label tw-text-xl" for="sortByDateDesktop">
                           Expiration Date
                         </label>
                       </div>
                     </li>
                     <li>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Name" name="flexRadioDefault" id="sortByName">
-                        <label class="form-check-label tw-text-xl" for="sortByName">
+                        <input class="form-check-input" type="radio" value="Name" name="flexRadioDefault" id="sortByNameDesktop">
+                        <label class="form-check-label tw-text-xl" for="sortByNameDesktop">
                           Name
                         </label>
                       </div>
@@ -196,6 +196,8 @@
                 </form>
               </div>
             </div>
+            <!-- BG Overlay -->
+            <div class="js-bg-overlay tw-fixed tw-inset-0 tw-z-10"></div>
           </div>
         </div>
 
@@ -386,7 +388,7 @@
     </div>
 
     <!-- Sort Overlay -->
-    <div class="js-sort-overlay tw-hidden">
+    <div class="js-sort-overlay tw-hidden md:!tw-hidden">
       <div
         class="tw-py-10 tw-fixed tw-bottom-0 tw-right-0 tw-left-0 tw-z-[9999] tw-bg-white tw-shadow-[0_4px_24px_0_rgba(0,0,0,0.05)] tw-h-1/2">
         <div class="container tw-px-6">
@@ -404,8 +406,8 @@
               <li class="tw-mb-8">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" value="Category" name="flexRadioDefault"
-                    id="sortByCategory" checked>
-                  <label class="form-check-label tw-text-xl" for="sortByCategory">
+                    id="sortByFoodCategory">
+                  <label class="form-check-label tw-text-xl" for="sortByFoodCategory">
                     Category
                   </label>
                 </div>

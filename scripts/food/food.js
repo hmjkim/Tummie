@@ -4,7 +4,13 @@ import {
   displayFoodItemsByName,
 } from "./sort-food.js";
 
-import { previewFile, slugify, convertToTitleCase, getURLParams, setURLParams } from "./foodHelpers.js"
+import {
+  previewFile,
+  slugify,
+  convertToTitleCase,
+  getURLParams,
+  setURLParams,
+} from "./foodHelpers.js";
 
 // import { updateSortingMethod } from "./sort.js";
 
@@ -28,7 +34,7 @@ const searchBar = document.querySelector(".js-search-bar");
 const foodItemTemplate = document.querySelector("#foodItemTemplate");
 const foodItemList = document.querySelector("#foodItemList");
 
-const selectBtn = document.querySelector(".js-select-items-btn");
+const selectBtns = document.querySelectorAll(".js-select-items-btn");
 const selectOverlay = document.querySelector(".js-select-overlay");
 
 const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
@@ -37,8 +43,10 @@ const meatballOverlay = document.querySelector(".js-meatball-dropdown");
 const itemCounter = document.querySelector(".js-item-counter");
 
 const sortBtn = document.querySelector(".js-sort-btn");
+const sortBtnDesktop = document.querySelector(".js-sort-btn-desktop");
 const sortOverlay = document.querySelector(".js-sort-overlay");
-const bgOverlay = document.querySelector(".js-sort-overlay .js-bg-overlay");
+const sortOverlayDesktop = document.querySelector(".js-sort-overlay-desktop");
+// const bgOverlay = document.querySelector(".js-sort-overlay .js-bg-overlay");
 const closeBtn = document.querySelector(".js-close-btn");
 
 const btnAddItem = document.querySelector(".btn-add-item");
@@ -85,8 +93,8 @@ firebase.auth().onAuthStateChanged((user) => {
               default:
                 sortingMethod = "Expiration Date";
             }
-            setURLParams('sort', sortingMethod);
-            
+            setURLParams("sort", sortingMethod);
+
             // Display food items with the default sorting method
             displayFoodItems(userID, sortingMethod);
           });
@@ -99,7 +107,6 @@ firebase.auth().onAuthStateChanged((user) => {
 
   // Helper function to display items with appropriate sorting method
   function displayFoodItems(userID, sortingMethod) {
-  
     db.collection("users")
       .doc(userID)
       .collection("food")
@@ -119,11 +126,7 @@ firebase.auth().onAuthStateChanged((user) => {
             createStorageSpaceDropdown(userID);
 
             // Display food items and chain the rest of the actions
-            displayFoodByStorageSpace(
-              userID,
-              spaceName,
-              sortingMethod
-            )
+            displayFoodByStorageSpace(userID, spaceName, sortingMethod)
               .then(() => {
                 console.log("Items sorted by:", sortingMethod);
                 console.log("All food items have been displayed.");
@@ -132,12 +135,48 @@ firebase.auth().onAuthStateChanged((user) => {
                 showSelectOverlay(userID, spaceName);
                 // deleteFood(userID, spaceName);
 
+                // Show/hide mobile sort overlay
                 sortBtn.addEventListener("click", () => {
-                  toggleElementsVisibility([
-                    sortOverlay,
-                    meatballOverlay,
-                  ]);
+                  toggleElementsVisibility([sortOverlay, meatballOverlay]);
                 });
+
+                // Show/hide Desktop sort overlay
+                sortBtnDesktop.addEventListener("click", () => {
+                  toggleElementsVisibility([sortOverlayDesktop]);
+                });
+
+                // Close overlay when clicking outside of it
+                document.addEventListener("click", (event) => {
+                  if (!sortOverlay) {
+                    return;
+                  }
+                  // overlay open, not clicking inside of overlay or overlay trigger button
+                  if (
+                    sortOverlay
+                      .querySelector(".js-bg-overlay")
+                      .contains(event.target)
+                  ) {
+                    // Close overlay
+                    sortOverlay.classList.add("tw-hidden");
+                  }
+                });
+
+                // Close overlay when clicking outside of it
+                document.addEventListener("click", (event) => {
+                  if (!sortOverlayDesktop) {
+                    return;
+                  }
+                  // overlay open, not clicking inside of overlay or overlay trigger button
+                  if (
+                    sortOverlayDesktop
+                      .querySelector(".js-bg-overlay")
+                      .contains(event.target)
+                  ) {
+                    // Close overlay
+                    sortOverlayDesktop.classList.add("tw-hidden");
+                  }
+                });
+
                 closeBtn.addEventListener("click", () => {
                   toggleElementsVisibility([sortOverlay]);
                 });
@@ -151,14 +190,13 @@ firebase.auth().onAuthStateChanged((user) => {
           } else {
             console.log("food collection does not exist");
             let node = emptyKitchenMessageTemplate.content.cloneNode(true);
-              emptyKitchenMessage.appendChild(node);
-              searchBar.style.display = "none";
+            emptyKitchenMessage.appendChild(node);
+            searchBar.style.display = "none";
           }
         }
       });
-    
   }
-  
+
   // SAVE BUTTON
   const saveBtns = document.querySelectorAll(".save-btn");
   if (saveBtns.length > 0) {
@@ -389,22 +427,23 @@ function showSelectOverlay(userID, spaceName) {
   }
 
   // Select button event listener
-  selectBtn.addEventListener("click", () => {
-    toggleElementsVisibility([
-      selectOverlay,
-      meatballOverlay,
-      searchBtn,
-      meatballOverlayTrigger,
-      doneBtn,
-    ]);
-    toggleCheckboxesDisplay(true);
-
-    // Disable clicking on the card and add item button
-    [btnAddItem, ...foodCards].forEach((link) => {
-      link.style.pointerEvents = "none";
+  selectBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      toggleElementsVisibility([
+        selectOverlay,
+        meatballOverlay,
+        searchBtn,
+        meatballOverlayTrigger,
+        doneBtn,
+      ]);
+      toggleCheckboxesDisplay(true);
+      // Disable clicking on the card and add item button
+      [btnAddItem, ...foodCards].forEach((link) => {
+        link.style.pointerEvents = "none";
+      });
     });
   });
-  
+
   // Done button event listener
   doneBtn.addEventListener("click", () => {
     toggleElementsVisibility([
@@ -450,18 +489,6 @@ function showSelectOverlay(userID, spaceName) {
         console.log(checkbox, "unchecked");
       }
       console.log(selectedList);
-    });
-
-    // Close overlay when clicking outside of it
-    document.addEventListener("click", (event) => {
-      if (!sortOverlay) {
-        return;
-      }
-      // overlay open, not clicking inside of overlay or overlay trigger button
-      if (bgOverlay.contains(event.target)) {
-        // Close overlay
-        sortOverlay.classList.add("tw-hidden");
-      }
     });
   });
 
@@ -643,20 +670,23 @@ function setupSortingOptions(userID, storageSpace, defaultSortingMethod) {
   const sortingOptions = document.querySelectorAll(
     '.js-sort-by input[type="radio"]'
   );
+  const sortingOptionsDesktop = document.querySelectorAll(
+    '.js-sort-by-desktop input[type="radio"]'
+  );
 
   // Pre-select the appropriate sorting radio button based on the current sorting method
-  sortingOptions.forEach((option) => {
+  [...sortingOptions, ...sortingOptionsDesktop].forEach((option) => {
     if (option.value === defaultSortingMethod) {
       option.checked = true;
       sortPreview.innerHTML = defaultSortingMethod; // Update preview text to reflect the current sorting method
     }
   });
 
-  sortingOptions.forEach((option) => {
-    option.addEventListener("change", function () {
-      if (this.checked) {
-        let sortingMethod = this.value;
-
+  [...sortingOptions, ...sortingOptionsDesktop].forEach((option) => {
+    option.addEventListener("change", () => {
+      console.log(option.checked, option);
+      if (option.checked) {
+        let sortingMethod = option.value;
         setURLParams("sort", sortingMethod);
         // Clear existing items
         foodItemList.innerHTML = "";
@@ -670,7 +700,10 @@ function setupSortingOptions(userID, storageSpace, defaultSortingMethod) {
               `Items sorted by ${sortingMethod} have been displayed.`
             );
             // Close the sort overlay if needed
-            toggleElementsVisibility([sortOverlay]);
+
+            // if ([sortOverlay, sortOverlayDesktop])
+            toggleElementsVisibility([sortOverlay, sortOverlayDesktop]);
+            // sortOverlay.style.display = 'none';
           })
           .catch((error) => {
             console.error("Failed to display food items:", error);
@@ -747,8 +780,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
 function populateFoodInfo() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -797,7 +828,7 @@ function populateFoodInfo() {
             if (image) {
               iconPath = `../images/icons/food/${image}`;
             } else {
-                iconPath = "../images/icons/placeholder.svg";
+              iconPath = "../images/icons/placeholder.svg";
             }
             document.querySelector(".js-edit-form #previewImg").src = iconPath;
             if (notes != null) {
@@ -854,14 +885,13 @@ function updateFoodItem(userID) {
     });
 }
 
-
 //------------------------------------------------
 // Upload Image on Add Food/ Edit Item pages
 //-------------------------------------------------
 const uploadImageInput = document.querySelector("#imageUpload");
 if (uploadImageInput) {
   uploadImageInput.addEventListener("change", () => {
-    previewFile()
-  })
+    previewFile();
+  });
 }
 export { calculateTimeLeft, determineRemainingDaysMessage };
