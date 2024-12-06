@@ -421,7 +421,7 @@ function populateFilterByCuisineList() {
 
     cuisineOptions = ['All', 'American', 'British', 'Canadian', 'Chinese', 'Croatian', 'Dutch', 'Egyptian', 'Filipino', 'French', 'Greek', 'Indian', 'Irish', 'Italian', 'Jamaican', 'Japanese', 'Kenyan', 'Malaysian', 'Mexican', 'Moroccan', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Thai', 'Tunisian', 'Turkish', 'Ukrainian', 'Vietnamese']
 
-    cuisineOtions.forEach(cuisineName => { //iterate through each item
+    cuisineOptions.forEach(cuisineName => { //iterate through each item
         let newCuisine = filterCuisineTemplate.content.cloneNode(true); // Clone the HTML template to create a new cuisine option
 
         newCuisine.querySelector('.form-check-label').innerHTML = cuisineName;  // update label name
