@@ -10,16 +10,15 @@ import {
   convertToTitleCase,
   getURLParams,
   setURLParams,
+  saveFileName
 } from "./foodHelpers.js";
 
-// import { updateSortingMethod } from "./sort.js";
-
 var currentUser;
+var isNewImageUploaded = false;
 // split path by \ and get the last one
 const editForm = document.querySelector(".js-edit-form");
 var foodImage = document.getElementById("imageUpload");
 var foodName = document.getElementById("nameInput");
-var previewImg = document.querySelector(".js-edit-form #previewImg");
 var foodExpiryDate = document.getElementById("datepickerInput");
 var foodStorage = document.getElementById("storageSpaceInput");
 var foodCategory = document.getElementById("categoryInput");
@@ -839,10 +838,6 @@ function populateFoodInfo() {
             } else {
               iconPath = "../images/icons/placeholder.svg";
             }
-      
-            // console.log('image', image)
-            // console.log('notes', notes)
-            // console.log('iconPath', iconPath)
 
             //if the data fields are not empty, then write them in to the form.
             if (title != null) {
@@ -890,7 +885,8 @@ function populateFoodInfo() {
 }
 
 function updateFoodItem(userID) {
-  console.log('updatefood')
+  var previewImg = document.querySelector('#previewImg');
+
   // Update doc with new data input inside users > food (sub collection)
   var foodRef = db
     .collection("users")
@@ -899,6 +895,11 @@ function updateFoodItem(userID) {
     .doc(getURLParams("docID"));
   let foodSlug = slugify(foodName.value);
 
+  // if new image is uploaded, get the img file from localStorage
+  // if not, grab the img path from previewImg element
+  // This is due to previewFile modifying file path to be data format (data:image/svg+xml;base64,...)
+  let currentImagePath = isNewImageUploaded ? localStorage.getItem('uploadedFileName') : previewImg.src.split("/").pop();
+  
   // Get the uploaded file name from local storage
   let imgFileName = localStorage.getItem('uploadedFileName');
   foodRef
@@ -910,7 +911,7 @@ function updateFoodItem(userID) {
       category: foodCategory.value,
       storage_space: foodStorage.value,
       quantity: foodQuantity.value,
-      image: imgFileName,
+      image: currentImagePath,
       notes: foodNotes.value,
       date_updated: firebase.firestore.FieldValue.serverTimestamp(),
     })
@@ -930,6 +931,10 @@ const uploadImageInput = document.querySelector("#imageUpload");
 if (uploadImageInput) {
   uploadImageInput.addEventListener("change", () => {
     previewFile();
+
+    isNewImageUploaded = true;
+    // Save file name to local storage for reference
+    saveFileName();
   });
 }
 export { calculateTimeLeft, determineRemainingDaysMessage };

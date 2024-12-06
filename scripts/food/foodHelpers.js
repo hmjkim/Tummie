@@ -10,13 +10,15 @@ function previewFile(input) {
     };
 
     reader.readAsDataURL(file);
-
-    // Save file name to local storage for reference
-    saveFileName(file);
   }
 }
 
-function saveFileName(file) {
+function loadExistingImageFile(){
+  // currentImagePath = 
+}
+
+function saveFileName(input) {
+  var file = $("input[type=file]").get(0).files[0];
   let fileName = file.name;
   localStorage.setItem('uploadedFileName', fileName);
 }
@@ -53,4 +55,4 @@ function setURLParams(key, value) {
   history.pushState(null, "", url);
 }
 
-export { previewFile, slugify, convertToTitleCase, getURLParams, setURLParams }
+export { previewFile, slugify, convertToTitleCase, getURLParams, setURLParams, saveFileName }
