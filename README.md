@@ -2,7 +2,7 @@
 
 ## 1. Project Description
 
-Tummie is a food expiry date tracker which helps reduce the food waste by reminding users of expiring foods and providing recipe suggestions.
+Tummie is a food expiry date tracker which helps reduce the food waste by reminding users of expiring foods and providing recipe suggestions in order to encourage food consumption.
 
 ## 2. Names of Contributors
 
@@ -11,8 +11,6 @@ Tummie is a food expiry date tracker which helps reduce the food waste by remind
 - Hei Yeung Sze
 	
 ## 3. Technologies and Resources Used
-
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 
 - HTML, CSS, JavaScript
 - Bootstrap 5.0 (Frontend library)
@@ -24,38 +22,36 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
     - [Inter](https://fonts.google.com/specimen/Inter)
 
 - [Flaticon](https://www.flaticon.com/)
-- Free Meal API from TheMealDB.com (https://www.themealdb.com/api.php)
+- [Free Meal API from TheMealDB.com](https://www.themealdb.com/api.php)
 
 ## 4. Complete setup/installation/usage
 
-No setup or installation is required for this application.
-
-A dummy account, with pre-written data, is created for testing pupose:
+No setup or installation is required for this application. A dummy account, with pre-written data, is created for testing pupose:
 
 Username: `oliviab@test.ca`
 
 Password: `password`
 
-
 ## 5. Known Bugs and Limitations
 
-Here are some known bugs:
+Here are some known bugs and limitations:
 
-- The pagination for favourite.html crashes when users unsave the only item on the page, e.g. if there is only one saved recipe on page 2 and the user unsaves it, the application remains on page 2 and does not redirect the user back to page one. The pagination bar at the bottom will display falsely. 
+- The pagination on favourite.html breaks when users unsave the only item on a page. For example, if there is only one saved recipe on page 2 and the user removes it, the application remains on page 2 instead of redirecting the user back to page 1, and the pagination bar at the bottom displays incorrect information.
 
-- The sorting feature does not work for specified kitchen spaces. The application allows users to navigate through "All space" and individual kitchen spaces (pantry, freezer, fridge, etc.) to keep the food items organized. However, if the user views the items by specific space and click on the sorting button, it re-directs them to "All space". 
+- The application does not prevent invalid data entry. For example, when the user fails to input an expiry date, "NaN days left" is displayed. Additionally, if the user omits the item name, the "sort by name" feature crashes. Implementing form validation and marking required fields could likely resolve these issues.
+
 
 ## 6. Features for Future
 
 What we'd like to build in the future:
 
-- Search feature: allows users to input keywords to search through the database to look up relevant data, such as items and recipes.
+- Search Feature: Allows users to input keywords to search the database for relevant data, such as items and recipes.
 
-- Personalized recipe recommendations: reads through the user's document to identify almost-expired items, and then recommends recipes based on those items to provide a more personalized user experience.
+- Personalized Recipe Recommendations: Analyzes the user's inventory to identify nearly expired items and suggests recipes based on those items, offering a more tailored user experience.
 
-- ShareHub feature: serves as a platform to allow users to share and get surplus food in their local communities.
+- ShareHub Feature: serves as a platform for users to share and get surplus food within their local communities.
 
-- Bulk data entry, barcode and receipt scanning, and auto-complete suggestions for textboxes: improves user expereince by minimizing the effort required for data entry
+- Bulk Data Entry, Barcode and Receipt Scanning, and Auto-Complete Suggestions: Enhances the user experience by minimizing the effort required for data entry.
 
 ## 7. Contents of Folder
 
