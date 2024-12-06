@@ -465,8 +465,6 @@ function showSelectOverlay(userID, spaceName) {
   // Done button event listener
   doneBtns.forEach((doneBtn) => {
     doneBtn.addEventListener("click", () => {
-      console.log('cliciked')
-      // doneBtn.classList.add('tw-hidden');
       toggleElementsVisibility([
         selectOverlay,
         meatballOverlay,
@@ -504,16 +502,16 @@ function showSelectOverlay(userID, spaceName) {
           selectedList.push(itemID);
         }
         // console.log(selectedList.length);
-
-        // Show number of selected items
-        itemCounter.innerHTML = `${selectedList.length} item(s) selected`;
         console.log(checkbox, "checked");
       } else {
         // Get everything except for the selected item
         selectedList = selectedList.filter((id) => id !== itemID);
         console.log(checkbox, "unchecked");
       }
-      console.log(selectedList);
+      // Show number of selected items
+      itemCounter.innerHTML = `${selectedList.length} item(s) selected`;
+      // console.log(selectedList);
+      // console.log('length of selected list', selectedList.length)
     });
   });
 
