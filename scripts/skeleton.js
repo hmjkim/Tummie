@@ -13,7 +13,7 @@ function loadSkeleton() {
 
       $("#headerContent").load("../partials/header.html", () => { d1.resolve()});
       $("#footerContent").load("../partials/footer.html", () => { d2.resolve()}),
-      $("#stickyMobileNav").load("../partials/sticky_mobile_nav.html", () => { d3.resolve()})
+      $("#stickyMobileNav").load("../partials/stickMobileNav.html", () => { d3.resolve()})
 
       $.when(d1, d2, d3).done(() => {
         updateActiveNavLink();
