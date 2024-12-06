@@ -147,7 +147,6 @@ Content of the project folder:
 List of references we used:
 
 - [Preview image before upload to the server](https://javascript.plainenglish.io/how-to-preview-image-before-upload-in-jquery-daca0849e00c)
-- [Replace image automatically with newly selected image]()
 - [Date Picker Plugin](https://gijgo.com/datepicker/example/bootstrap-5)
 - [Slugify a string](https://dev.to/bybydev/how-to-slugify-a-string-in-javascript-4o9n)
 - [Change to title case](https://dev.to/ypdev19/ways-to-title-case-strings-with-javascript-1dpe)
