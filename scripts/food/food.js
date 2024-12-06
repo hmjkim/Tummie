@@ -34,7 +34,10 @@ const searchBar = document.querySelector(".js-search-bar");
 const foodItemTemplate = document.querySelector("#foodItemTemplate");
 const foodItemList = document.querySelector("#foodItemList");
 
-const selectBtns = document.querySelectorAll(".js-select-items-btn");
+const selectBtn = document.querySelector(".js-select-items-btn");
+const selectBtnDesktop = document.querySelector(
+  ".js-select-items-btn-desktop"
+);
 const selectOverlay = document.querySelector(".js-select-overlay");
 
 const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
@@ -409,8 +412,8 @@ function toggleElementsVisibility(elements) {
 
 function showSelectOverlay(userID, spaceName) {
   // Select items
-  const searchBtn = document.querySelector(".js-search-btn");
-  const doneBtn = document.querySelector(".js-done-btn");
+  // const searchBtn = document.querySelector(".js-search-btn");
+  const doneBtns = document.querySelectorAll(".js-done-btn");
   const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
   const selectOverlay = document.querySelector(".js-select-overlay");
   const checkboxes = document.querySelectorAll("#foodItemList .form-check");
@@ -427,49 +430,71 @@ function showSelectOverlay(userID, spaceName) {
   }
 
   // Select button event listener
-  selectBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+  selectBtn.addEventListener("click", () => {   
       toggleElementsVisibility([
         selectOverlay,
         meatballOverlay,
-        searchBtn,
         meatballOverlayTrigger,
-        doneBtn,
+        sortBtnDesktop,
+        selectBtnDesktop,
+        ...doneBtns,
       ]);
       toggleCheckboxesDisplay(true);
       // Disable clicking on the card and add item button
       [btnAddItem, ...foodCards].forEach((link) => {
         link.style.pointerEvents = "none";
       });
+  });
+
+  // Select button desktop event listener
+  selectBtnDesktop.addEventListener("click", () => {
+    toggleElementsVisibility([
+      selectOverlay,
+      sortBtnDesktop,
+      selectBtnDesktop,
+      meatballOverlayTrigger,
+      ...doneBtns,
+    ]);
+    toggleCheckboxesDisplay(true);
+    // Disable clicking on the card and add item button
+    [btnAddItem, ...foodCards].forEach((link) => {
+      link.style.pointerEvents = "none";
     });
   });
 
   // Done button event listener
-  doneBtn.addEventListener("click", () => {
-    toggleElementsVisibility([
-      selectOverlay,
-      meatballOverlay,
-      searchBtn,
-      meatballOverlayTrigger,
-      doneBtn,
-    ]);
-    meatballOverlay.classList.add("tw-hidden"); // Explicitly hide meatballOverlay
-    meatballOverlayTrigger.classList.remove("tw-text-neutral");
-    toggleCheckboxesDisplay(false);
-    itemCounter.innerHTML = "0 item(s) selected";
+  doneBtns.forEach((doneBtn) => {
+    doneBtn.addEventListener("click", () => {
+      console.log('cliciked')
+      // doneBtn.classList.add('tw-hidden');
+      toggleElementsVisibility([
+        selectOverlay,
+        meatballOverlay,
+        meatballOverlayTrigger,
+        sortBtnDesktop,
+        // selectBtn,
+        selectBtnDesktop,
+        ...doneBtns,
+      ]);
+      meatballOverlay.classList.add("tw-hidden"); // Explicitly hide meatballOverlay
+      meatballOverlayTrigger.classList.remove("tw-text-neutral");
+      toggleCheckboxesDisplay(false);
+      itemCounter.innerHTML = "0 item(s) selected";
 
-    [btnAddItem, ...foodCards].forEach((link) => {
-      link.style.pointerEvents = "auto";
-    });
+      [btnAddItem, ...foodCards].forEach((link) => {
+        link.style.pointerEvents = "auto";
+      });
 
-    // reset the list
-    selectedList = [];
+      // reset the list
+      selectedList = [];
 
-    // Uncheck the checked boxes
-    foodItemList.querySelectorAll(".form-check-input").forEach((checkbox) => {
-      checkbox.checked = false;
+      // Uncheck the checked boxes
+      foodItemList.querySelectorAll(".form-check-input").forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     });
   });
+
   foodItemList.querySelectorAll(".form-check-input").forEach((checkbox) => {
     // console.log(checkbox);
     checkbox.addEventListener("click", () => {
@@ -515,10 +540,10 @@ function showSelectOverlay(userID, spaceName) {
   const moveOverlay = document.querySelector(".js-move-overlay");
   const closeMoveBtn = document.querySelector(".js-close-move-btn");
   moveBtn.addEventListener("click", () => {
-    toggleElementsVisibility([selectOverlay, moveOverlay, doneBtn]);
+    toggleElementsVisibility([selectOverlay, moveOverlay]);
   });
   closeMoveBtn.addEventListener("click", () => {
-    toggleElementsVisibility([selectOverlay, moveOverlay, doneBtn]);
+    toggleElementsVisibility([selectOverlay, moveOverlay]);
   });
 
   // Write new storage place to database
@@ -700,10 +725,7 @@ function setupSortingOptions(userID, storageSpace, defaultSortingMethod) {
               `Items sorted by ${sortingMethod} have been displayed.`
             );
             // Close the sort overlay if needed
-
-            // if ([sortOverlay, sortOverlayDesktop])
             toggleElementsVisibility([sortOverlay, sortOverlayDesktop]);
-            // sortOverlay.style.display = 'none';
           })
           .catch((error) => {
             console.error("Failed to display food items:", error);
