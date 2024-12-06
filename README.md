@@ -2,7 +2,7 @@
 
 ## 1. Project Description
 
-Tummie is a food expiry date tracker which helps reduce the food waste by reminding users of expiring foods and providing recipe suggestions.
+Tummie is a food expiry date tracker which helps reduce the food waste by reminding users of expiring foods and providing recipe suggestions in order to encourage food consumption.
 
 ## 2. Names of Contributors
 
@@ -11,8 +11,6 @@ Tummie is a food expiry date tracker which helps reduce the food waste by remind
 - Hei Yeung Sze
 	
 ## 3. Technologies and Resources Used
-
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 
 - HTML, CSS, JavaScript
 - Bootstrap 5.0 (Frontend library)
@@ -24,31 +22,36 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
     - [Inter](https://fonts.google.com/specimen/Inter)
 
 - [Flaticon](https://www.flaticon.com/)
-- Free Meal API from TheMealDB.com (https://www.themealdb.com/api.php)
+- [Free Meal API from TheMealDB.com](https://www.themealdb.com/api.php)
 
-## 4. Complete setup/installion/usage
+## 4. Complete setup/installation/usage
 
-State what a user needs to do when they come to your project. How do others start using your code or application?
-Here are the steps ...
+No setup or installation is required for this application. A dummy account, with pre-written data, is created for testing pupose:
 
-- ...
-- ...
-- ...
+Username: `oliviab@test.ca`
+
+Password: `password`
 
 ## 5. Known Bugs and Limitations
 
-Here are some known bugs:
+Here are some known bugs and limitations:
 
-- ...
-- ...
-- ...
+- The pagination on favourite.html breaks when users unsave the only item on a page. For example, if there is only one saved recipe on page 2 and the user removes it, the application remains on page 2 instead of redirecting the user back to page 1, and the pagination bar at the bottom displays incorrect information.
+
+- The application does not prevent invalid data entry. For example, when the user fails to input an expiry date, "NaN days left" is displayed. Additionally, if the user omits the item name, the "sort by name" feature crashes. Implementing form validation and marking required fields could likely resolve these issues.
+
 
 ## 6. Features for Future
 
 What we'd like to build in the future:
 
-- Auto-recommended recipes for each individual items (by searching the ingredients of recipes).
-- ShareHub feature which allows users to share and get surplus food in their local communities.
+- Search Feature: Allows users to input keywords to search the database for relevant data, such as items and recipes.
+
+- Personalized Recipe Recommendations: Analyzes the user's inventory to identify nearly expired items and suggests recipes based on those items, offering a more tailored user experience.
+
+- ShareHub Feature: serves as a platform for users to share and get surplus food within their local communities.
+
+- Bulk Data Entry, Barcode and Receipt Scanning, and Auto-Complete Suggestions: Enhances the user experience by minimizing the effort required for data entry.
 
 ## 7. Contents of Folder
 
