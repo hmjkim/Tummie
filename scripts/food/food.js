@@ -665,6 +665,7 @@ function displayFoodByStorageSpace(userID, storageSpace, sortingMethod) {
       let ref = storageSpace == "all_spaces" ? allFoodItems : filteredItems;
 
       ref
+        .orderBy("expiry_date")
         .get()
         .then((items) => {
           // Get the sorting method from url if default doesn't exist(set by sort radio buttons )
