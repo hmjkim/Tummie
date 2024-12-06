@@ -60,18 +60,19 @@ Content of the project folder:
 ```
 .
 ├── README.md
+├── 404.html
 ├── firebase.json
 ├── firestore.indexes.json
 ├── firestore.rules
-├── images
-│   ├── icons
+├── images         # Folder for images
+│   ├── icons       # Folder for icons
 │   │   ├── about.svg
 │   │   ├── account.svg
 │   │   ├── arrow-left.svg
 │   │   ├── arrow.svg
 │   │   ├── close.svg
 │   │   ├── favorite.svg
-│   │   ├── food
+│   │   ├── food        # Folder for food icons used in demo
 │   │   │   ├── apple.svg
 │   │   │   ├── carrot.svg
 │   │   │   ├── cheese.svg
@@ -95,47 +96,46 @@ Content of the project folder:
 │   │   ├── sharehub.svg
 │   │   ├── support.svg
 │   │   └── warning.svg
-│   └── logo
+│   └── logo        # Folder for logo images
 │       ├── logo-placeholder.svg
 │       ├── logo-white.svg
 │       └── logo.svg
-├── 404.html
-├── index.html
-├── login.html
-├── mykitchen
-│   ├── addFood.html
-│   └── eachFood.html
-├── mykitchen.html
-├── partials
-│   ├── footer.html
-│   ├── header.html
-│   ├── headerBeforeLogin.html
-│   └── stickyMobileNav.html
-├── profile.html                            # Page that users can udpate account info, change setting, and submit service requests, etc.
-├── recipes                                 # Folder for recipe-related subpages
-│   ├── eachFavouriteRecipe.html            # Page that populates each saved recipe's details
-│   ├── eachRecipe.html                     # Page that populates each recipe's details
-│   └── favourite.html                      # Page that displays saved recipes 
-├── recipes.html                            # Page that displays all recipes
-├── sharehub.html                           # Page that users can see food sharing information (under construction)
-├── scripts                                 # Folder for scripts
-│   ├── authentication.js                   # File that contains authentication-related functions
-│   ├── eachFavouriteRecipe.js              # File that contains functions associated with eachFavouriteRecipe.html
-│   ├── eachRecipe.js                       # File that contains functions associated with eachRecipe.html
-│   ├── favourite.js                        # File that contains functions associated with favourite.html
-│   ├── firebaseAPI_DTC02.js                # File that contains functions associated with firebase implementation
-│   ├── food                                # Sub-Folder for files that contain functions associated with mykitchen.html
+├── index.html      # Page shows the user sign in and sing up options
+├── login.html      # Page shows the login window
+├── mykitchen       # Folder for my kitchen related pages
+│   ├── addFood.html    # Page for adding food items
+│   └── eachFood.html   # Page for editing food items which shows the food item information
+├── mykitchen.html      # Page shows the food inventory
+├── partials        # Folder for header and footer related files
+│   ├── footer.html     # Page for desktop view footer
+│   ├── header.html     # Page for header
+│   ├── headerBeforeLogin.html      # Page for header before login
+│   └── stickyMobileNav.html        # Page for mobile view footer
+├── profile.html    # Page that users can udpate account info, change setting, and submit service requests, etc.
+├── recipes     # Folder for recipe-related subpages
+│   ├── eachFavouriteRecipe.html    # Page that populates each saved recipe's details
+│   ├── eachRecipe.html     # Page that populates each recipe's details
+│   └── favourite.html      # Page that displays saved recipes 
+├── recipes.html        # Page that displays all recipes
+├── sharehub.html       # Page that users can see food sharing information (under construction)
+├── scripts         # Folder for scripts
+│   ├── authentication.js       # Contains authentication-related functions
+│   ├── eachFavouriteRecipe.js      # Contains functions associated with eachFavouriteRecipe.html
+│   ├── eachRecipe.js       # Contains functions associated with eachRecipe.html
+│   ├── favourite.js        # Contains functions associated with favourite.html
+│   ├── firebaseAPI_DTC02.js        # Contains functions associated with firebase implementation
+│   ├── food        # Sub-Folder for files that contain functions associated with mykitchen.html
 │   │   ├── food.js
 │   │   ├── foodHelpers.js
 │   │   └── sortFood.js
-│   ├── profile.js                          # File that contains functions associated with profile.html
-│   ├── recipes.js                          # File that contains functions associated with recipes.html
-│   ├── script.js                           # File that contains functions associated with general set-up
-│   ├── sharehub.js                         # File that contains functions associated with sharehub.html
-│   └── skeleton.js                         # File that contains functions associated with partials
-├── styles                                  # Folder for CSS styling
+│   ├── profile.js      # Contains functions associated with profile.html
+│   ├── recipes.js      # Contains functions associated with recipes.html
+│   ├── script.js       # Contains functions associated with general set-up
+│   ├── sharehub.js     # Contains functions associated with sharehub.html
+│   └── skeleton.js     # Contains functions associated with partials
+├── styles      # Folder for CSS styling
 │   └── style.css
-└── tailwind.config.js                      # File that configures tailwind
+└── tailwind.config.js      # File that configures tailwind
 ```
 
 ## 8. References
