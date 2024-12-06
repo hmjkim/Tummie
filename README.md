@@ -111,32 +111,31 @@ Content of the project folder:
 │   ├── header.html
 │   ├── headerBeforeLogin.html
 │   └── stickyMobileNav.html
-├── profile.html
-├── recipes
-│   ├── eachFavouriteRecipe.html
-│   ├── eachRecipe.html
-│   └── favourite.html
-├── recipes.html
-├── sharehub.html
-├── scripts
-│   ├── authentication.js
-│   ├── eachFavouriteRecipe.js
-│   ├── eachRecipe.js
-│   ├── favourite.js
-│   ├── firebaseAPI_DTC02.js
-│   ├── food
+├── profile.html                            # Page that users can udpate account info, change setting, and submit service requests, etc.
+├── recipes                                 # Folder for recipe-related subpages
+│   ├── eachFavouriteRecipe.html            # Page that populates each saved recipe's details
+│   ├── eachRecipe.html                     # Page that populates each recipe's details
+│   └── favourite.html                      # Page that displays saved recipes 
+├── recipes.html                            # Page that displays all recipes
+├── sharehub.html                           # Page that users can see food sharing information (under construction)
+├── scripts                                 # Folder for scripts
+│   ├── authentication.js                   # File that contains authentication-related functions
+│   ├── eachFavouriteRecipe.js              # File that contains functions associated with eachFavouriteRecipe.html
+│   ├── eachRecipe.js                       # File that contains functions associated with eachRecipe.html
+│   ├── favourite.js                        # File that contains functions associated with favourite.html
+│   ├── firebaseAPI_DTC02.js                # File that contains functions associated with firebase implementation
+│   ├── food                                # Sub-Folder for files that contain functions associated with mykitchen.html
 │   │   ├── food.js
 │   │   ├── foodHelpers.js
-│   │   ├── recipes
 │   │   └── sortFood.js
-│   ├── profile.js
-│   ├── recipes.js
-│   ├── script.js
-│   ├── sharehub.js
-│   └── skeleton.js
-├── styles
+│   ├── profile.js                          # File that contains functions associated with profile.html
+│   ├── recipes.js                          # File that contains functions associated with recipes.html
+│   ├── script.js                           # File that contains functions associated with general set-up
+│   ├── sharehub.js                         # File that contains functions associated with sharehub.html
+│   └── skeleton.js                         # File that contains functions associated with partials
+├── styles                                  # Folder for CSS styling
 │   └── style.css
-└── tailwind.config.js
+└── tailwind.config.js                      # File that configures tailwind
 ```
 
 ## 8. References
