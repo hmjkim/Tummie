@@ -35,9 +35,6 @@ function updateActiveNavLink() {
     "#headerContent .nav-item a"
   );
   const recipesNavLinks = document.querySelectorAll(".js-recipes-link");
-
-  console.log("desktop", desktopNavLinks);
-  console.log("recipesNavLink", recipesNavLink);
   const currentURL = window.location.pathname;
 
   if (
@@ -54,10 +51,6 @@ function updateActiveNavLink() {
     })
   } else {
     [...navLinks, ...desktopNavLinks].forEach((link) => {
-      console.log("link ", link);
-      console.log("current url ", currentURL);
-      console.log("href url ", link.getAttribute("href"));
-      console.log(link.getAttribute("href").includes(currentURL));
       if (link.getAttribute("href").includes(currentURL)) {
         let linkText = link.innerText;
         link.classList.add("active");
