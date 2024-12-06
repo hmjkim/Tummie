@@ -10,12 +10,12 @@ function loadSkeleton() {
       $('#stickyMobileNav').load('./partials/sticky_mobile_nav.html', () => {
         updateActiveNavLink()
       });
-    } 
+    }
   });
-  }
+}
 
-$(document).ready(function(){
-    loadSkeleton(); 
+$(document).ready(function () {
+  loadSkeleton();
 
 });
 
@@ -41,7 +41,6 @@ function slugify(str) {
   str = str.toLowerCase(); // convert string to lowercase
   str = str
     .replace(/[^a-z0-9 -]/g, "") // remove any non-alphanumeric characters
-    .replace(/\s+/g, "-") // replace spaces with hyphens
-    .replace(/-+/g, "-"); // remove consecutive hyphens
+    .replace(/\s+/g, "") // remove spaces
   return str;
 }
