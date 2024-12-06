@@ -104,8 +104,8 @@ Content of the project folder:
 │       ├── logo-placeholder.svg
 │       ├── logo-white.svg
 │       └── logo.svg
-├── index.html      # Page shows the user sign in and sing up options
-├── login.html      # Page shows the login window
+├── index.html      # Page that shows the user sign in and sing up options
+├── login.html      # Page that shows the login window
 ├── mykitchen       # Folder for my kitchen related pages
 │   ├── addFood.html    # Page for adding food items
 │   └── eachFood.html   # Page for editing food items which shows the food item information
