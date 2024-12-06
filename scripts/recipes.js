@@ -417,10 +417,19 @@ function populateFilterByCuisineList() {
     cuisines.forEach(cuisine => { //iterate through each item
         let newCuisine = filterCuisineTemplate.content.cloneNode(true); // Clone the HTML template to create a new cuisine option
 
-        newCuisine.querySelector('.form-check-label').innerHTML = cuisine;  // update name
-        newCuisine.querySelector('.filter-link').href = `recipes.html?cuisine=${cuisine}`; // update the link with the cuisine selected from the filter
+        newCuisine.querySelector('.form-check-label').innerHTML = cuisine;  // update label name
+        newCuisine.querySelector('.form-check-input').id = cuisine;     // update 'id' of the radio button
+        newCuisine.querySelector('.form-check-label').htmlFor = cuisine;   // update 'for' of the label
 
         //attach to "filterCuisine-go-here"
         document.getElementById("filterCuisine-go-here").appendChild(newCuisine);
     })
+
+    // Add event listener for each radio button
+    cuisineFilterLists = document.querySelectorAll(".form-check-label")
+    cuisineFilterLists.forEach(element => {
+        element.addEventListener("click", () => {
+            window.location.href = `recipes.html?cuisine=${element.innerHTML}`
+        })
+    });
 }
