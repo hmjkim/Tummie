@@ -58,55 +58,21 @@ What we'd like to build in the future:
 Content of the project folder:
 
 ```
- Top level of project folder:
-├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
-└── README.md
-
-It has the following subfolders and files:
-├── .git                     # Folder for git repo
-├── images                   # Folder for images
-    /about.svg                # Acknowledge source
-    /account.svg
-    /arrow-left.svg
-    /arrow.svg
-    /close.svg
-    /favorite.svg
-    /home.svg
-    /home.svg
-    /logout.svg
-    /my-kitchen-active.svg
-    /mykitchen.svg
-    /placeholder.svg
-    /profile-acitve.svg
-    /profile.svg
-    /recipes-active.svg
-    /recipes.svg
-    /setting.svg
-    /sharehub-active.svg
-    /sharehub.svg
-    /support.svg
-    /warning.svg
-├── scripts                  # Folder for scripts
-    /blah.js                 #
-├── styles                   # Folder for styles
-    /style.css                #
-
 .
-├── 404.html
 ├── README.md
+├── 404.html
 ├── firebase.json
 ├── firestore.indexes.json
 ├── firestore.rules
-├── images
-│   ├── icons
+├── images         # Folder for images
+│   ├── icons       # Folder for icons
 │   │   ├── about.svg
 │   │   ├── account.svg
 │   │   ├── arrow-left.svg
 │   │   ├── arrow.svg
 │   │   ├── close.svg
 │   │   ├── favorite.svg
-│   │   ├── food
+│   │   ├── food        # Folder for food icons used in demo
 │   │   │   ├── apple.svg
 │   │   │   ├── carrot.svg
 │   │   │   ├── cheese.svg
@@ -130,27 +96,28 @@ It has the following subfolders and files:
 │   │   ├── sharehub.svg
 │   │   ├── support.svg
 │   │   └── warning.svg
-│   └── logo
+│   └── logo        # Folder for logo images
 │       ├── logo-placeholder.svg
 │       ├── logo-white.svg
 │       └── logo.svg
-├── index.html
-├── login.html
-├── mykitchen
-│   ├── addFood.html
-│   └── eachFood.html
-├── mykitchen.html
-├── partials
-│   ├── footer.html
-│   ├── header.html
-│   ├── headerBeforeLogin.html
-│   └── stickyMobileNav.html
+├── index.html      # Page shows the user sign in and sing up options
+├── login.html      # Page shows the login window
+├── mykitchen       # Folder for my kitchen related pages
+│   ├── addFood.html    # Page for adding food items
+│   └── eachFood.html   # Page for editing food items which shows the food item information
+├── mykitchen.html      # Page shows the food inventory
+├── partials        # Folder for header and footer related files
+│   ├── footer.html     # Page for desktop view footer
+│   ├── header.html     # Page for header
+│   ├── headerBeforeLogin.html      # Page for header before login
+│   └── stickyMobileNav.html        # Page for mobile view footer
 ├── profile.html
 ├── recipes
 │   ├── eachFavouriteRecipe.html
 │   ├── eachRecipe.html
 │   └── favourite.html
 ├── recipes.html
+├── sharehub.html
 ├── scripts
 │   ├── authentication.js
 │   ├── eachFavouriteRecipe.js
@@ -167,8 +134,18 @@ It has the following subfolders and files:
 │   ├── script.js
 │   ├── sharehub.js
 │   └── skeleton.js
-├── sharehub.html
 ├── styles
 │   └── style.css
 └── tailwind.config.js
 ```
+
+## 8. References
+
+List of references we used:
+
+- [Preview image before upload to the server](https://javascript.plainenglish.io/how-to-preview-image-before-upload-in-jquery-daca0849e00c)
+- [Replace image automatically with newly selected image]()
+- [Date Picker Plugin](https://gijgo.com/datepicker/example/bootstrap-5)
+- [Slugify a string](https://dev.to/bybydev/how-to-slugify-a-string-in-javascript-4o9n)
+- [Change to title case](https://dev.to/ypdev19/ways-to-title-case-strings-with-javascript-1dpe)
+- [SET Query string](https://zgadzaj.com/development/javascript/how-to-change-url-query-parameter-with-javascript-only)
