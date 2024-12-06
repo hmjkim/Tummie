@@ -237,7 +237,7 @@ firebase.auth().onAuthStateChanged((user) => {
         .then(() => {
           console.log("Document successfully deleted!");
           history.back();
-          // window.location.href = `mykitchen.html?storage=${spaceName}`;
+          // window.location.href = `/mykitchen.html?storage=${spaceName}`;
         })
         .catch((error) => {
           console.error("Error removing document: ", error);
@@ -319,7 +319,7 @@ function writeFood(userID) {
     })
     .then((foodRef) => {
       console.log("Document written with ID:", foodRef);
-      window.location.href = "mykitchen.html?storage=all_spaces";
+      window.location.href = "/mykitchen.html?storage=all_spaces";
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -352,7 +352,7 @@ function createStorageSpaceDropdown(userID) {
     // Update the title for "All Spaces" directly in the anchor tag
     let allSpacesLinkElement = allSpacesBtn.querySelector("a");
     if (allSpacesLinkElement) {
-      allSpacesLinkElement.href = "mykitchen.html?storage=all_spaces";
+      allSpacesLinkElement.href = "/mykitchen.html?storage=all_spaces";
       allSpacesLinkElement.querySelector(".js-storage-space-title").innerHTML =
         "All Spaces";
     }
@@ -401,7 +401,7 @@ function createStorageSpaceDropdown(userID) {
           // Update the title directly in the anchor tag
           let spaceLinkElement = spaceBtn.querySelector("a");
           if (spaceLinkElement) {
-            spaceLinkElement.href = `mykitchen.html?storage=${slugify(space)}`;
+            spaceLinkElement.href = `/mykitchen.html?storage=${slugify(space)}`;
           }
           // Append to the dropdown
           storageSpaceDropdown.appendChild(spaceBtn);
@@ -524,7 +524,7 @@ function showSelectOverlay(userID, spaceName) {
         .delete()
         .then(() => {
           console.log("Document successfully deleted!");
-          window.location.href = `mykitchen.html?storage=${spaceName}`;
+          window.location.href = `/mykitchen.html?storage=${spaceName}`;
         })
         .catch((error) => {
           console.error("Error removing document: ", error);
@@ -559,7 +559,7 @@ function showSelectOverlay(userID, spaceName) {
           storage_space: "Fridge",
         })
         .then(() => {
-          window.location.href = `mykitchen.html?storage=${spaceName}`;
+          window.location.href = `/mykitchen.html?storage=${spaceName}`;
         })
         .catch((error) => {
           console.error("Error moving item: ", error);
@@ -577,7 +577,7 @@ function showSelectOverlay(userID, spaceName) {
           storage_space: "Freezer",
         })
         .then(() => {
-          window.location.href = `mykitchen.html?storage=${spaceName}`;
+          window.location.href = `/mykitchen.html?storage=${spaceName}`;
         })
         .catch((error) => {
           console.error("Error moving item: ", error);
@@ -595,7 +595,7 @@ function showSelectOverlay(userID, spaceName) {
           storage_space: "Pantry",
         })
         .then(() => {
-          window.location.href = `mykitchen.html?storage=${spaceName}`;
+          window.location.href = `/mykitchen.html?storage=${spaceName}`;
         })
         .catch((error) => {
           console.error("Error moving item: ", error);
@@ -613,7 +613,7 @@ function showSelectOverlay(userID, spaceName) {
           storage_space: "Other",
         })
         .then(() => {
-          window.location.href = `mykitchen.html?storage=${spaceName}`;
+          window.location.href = `/mykitchen.html?storage=${spaceName}`;
         })
         .catch((error) => {
           console.error("Error moving item: ", error);
