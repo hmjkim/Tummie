@@ -60,18 +60,19 @@ Content of the project folder:
 ```
 .
 ├── README.md
+├── 404.html
 ├── firebase.json
 ├── firestore.indexes.json
 ├── firestore.rules
-├── images
-│   ├── icons
+├── images         # Folder for images
+│   ├── icons       # Folder for icons
 │   │   ├── about.svg
 │   │   ├── account.svg
 │   │   ├── arrow-left.svg
 │   │   ├── arrow.svg
 │   │   ├── close.svg
 │   │   ├── favorite.svg
-│   │   ├── food
+│   │   ├── food        # Folder for food icons used in demo
 │   │   │   ├── apple.svg
 │   │   │   ├── carrot.svg
 │   │   │   ├── cheese.svg
@@ -95,22 +96,21 @@ Content of the project folder:
 │   │   ├── sharehub.svg
 │   │   ├── support.svg
 │   │   └── warning.svg
-│   └── logo
+│   └── logo        # Folder for logo images
 │       ├── logo-placeholder.svg
 │       ├── logo-white.svg
 │       └── logo.svg
-├── 404.html
-├── index.html
-├── login.html
-├── mykitchen
-│   ├── addFood.html
-│   └── eachFood.html
-├── mykitchen.html
-├── partials
-│   ├── footer.html
-│   ├── header.html
-│   ├── headerBeforeLogin.html
-│   └── stickyMobileNav.html
+├── index.html      # Page shows the user sign in and sing up options
+├── login.html      # Page shows the login window
+├── mykitchen       # Folder for my kitchen related pages
+│   ├── addFood.html    # Page for adding food items
+│   └── eachFood.html   # Page for editing food items which shows the food item information
+├── mykitchen.html      # Page shows the food inventory
+├── partials        # Folder for header and footer related files
+│   ├── footer.html     # Page for desktop view footer
+│   ├── header.html     # Page for header
+│   ├── headerBeforeLogin.html      # Page for header before login
+│   └── stickyMobileNav.html        # Page for mobile view footer
 ├── profile.html
 ├── recipes
 │   ├── eachFavouriteRecipe.html
