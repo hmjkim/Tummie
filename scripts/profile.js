@@ -123,13 +123,13 @@ function saveAccountInfo() {
     })
         .then(() => {
             console.log("Your personal information has been successfully updated!");
+            getNameFromAuth()
+            populateUserInfo()
         })
     //c) functions after saving
     document.getElementById('accountInfoFields').disabled = true;
     document.getElementById('profileAccount').classList.add("tw-hidden");
     document.querySelector("#backgroundOverlay").classList.add("tw-hidden");
-    getNameFromAuth()
-    populateUserInfo()
 }
 
 
