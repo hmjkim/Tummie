@@ -10,7 +10,15 @@ function previewFile(input) {
     };
 
     reader.readAsDataURL(file);
+
+    // Save file name to local storage for reference
+    saveFileName(file);
   }
+}
+
+function saveFileName(file) {
+  let fileName = file.name;
+  localStorage.setItem('uploadedFileName', fileName);
 }
 
 function slugify(str) {

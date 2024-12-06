@@ -19,6 +19,7 @@ var currentUser;
 const editForm = document.querySelector(".js-edit-form");
 var foodImage = document.getElementById("imageUpload");
 var foodName = document.getElementById("nameInput");
+var previewImg = document.querySelector(".js-edit-form #previewImg");
 var foodExpiryDate = document.getElementById("datepickerInput");
 var foodStorage = document.getElementById("storageSpaceInput");
 var foodCategory = document.getElementById("categoryInput");
@@ -35,9 +36,7 @@ const foodItemTemplate = document.querySelector("#foodItemTemplate");
 const foodItemList = document.querySelector("#foodItemList");
 
 const selectBtn = document.querySelector(".js-select-items-btn");
-const selectBtnDesktop = document.querySelector(
-  ".js-select-items-btn-desktop"
-);
+const selectBtnDesktop = document.querySelector(".js-select-items-btn-desktop");
 const selectOverlay = document.querySelector(".js-select-overlay");
 
 const meatballOverlayTrigger = document.querySelector(".js-meatball-menu");
@@ -80,28 +79,38 @@ firebase.auth().onAuthStateChanged((user) => {
           .doc(userID)
           .get()
           .then((userDoc) => {
-            let defaultSortingPreference = userDoc.data().default_sorting;
-            let sortingMethod;
+            if (userDoc.exists) {
+              let defaultSortingPreference = userDoc.data().default_sorting;
+              let sortingMethod;
 
-            switch (defaultSortingPreference) {
-              case "defaultSortByDate":
-                sortingMethod = "Expiration Date";
-                break;
-              case "defaultSortByCategory":
-                sortingMethod = "Category";
-                break;
-              case "defaultSortByName":
-                sortingMethod = "Name";
-                break;
-              default:
-                sortingMethod = "Expiration Date";
-            }
-            if (window.location.pathname == "mykitchen.html") {
-              setURLParams("sort", sortingMethod);
-            }
+              if (defaultSortingPreference != null) {
+                switch (defaultSortingPreference) {
+                  case "defaultSortByDate":
+                    sortingMethod = "Expiration Date";
+                    break;
+                  case "defaultSortByCategory":
+                    sortingMethod = "Category";
+                    break;
+                  case "defaultSortByName":
+                    sortingMethod = "Name";
+                    break;
+                  default:
+                    sortingMethod = "Expiration Date";
+                }
+              }
+              if (window.location.pathname == "mykitchen.html") {
+                setURLParams("sort", sortingMethod);
+              }
 
-            // Display food items with the default sorting method
-            displayFoodItems(userID, sortingMethod);
+              // Display food items with the default sorting method
+              displayFoodItems(userID, sortingMethod);
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+            }
+          })
+          .catch((error) => {
+            console.log("Error getting document:", error);
           });
       }
     }
@@ -432,20 +441,20 @@ function showSelectOverlay(userID, spaceName) {
   }
 
   // Select button event listener
-  selectBtn.addEventListener("click", () => {   
-      toggleElementsVisibility([
-        selectOverlay,
-        meatballOverlay,
-        meatballOverlayTrigger,
-        sortBtnDesktop,
-        selectBtnDesktop,
-        ...doneBtns,
-      ]);
-      toggleCheckboxesDisplay(true);
-      // Disable clicking on the card and add item button
-      [btnAddItem, ...foodCards].forEach((link) => {
-        link.style.pointerEvents = "none";
-      });
+  selectBtn.addEventListener("click", () => {
+    toggleElementsVisibility([
+      selectOverlay,
+      meatballOverlay,
+      meatballOverlayTrigger,
+      sortBtnDesktop,
+      selectBtnDesktop,
+      ...doneBtns,
+    ]);
+    toggleCheckboxesDisplay(true);
+    // Disable clicking on the card and add item button
+    [btnAddItem, ...foodCards].forEach((link) => {
+      link.style.pointerEvents = "none";
+    });
   });
 
   // Select button desktop event listener
@@ -804,7 +813,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function populateFoodInfo() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      console.log("populateFoodInfo");
       var foodItemRef = db
         .collection("users")
         .doc(user.uid)
@@ -825,6 +833,16 @@ function populateFoodInfo() {
             let notes = doc.data().notes;
             let dateCreated = doc.data().date_created;
             let daysLeft = calculateTimeLeft(expiry_date);
+            let iconPath;
+            if (image) {
+              iconPath = `../images/icons/food/${image}`;
+            } else {
+              iconPath = "../images/icons/placeholder.svg";
+            }
+      
+            // console.log('image', image)
+            // console.log('notes', notes)
+            // console.log('iconPath', iconPath)
 
             //if the data fields are not empty, then write them in to the form.
             if (title != null) {
@@ -846,11 +864,7 @@ function populateFoodInfo() {
               document.querySelector(".js-edit-form #quantityInput").value =
                 quantity;
             }
-            if (image) {
-              iconPath = `../images/icons/food/${image}`;
-            } else {
-              iconPath = "../images/icons/placeholder.svg";
-            }
+
             document.querySelector(".js-edit-form #previewImg").src = iconPath;
             if (notes != null) {
               document.querySelector(".js-edit-form #notesInput").value = notes;
@@ -876,6 +890,7 @@ function populateFoodInfo() {
 }
 
 function updateFoodItem(userID) {
+  console.log('updatefood')
   // Update doc with new data input inside users > food (sub collection)
   var foodRef = db
     .collection("users")
@@ -884,6 +899,8 @@ function updateFoodItem(userID) {
     .doc(getURLParams("docID"));
   let foodSlug = slugify(foodName.value);
 
+  // Get the uploaded file name from local storage
+  let imgFileName = localStorage.getItem('uploadedFileName');
   foodRef
     .update({
       userID: userID,
@@ -893,7 +910,7 @@ function updateFoodItem(userID) {
       category: foodCategory.value,
       storage_space: foodStorage.value,
       quantity: foodQuantity.value,
-      image: foodImage.value.split("\\").pop(),
+      image: imgFileName,
       notes: foodNotes.value,
       date_updated: firebase.firestore.FieldValue.serverTimestamp(),
     })
