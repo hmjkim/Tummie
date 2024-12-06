@@ -57,7 +57,6 @@ const addOverlay = document.querySelector(".add-overlay");
 // Get the currently signed-in user
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    // console.log("current user", user)
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/v8/firebase.User
     var userID = user.uid;
@@ -128,11 +127,8 @@ firebase.auth().onAuthStateChanged((user) => {
         if (emptyKitchenMessage && searchBar) {
           // When food subcollection has more than one entry
           if (subCollection.docs.length > 0) {
-            console.log("food collection exists");
-            //   document.querySelector('.js-sub-header').classList.remove('tw-hidden');
 
             let spaceName = getURLParams("storage");
-            console.log(spaceName);
             // Execute necessary setup before displaying items
             toggleStorageDropdown();
             toggleMeatballOverlay();
@@ -233,7 +229,6 @@ firebase.auth().onAuthStateChanged((user) => {
   }
   deleteBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      console.log("clicked");
       db.collection("users")
         .doc(userID)
         .collection("food")
@@ -504,23 +499,18 @@ function showSelectOverlay(userID, spaceName) {
   });
 
   foodItemList.querySelectorAll(".form-check-input").forEach((checkbox) => {
-    // console.log(checkbox);
     checkbox.addEventListener("click", () => {
       let itemID = checkbox.dataset.id;
       if (checkbox.checked) {
         if (!selectedList.includes(itemID)) {
           selectedList.push(itemID);
         }
-        // console.log(selectedList.length);
-        console.log(checkbox, "checked");
       } else {
         // Get everything except for the selected item
         selectedList = selectedList.filter((id) => id !== itemID);
-        console.log(checkbox, "unchecked");
       }
       // Show number of selected items
       itemCounter.innerHTML = `${selectedList.length} item(s) selected`;
-      // console.log(selectedList);
     });
   });
 
@@ -717,7 +707,6 @@ function setupSortingOptions(userID, storageSpace, defaultSortingMethod) {
 
   [...sortingOptions, ...sortingOptionsDesktop].forEach((option) => {
     option.addEventListener("change", () => {
-      console.log(option.checked, option);
       if (option.checked) {
         let sortingMethod = option.value;
         setURLParams("sort", sortingMethod);

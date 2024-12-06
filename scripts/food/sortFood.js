@@ -82,7 +82,6 @@ function createSortByCategoryContainer(items) {
             return sortedOrder.indexOf(a) - sortedOrder.indexOf(b)
         })
 
-        console.log(categoryList);
         categoryList.forEach((category) => {
 
             let categoryContainer = document.createElement('li')
@@ -126,8 +125,6 @@ function createSortByDateContainer(items) {
         setExpiryDate.add(expiryCategory);
     });
 
-    console.log(setExpiryDate)
-
     // Make set to array
     // Array.from() static method creates a new, shallow-copied Array instance from an iterable or array-like object.
     let dateList = Array.from(setExpiryDate);
@@ -144,12 +141,10 @@ function createSortByDateContainer(items) {
         ]
         return sortedOrder.indexOf(a) - sortedOrder.indexOf(b)
     })
-    console.log(dateList)
 
     // Create containers for each expiry category
     dateList.forEach((expiryCategory) => {
         let expiryCategoryID = expiryCategory.replaceAll(" ", "");
-        console.log(expiryCategoryID)
         let expiryDateContainer = document.createElement('li');
         expiryDateContainer.classList.add('tw-mb-5');
         expiryDateContainer.innerHTML = `
@@ -215,7 +210,6 @@ function createSortByNameContainer(items) {
         setFirstLetter.add(firstLetter)
     });
     let alphaList = Array.from(setFirstLetter).sort();
-    console.log(alphaList)
     // Create containers for each first letter
     alphaList.forEach((firstLetter) => {
         let alphabeticalContainer = document.createElement('li');
