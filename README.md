@@ -115,32 +115,31 @@ Content of the project folder:
 │   ├── header.html     # Page for header
 │   ├── headerBeforeLogin.html      # Page for header before login
 │   └── stickyMobileNav.html        # Page for mobile view footer
-├── profile.html
-├── recipes
-│   ├── eachFavouriteRecipe.html
-│   ├── eachRecipe.html
-│   └── favourite.html
-├── recipes.html
-├── sharehub.html
-├── scripts
-│   ├── authentication.js
-│   ├── eachFavouriteRecipe.js
-│   ├── eachRecipe.js
-│   ├── favourite.js
-│   ├── firebaseAPI_DTC02.js
-│   ├── food
+├── profile.html    # Page that users can udpate account info, change setting, and submit service requests, etc.
+├── recipes     # Folder for recipe-related subpages
+│   ├── eachFavouriteRecipe.html    # Page that populates each saved recipe's details
+│   ├── eachRecipe.html     # Page that populates each recipe's details
+│   └── favourite.html      # Page that displays saved recipes 
+├── recipes.html        # Page that displays all recipes
+├── sharehub.html       # Page that users can see food sharing information (under construction)
+├── scripts         # Folder for scripts
+│   ├── authentication.js       # Contains authentication-related functions
+│   ├── eachFavouriteRecipe.js      # Contains functions associated with eachFavouriteRecipe.html
+│   ├── eachRecipe.js       # Contains functions associated with eachRecipe.html
+│   ├── favourite.js        # Contains functions associated with favourite.html
+│   ├── firebaseAPI_DTC02.js        # Contains functions associated with firebase implementation
+│   ├── food        # Sub-Folder for files that contain functions associated with mykitchen.html
 │   │   ├── food.js
 │   │   ├── foodHelpers.js
-│   │   ├── recipes
 │   │   └── sortFood.js
-│   ├── profile.js
-│   ├── recipes.js
-│   ├── script.js
-│   ├── sharehub.js
-│   └── skeleton.js
-├── styles
+│   ├── profile.js      # Contains functions associated with profile.html
+│   ├── recipes.js      # Contains functions associated with recipes.html
+│   ├── script.js       # Contains functions associated with general set-up
+│   ├── sharehub.js     # Contains functions associated with sharehub.html
+│   └── skeleton.js     # Contains functions associated with partials
+├── styles      # Folder for CSS styling
 │   └── style.css
-└── tailwind.config.js
+└── tailwind.config.js      # File that configures tailwind
 ```
 
 ## 8. References
@@ -148,7 +147,6 @@ Content of the project folder:
 List of references we used:
 
 - [Preview image before upload to the server](https://javascript.plainenglish.io/how-to-preview-image-before-upload-in-jquery-daca0849e00c)
-- [Replace image automatically with newly selected image]()
 - [Date Picker Plugin](https://gijgo.com/datepicker/example/bootstrap-5)
 - [Slugify a string](https://dev.to/bybydev/how-to-slugify-a-string-in-javascript-4o9n)
 - [Change to title case](https://dev.to/ypdev19/ways-to-title-case-strings-with-javascript-1dpe)

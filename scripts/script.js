@@ -24,7 +24,7 @@ function logout() {
       .signOut()
       .then(() => {
         // Sign-out successful.
-        console.log("logging out user");
+        console.log("You are logged out.");
       })
       .catch((error) => {
         // An error happened.
