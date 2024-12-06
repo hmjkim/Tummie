@@ -39,12 +39,10 @@ $(document).ready(function () {
 // Update sticky nav bar links to be highlighted if current page
 //---------------------------------------------------
 function updateActiveNavLink() {
-  console.log(updateActiveNavLink);
   const navLinks = document.querySelectorAll("#stickyMobileNav a");
   const desktopNavLinks = document.querySelectorAll(
     "#headerContent .nav-item a"
   );
-  console.log('navLinks', navLinks)
   const currentURL = window.location.pathname;
     [...navLinks, ...desktopNavLinks].forEach((link) => {
       let linkURL = link.getAttribute('href');
