@@ -28,7 +28,7 @@ function displayRecipeInfo() {
     document.querySelector('i').onclick = () => savetoFavorite(ID); // add event listen to invoke function everytime when the favorite button is hit
 
     // link 'Back to All Recipes' button to the page number the user was in
-    document.querySelector('a').href = `recipes.html?cuisine=${cuisine}&page=${pageNumber}`
+    document.querySelector('a').href = `/recipes.html?cuisine=${cuisine}&page=${pageNumber}`
 
     db.collection("recipes")
         .doc(ID)

@@ -83,7 +83,7 @@
     </style>
 
     <!-- Link to styles of your own -->
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="../styles/style.css" />
   </head>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
@@ -92,18 +92,23 @@
       <!-- Content -->
        <section>
         <div class="tw-flex md:tw-block tw-items-center tw-mb-6 md:tw-static md:tw-p-0 tw-fixed tw-w-full tw-top-0 tw-left-0 tw-right-0 container tw-py-3 tw-bg-white tw-z-[999]">
-          <button id="go-back" class="tw-basis-[5%] md:tw-hidden">
-            <img class="" src="./images/icons/arrow-left.svg" alt="Left arrow">
-          </button>
-          <h1 class="tw-text-2xl tw-basis-[95%] tw-text-center md:tw-text-left">Add New Item</h1>
+          <div class="tw-basis-[20%] md:tw-hidden tw-flex tw-items-center">
+            <button id="go-back" class="tw-px-2">
+              <img class="" src="../images/icons/arrow-left.svg" alt="Left arrow">
+            </button>
+          </div>
+          <h1 class="tw-text-2xl tw-basis-[60%] tw-text-center md:tw-text-left">Edit Item</h1>
+          <div class="tw-basis-[20%] tw-text-right md:tw-hidden">
+            <button type="button" class="save-btn tw-px-2 tw-text-primary tw-font-semibold">Save</button>
+          </div>
         </div>
-        <form class="tw-pt-12 md:tw-pt-0">
+        <form class="js-edit-form tw-pt-12 md:tw-pt-0">
           <fieldset class="tw-grid tw-gap-5 md:tw-gap-8" id="personalInfoFields">
             <div class="form-group tw-relative tw-block tw-mx-auto">
               <label for="imageUpload" class="tw-inline-block tw-cursor-pointer">
                 <!-- Placeholder icon -->
                 <span class="tw-border tw-border-solid tw-border-[#dee2e6] tw-p-2 tw-block tw-rounded-lg">
-                  <img id="previewImg" src="./images/icons/placeholder.svg" alt="Placeholder image" style="width: 55px; height: 55px; object-fit: cover;">
+                  <img id="previewImg" src="../images/icons/placeholder.svg" alt="Placeholder image" style="width: 55px; height: 55px; object-fit: cover;">
                 </span>
                 <!-- Edit Icon -->
                 <span class="tw-absolute tw-top-[66%] tw-left-[75%] tw-p-[6px] tw-border tw-border-solid tw-border-neutral-light tw-rounded-[50%] tw-bg-white">
@@ -117,13 +122,15 @@
             <!-- Name -->
             <div class="form-group">
                 <label for="nameInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Name</label>
-                <input type="text" id="nameInput" class="form-control" placeholder="Enter food item name">
+                <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
             </div>
             <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-5 md:tw-gap-8">
               <!-- Expiry Date -->
               <div class="form-group">
-                  <label for="datepickerInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Expiry Date</label>
-                  <input id="datepickerInput" type="text" class="form-control" placeholder="Select a date">
+                  <div class="tw-flex tw-justify-between">
+                    <label for="datepickerInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Expiry Date</label>
+                  </div>
+                  <input id="datepickerInput" type="text" class="form-control" placeholder="Select date">
               </div>
               <!-- Quantity -->
               <div class="form-group">
@@ -157,19 +164,23 @@
               <label for="notesInput" class="tw-font-sansHeading tw-font-bold tw-mb-1 tw-text-lg">Notes</label>
               <textarea class="form-control" id="notesInput" rows="4"></textarea>
             </div>
-        </fieldset>
-        <div class="tw-mt-10 tw-flex tw-space-x-8">
-          <button type="button" class="btn btn-primary save-btn tw-hidden md:tw-inline-block md:tw-w-fit">Save</button>
+          </fieldset>
+          <div class="tw-text-right">
+            <button type="button" class="js-delete-btn tw-hidden md:tw-inline-flex tw-space-x-2 tw-justify-center tw-items-center tw-p-5 hover:tw-text-[#FF2525]/80 tw-transition tw-text-[#FF2525]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <path d="M23.75 8.75L22.6658 23.9281C22.5724 25.2364 21.4838 26.25 20.1722 26.25H9.8278C8.5162 26.25 7.4276 25.2364 7.33415 23.9281L6.25 8.75M12.5 13.75V21.25M17.5 13.75V21.25M18.75 8.75V5C18.75 4.30964 18.1904 3.75 17.5 3.75H12.5C11.8096 3.75 11.25 4.30964 11.25 5V8.75M5 8.75H25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <p class="label">Delete Item</p>
+            </button>
+          </div>
+        <div class="tw-mt-8 md:tw-mt-0 tw-flex md:tw-space-x-8">
+          <button type="button" class="tw-hidden md:tw-inline-block btn btn-primary save-btn md:tw-w-fit">Save</button>
+          <button type="button" class="js-delete-btn md:tw-hidden btn btn-secondary md:tw-w-fit">Delete</button>
           <button type="button" class="js-cancel-btn tw-hidden md:tw-block tw-text-primary tw-font-semibold">Cancel</button>
         </div>
         </form>
         
        </section>
-       <div class="sticky-bar fixed-bottom">
-        <div class="container py-3">
-          <button type="button" class="btn btn-primary save-btn md:tw-w-fit">Save</button>
-        </div>
-       </div>
       <!-- <div id="stickyMobileNav"></div> -->
     </main>
     <!-- <footer id="footerContent"></footer> -->
@@ -185,11 +196,10 @@
           uiLibrary: 'bootstrap5'
       });
     </script>
-    
     <!-- Link to scripts of your own -->
-    <script src="./scripts/skeleton.js"></script>
-    <script src="./scripts/firebaseAPI_DTC02.js"></script>
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/food/food.js" type="module"></script>
+    <script src="../scripts/skeleton.js"></script>
+    <script src="../scripts/firebaseAPI_DTC02.js"></script>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/food/food.js" type="module"></script>
   </body>
 </html>

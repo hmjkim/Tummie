@@ -2,7 +2,7 @@ import {
   displayFoodItemsByCategory,
   displayFoodItemsByExpiryDate,
   displayFoodItemsByName,
-} from "./sort-food.js";
+} from "./sortFood.js";
 
 import {
   previewFile,
@@ -835,9 +835,9 @@ function populateFoodInfo() {
             let daysLeft = calculateTimeLeft(expiry_date);
             let iconPath;
             if (image) {
-              iconPath = `../images/icons/food/${image}`;
+              iconPath = `../../images/icons/food/${image}`;
             } else {
-              iconPath = "../images/icons/placeholder.svg";
+              iconPath = "../../images/icons/placeholder.svg";
             }
 
             //if the data fields are not empty, then write them in to the form.

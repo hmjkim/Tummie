@@ -87,7 +87,7 @@ function populateFavoriteRecipes(currentUser) {
                     //update title and text and image
                     newcard.querySelector('.card-title').innerHTML = title;
                     newcard.querySelector('.card-image').src = link;
-                    newcard.querySelector('.card-button').href = `eachFavouriteRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
+                    newcard.querySelector('.card-button').href = `/recipes/eachFavouriteRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the button with the document ID and page number
                     newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
                     newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
@@ -231,7 +231,7 @@ function pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber > 1) {
         document.getElementById("prevBtnLink").addEventListener("click", () => {
             pageNumber--
-            document.getElementById("prevBtnLink").href = `favourite.html?cuisine=${cuisine}&page=${pageNumber}`
+            document.getElementById("prevBtnLink").href = `/recipes/favourite.html?cuisine=${cuisine}&page=${pageNumber}`
             populateFavoriteRecipes(currentUser)
         })
     }
@@ -240,7 +240,7 @@ function pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES) {
     for (let i = 0; i < btnsDisplayed.length; i++) {
         btnsDisplayed[i].addEventListener("click", () => {
             pageNumber = parseInt(btnsDisplayed[i].innerText)
-            btnsDisplayed[i].href = `favourite.html?cuisine=${cuisine}&page=${pageNumber}`
+            btnsDisplayed[i].href = `/recipes/favourite.html?cuisine=${cuisine}&page=${pageNumber}`
             populateFavoriteRecipes(currentUser)
         })
     }
@@ -249,7 +249,7 @@ function pagination(cuisine, pageNumber, TOTAL_NUMBER_OF_PAGES) {
     if (pageNumber < TOTAL_NUMBER_OF_PAGES) {
         document.getElementById("nextBtnLink").addEventListener("click", () => {
             pageNumber++
-            document.getElementById("nextBtnLink").href = `favourite.html?cuisine=${cuisine}&page=${pageNumber}`
+            document.getElementById("nextBtnLink").href = `/recipes/favourite.html?cuisine=${cuisine}&page=${pageNumber}`
             populateFavoriteRecipes(currentUser)
         })
     }

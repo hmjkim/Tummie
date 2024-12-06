@@ -7,13 +7,13 @@ const foodItemList = document.querySelector("#foodItemList");
 function populateFoodItemCard(foodItemCard, data, docID, daysLeft) {
     let iconPath;
     foodItemCard.querySelector(".food-title").innerHTML = data.title;
-    foodItemCard.querySelector(".food-link").href = '/eachFood.html?docID=' + docID;
+    foodItemCard.querySelector(".food-link").href = '/mykitchen/eachFood.html?docID=' + docID;
     foodItemCard.querySelector(".food-days-left").innerHTML = determineRemainingDaysMessage(daysLeft, data.expiry_date);
     foodItemCard.querySelector(".food-quantity").innerHTML = `Quantity: ${data.quantity}`;
     if (data.image) {
-        iconPath = `../images/icons/food/${data.image}`;
+        iconPath = `../../images/icons/food/${data.image}`;
     } else {
-        iconPath = "../images/logo/logo-placeholder.svg";
+        iconPath = "../../images/logo/logo-placeholder.svg";
     }
     foodItemCard.querySelector(".food-img").src = iconPath;
     foodItemCard.querySelector(".food-img").alt = `${data.title} icon`;

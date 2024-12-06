@@ -13,7 +13,7 @@ function loadSkeleton() {
 
       $("#headerContent").load("../partials/header.html", () => { d1.resolve()});
       $("#footerContent").load("../partials/footer.html", () => { d2.resolve()}),
-      $("#stickyMobileNav").load("../partials/stickMobileNav.html", () => { d3.resolve()})
+      $("#stickyMobileNav").load("../partials/stickyMobileNav.html", () => { d3.resolve()})
 
       $.when(d1, d2, d3).done(() => {
         updateActiveNavLink();
@@ -34,34 +34,24 @@ function updateActiveNavLink() {
   const desktopNavLinks = document.querySelectorAll(
     "#headerContent .nav-item a"
   );
-  const recipesNavLinks = document.querySelectorAll(".js-recipes-link");
   const currentURL = window.location.pathname;
-
-  if (
-    currentURL == "/eachRecipe.html" ||
-    currentURL == "/favourite.html" ||
-    currentURL == "/eachFavouriteRecipe.html"
-  ) {
-    recipesNavLinks.forEach((link) => {
-      link.classList.add("active");
-      let linkIcon = link.querySelector("img");
-      if (linkIcon) {
-        linkIcon.src = `./images/icons/recipes-active.svg`;
-      }
-    })
-  } else {
     [...navLinks, ...desktopNavLinks].forEach((link) => {
-      if (link.getAttribute("href").includes(currentURL)) {
+      let linkURL = link.getAttribute('href');
+
+      // Create a parent and child page relationship 
+      // eg. recipes.html (parent) , recipes/eachRecipe.html
+      // eg. child page under recipes will have recipe link highlighted
+      let parentPath = currentURL.split('/')[1];
+      if (linkURL.includes(parentPath)) {
         let linkText = link.innerText;
-        link.classList.add("active");
-        let linkIcon = link.querySelector("img");
+        link.classList.add('active');
+        let linkIcon = link.querySelector('img');
         if (linkIcon) {
-          linkIcon.src = `./images/icons/${slugify(linkText)}-active.svg`;
+          linkIcon.src = `../images/icons/${slugify(linkText)}-active.svg`
         }
       }
     });
   }
-}
 
 function slugify(str) {
   str = str.replace(/^\s+|\s+$/g, ""); // trim leading/trailing white space

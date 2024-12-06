@@ -189,8 +189,8 @@ function createCards(allRecipes, cuisine, pageNumber) {
         //update title, text, and image
         newcard.querySelector('.card-title').innerHTML = title;  // update title
         newcard.querySelector('.card-image').src = link; // update image
-        newcard.querySelector('.card-button').href = `eachRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the button with the document ID, page number, and cuisine info
-        newcard.querySelector('.card-image-link').href = `eachRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the card image with the document ID, page number, and cuisine info
+        newcard.querySelector('.card-button').href = `/recipes/eachRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the button with the document ID, page number, and cuisine info
+        newcard.querySelector('.card-image-link').href = `/recipes/eachRecipe.html?cuisine=${cuisine}&page=${pageNumber}&docID=${docID}`; // link the card image with the document ID, page number, and cuisine info
         newcard.querySelector('i').id = 'save-' + docID;   // add an unique id to each favorite button so that we can distinguish which recipe to be added to be bookmarked and apply event listener accordingly 
         newcard.querySelector('i').onclick = () => savetoFavorite(docID); // add event listen to invoke function everytime when the favorite button is hit
 
