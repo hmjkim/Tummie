@@ -13,7 +13,7 @@ function populateFoodItemCard(foodItemCard, data, docID, daysLeft) {
     if (data.image) {
         iconPath = `../images/icons/food/${data.image}`;
     } else {
-        iconPath = "../images/icons/placeholder.svg";
+        iconPath = "../images/logo/logo-placeholder.svg";
     }
     foodItemCard.querySelector(".food-img").src = iconPath;
     foodItemCard.querySelector(".food-img").alt = `${data.title} icon`;
