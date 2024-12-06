@@ -27,13 +27,18 @@ function updateActiveNavLink() {
   const navLinks = document.querySelectorAll('#stickyMobileNav a');
   const currentURL = window.location.pathname;
 
-  navLinks.forEach((link) => {
-    if (link.getAttribute('href').includes(currentURL)) {
-      let linkText = link.innerText;
-      link.classList.add('active');
-      link.querySelector('img').src = `./images/icons/${slugify(linkText)}-active.svg`
-    }
-  });
+  if (currentURL == '/eachRecipe.html' || currentURL == '/favourite.html' || currentURL == '/eachFavouriteRecipe.html') {
+    recipesNavLink.classList.add('active');
+    recipesNavLink.querySelector('img').src = `./images/icons/recipes-active.svg`
+  } else {
+    navLinks.forEach((link) => {
+      if (link.getAttribute('href').includes(currentURL)) {
+        let linkText = link.innerText;
+        link.classList.add('active');
+        link.querySelector('img').src = `./images/icons/${slugify(linkText)}-active.svg`
+      }
+    });
+  }
 }
 
 function slugify(str) {
