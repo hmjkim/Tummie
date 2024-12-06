@@ -58,42 +58,7 @@ What we'd like to build in the future:
 Content of the project folder:
 
 ```
- Top level of project folder:
-├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
-└── README.md
-
-It has the following subfolders and files:
-├── .git                     # Folder for git repo
-├── images                   # Folder for images
-    /about.svg                # Acknowledge source
-    /account.svg
-    /arrow-left.svg
-    /arrow.svg
-    /close.svg
-    /favorite.svg
-    /home.svg
-    /home.svg
-    /logout.svg
-    /my-kitchen-active.svg
-    /mykitchen.svg
-    /placeholder.svg
-    /profile-acitve.svg
-    /profile.svg
-    /recipes-active.svg
-    /recipes.svg
-    /setting.svg
-    /sharehub-active.svg
-    /sharehub.svg
-    /support.svg
-    /warning.svg
-├── scripts                  # Folder for scripts
-    /blah.js                 #
-├── styles                   # Folder for styles
-    /style.css                #
-
 .
-├── 404.html
 ├── README.md
 ├── firebase.json
 ├── firestore.indexes.json
@@ -134,6 +99,7 @@ It has the following subfolders and files:
 │       ├── logo-placeholder.svg
 │       ├── logo-white.svg
 │       └── logo.svg
+├── 404.html
 ├── index.html
 ├── login.html
 ├── mykitchen
@@ -151,6 +117,7 @@ It has the following subfolders and files:
 │   ├── eachRecipe.html
 │   └── favourite.html
 ├── recipes.html
+├── sharehub.html
 ├── scripts
 │   ├── authentication.js
 │   ├── eachFavouriteRecipe.js
@@ -167,7 +134,6 @@ It has the following subfolders and files:
 │   ├── script.js
 │   ├── sharehub.js
 │   └── skeleton.js
-├── sharehub.html
 ├── styles
 │   └── style.css
 └── tailwind.config.js
