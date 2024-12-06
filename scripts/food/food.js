@@ -96,7 +96,9 @@ firebase.auth().onAuthStateChanged((user) => {
               default:
                 sortingMethod = "Expiration Date";
             }
-            setURLParams("sort", sortingMethod);
+            if (window.location.pathname == "mykitchen.html") {
+              setURLParams("sort", sortingMethod);
+            }
 
             // Display food items with the default sorting method
             displayFoodItems(userID, sortingMethod);
