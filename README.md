@@ -1,4 +1,4 @@
-# Project Title
+# Tummie
 
 ## 1. Project Description
 
@@ -26,7 +26,7 @@ Tummie is a food expiry date tracker which helps reduce the food waste by remind
 
 ## 4. Complete setup/installation/usage
 
-No setup or installation is required for this application. A dummy account, with pre-written data, is created for testing pupose:
+No setup or installation is required for this application. A dummy account, with pre-written data, is created for testing purpose:
 
 Username: `oliviab@test.ca`
 
